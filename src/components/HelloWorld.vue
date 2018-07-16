@@ -84,12 +84,24 @@
 </template>
 
 <script>
+    import { testjj } from '../service/getData'
+
+
 export default {
   name: 'HelloWorld',
   data () {
     return {
       msg: 'Welcome to Your Vue.js App'
     }
+  },
+  created() {
+    this.goTest()
+  },
+  methods: {
+    async goTest(){
+        let data = await testjj('123', '456');
+        console.log('---', data)
+    },
   }
 }
 </script>
