@@ -13,7 +13,8 @@ let imgBaseUrl = '';
 
 
 if (process.env.NODE_ENV == 'development') {
-    imgBaseUrl = '/img/';
+	imgBaseUrl = '/img/';
+	baseUrl = 'https://www.travel-network.xin/mixin-apis/'
 
 }else if(process.env.NODE_ENV == 'production'){
 	baseUrl = '//elm.cangdu.org';
