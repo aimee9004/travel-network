@@ -1,17 +1,32 @@
 <template>
     <div>
-
+        <van-nav-bar
+            title="标题"
+            left-text="返回"
+            right-text="按钮"
+            left-arrow
+            @click-left="$router.go(-1)"
+            @click-right="onClickRight"
+        />
     </div>
 </template>
 
 <script>
-export default {
-    data() {
-        return {
+    import Vue from 'vue'
+    import { NavBar } from 'vant'
+    Vue.use(NavBar);
+    export default {
+        data() {
+            return {
 
+            }
+        },
+        methods: {   
+            onClickRight() {
+                // Toast('按钮');
+            }
         }
     }
-}
 </script>
 
 

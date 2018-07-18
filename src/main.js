@@ -5,11 +5,12 @@ import store from './store'
 import App from './App'
 import router from './router'
 import Vant from 'vant'
+import 'vant/lib/vant-css/index.css';
 
 import './config/rem'
 
 Vue.config.productionTip = false
-Vue.use(Vant)
+// Vue.use(Vant)
 
 /* eslint-disable no-new */
 new Vue({

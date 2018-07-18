@@ -84,7 +84,7 @@
 </template>
 
 <script>
-    import { testjj } from '../service/getData'
+    import { testjj, testjj2 } from '../service/getData'
 
 
 export default {
@@ -100,7 +100,8 @@ export default {
   methods: {
     async goTest(){
         let data = await testjj('123', '456');
-        console.log('---', data)
+        
+        let data2 = await testjj2(0, 0)
     },
   }
 }

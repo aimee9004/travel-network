@@ -3,7 +3,8 @@ import {getStore} from '../config/mUtils'
 
 
 // test
-export const testjj = (platform, curVersion) => fetch('/api/appBase/checkAppVersion', {platform, curVersion}, 'POST');
+export const testjj = (platform, curVersion) => fetch('/api/appBase/checkAppVersion', { platform, curVersion }, 'POST');
+export const testjj2 = (parentId, sameLevel) => fetch('/api/appArticle/areaList', { parentId, sameLevel }, 'POST');
 
 /**
  * 账号密码登录
