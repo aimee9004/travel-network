@@ -12,6 +12,9 @@ const HelloWorld = r => require.ensure([], () => r(require('@/components/HelloWo
 // 交易 QC 列表
 const ListQc = r => require.ensure([], () => r(require('@/page/deal/list-qc')), 'listQc') 
 
+// 买入 卖出页面
+const BuySell = r => require.ensure([], () => r(require('@/page/deal/buy-sell')), 'buySell')
+
 
 let myRoutes = [
   {
@@ -21,6 +24,10 @@ let myRoutes = [
     path: '/qc-list',
     name: 'listQc',
     component: ListQc
+  }, {
+    path: '/buy-sell',
+    name: 'buySell',
+    component: BuySell
   }
 ]
 
