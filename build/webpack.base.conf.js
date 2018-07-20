@@ -65,7 +65,22 @@ module.exports = {
           limit: 10000,
           name: utils.assetsPath('fonts/[name].[hash:7].[ext]')
         }
-      }
+      },
+      // {
+      //   test: /\.scss$/,
+      //   use: [
+      //     'vue-style-loader',
+      //     'css-loader',
+      //     // 'sass-loader',
+      //     {
+      //       loader: 'sass-resources-loader',
+      //       options: {
+      //         resources: path.resolve(__dirname, '../src/style/common.scss')
+      //       }
+      //     }
+          
+      //   ]
+      // }
     ]
   },
   node: {

@@ -4,7 +4,6 @@
 
         <van-tabs v-model="active" swipeable >
             <van-tab title="买入">
-                买入11
                 <children-index></children-index>
             </van-tab>
             <van-tab title="卖出">
