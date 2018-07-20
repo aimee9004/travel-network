@@ -3,7 +3,7 @@
 <template>
     <div>
         <header>
-            <span title="档位" class="first">档位1</span>
+            <span title="档位" class="first">档位</span>
             <span title="价格" class="second">价格</span>
             <span title="数量" class="third">数量</span>
         </header>
@@ -34,10 +34,11 @@
                 </van-cell-group>
                 <p class="sub-title clear">交易额 <span>0.00 QC</span></p>
 
-                <van-button class="red-btn">买入 BTC</van-button>
+                <van-button v-if='activeName===0' class="red-btn">买入 BTC</van-button>
+                <van-button v-if='activeName===1' class="green-btn">卖出 BTC</van-button>
 
                 <van-cell-group class="marginTB10">
-                    <van-field class="input-class colorRed"
+                    <van-field class="input-class" :class="{colorRed: activeName===0, colorGreen: activeName===1}"
                         v-model="dealZb"
                         disabled
                         placeholder="可买ZB"
@@ -46,7 +47,7 @@
                     </van-field>
                 </van-cell-group>
                 <van-cell-group>
-                    <van-field class="input-class colorRed"
+                    <van-field class="input-class" :class="{colorRed: activeName===0, colorGreen: activeName===1}"
                         v-model="dealQc"
                         disabled
                         placeholder="可用QC"
@@ -57,7 +58,7 @@
 
             </van-col>
             <van-col span="12" class="right-content">
-                <van-row v-for="(item, index) in 10" :key="index" class="green-list">
+                <van-row v-for="(item, index) in 10" :key="'green'+index" class="green-list">
                     <van-col class="first" span="10">
                         <span class="span-first">{{index+1}}</span>4.6732
                     </van-col>
@@ -68,7 +69,7 @@
 
                 <van-progress :percentage="20" :show-pivot="false" color="#f44"></van-progress>
 
-                <van-row v-for="(item, index) in 10" :key="index" class="red-list">
+                <van-row v-for="(item, index) in 10" :key="'red'+index" class="red-list">
                     <van-col class="first" span="10">
                         <span class="span-first">{{index+1}}</span>4.6732
                     </van-col>
@@ -79,15 +80,43 @@
             </van-col>
         </van-row>
 
+        <van-row class="bottom-tabs">
+            <van-col span="6">当前委托</van-col>
+            <van-col span="6">历史委托</van-col>
+            <van-col span="6"><van-icon name=""></van-icon></van-col>
+        </van-row>
+
+        <div class="bottom-list" :class="{buyClass: activeName===0, sellClass: activeName===1}">
+            <van-row v-for="(item, index) in 4" :key="index">
+                <van-col class="first" span="10">
+                    <p><span class="speci1">卖出</span><span class="speci2">EOS 1159.65</span></p>
+                    <p><span>委托价格</span><span class="speci3">QC 55.17</span></p>
+                </van-col>
+                <van-col class="second" span="11">
+                    <p><span>成交数量</span><span class="speci4">EOS 1159.65</span></p>
+                    <p><span>成交价格</span><span class="speci4">QC 55.170</span></p>
+                </van-col>
+                <van-col class="third" span="3">06:26<br>16:17</van-col>
+            </van-row>
+        </div>
+
+
     </div>
 </template>
 
 <script>
     import Vue from 'vue'
-    import { Row, Col, Field, CellGroup, Button, Progress } from 'vant'
-    Vue.use(Row).use(Col).use(Field).use(CellGroup).use(Button).use(Progress)
+    import { Row, Col, Field, CellGroup, Button, Progress, Icon } from 'vant'
+    Vue.use(Row).use(Col).use(Field).use(CellGroup)
+    .use(Button).use(Progress).use(Icon)
 
     export default {
+        props: {
+            activeName: {
+                type: Number,
+                default: 0
+            }
+        },
         data() {
             return {
                 trustPrice: '',
@@ -110,6 +139,16 @@
         /deep/ .van-field__button {
             >span {
                 color: #f44;
+            }
+        }
+    }
+    .colorGreen {
+        /deep/ .van-field__control {
+            color: rgb(0, 159, 80);
+        }
+        /deep/ .van-field__button {
+            >span {
+                color: rgb(0, 159, 80);
             }
         }
     }
@@ -167,6 +206,12 @@
                 border: 1px solid #f44;
                 /deep/ .van-button__text {
                     color: #f44;
+                }
+            }
+            .green-btn {
+                border: 1px solid rgb(0, 159, 80);
+                /deep/ .van-button__text {
+                    color: rgb(0, 159, 80);
                 }
             }
         }
@@ -233,6 +278,78 @@
         }
         .van-hairline--top-bottom::after {
             border: 0;
+        }
+    }
+    .bottom-tabs {
+        &.van-row {
+            height: 50px;
+            font-size: 14px;
+            line-height: 50px;
+            border-top: 1px solid #ddd;
+            margin-bottom: 10px;
+            background-color: white;
+        }
+    }
+    .bottom-list {
+        margin: 10px;
+        .van-row {
+            font-size: 12px;
+            padding: 5px 10px;
+            text-align: left;
+            margin-bottom: 5px;
+            background-color: white;
+            border-bottom: 1px solid rgb(0, 159, 80);
+            &:last-child {
+                margin-bottom: 60px;
+            }
+            .van-col {
+                >p {
+                    >span {
+                        color: rgb(183, 183, 183);
+                    }
+                }
+                .speci1 {
+                    // color: rgb(0, 159, 80);
+                    font-size: 16px;
+                    margin-right: 3px;
+                }
+                .speci2 {
+                    font-size: 15px;
+                    color: #333;
+                }
+                .speci3 {
+                    font-size: 14px;
+                    color: #333;
+                    margin-left: 3px;
+                }
+                .speci4 {
+                    font-size: 14px;
+                    // color: rgb(0, 159, 80);
+                    margin-left: 3px;
+                }
+                &.third {
+                    text-align: right;
+                    color: rgb(183, 183, 183);
+                }
+            }
+        }
+        &.buyClass {
+            .van-row {
+                .van-col {
+                    .speci1, .speci4 {
+                        color: #f44;
+                    }
+                }
+            }
+        }
+        &.sellClass {
+            .van-row {
+                .van-col {
+                    .speci1, .speci4 {
+                        color: rgb(0, 159, 80);
+                    }
+                }
+            }
         }
     }
 </style>

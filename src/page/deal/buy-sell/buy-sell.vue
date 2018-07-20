@@ -2,13 +2,12 @@
     <div class="buy-sell">
         <header-bar></header-bar>
 
-        <van-tabs v-model="active" swipeable >
+        <van-tabs v-model="activeName" swipeable >
             <van-tab title="买入">
                 <children-index></children-index>
             </van-tab>
             <van-tab title="卖出">
-                卖出22
-                <children-index></children-index>
+                <children-index :activeName="activeName"></children-index>
             </van-tab>
             
         </van-tabs>
@@ -30,7 +29,7 @@
     export default {
         data() {
             return {
-                active: '1'
+                activeName: 0
             }
         },
         components: {
@@ -44,6 +43,9 @@
 
 <style lang="scss" scoped>
     .buy-sell {
+        .van-tabs {
+            margin-bottom: 50px;
+        }
         /deep/ .van-tabs__wrap {
             width: 50%;
             border-bottom: 1px solid #ddd;
