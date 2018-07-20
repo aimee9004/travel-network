@@ -13,7 +13,7 @@ const HelloWorld = r => require.ensure([], () => r(require('@/components/HelloWo
 const ListQc = r => require.ensure([], () => r(require('@/page/deal/list-qc')), 'listQc') 
 
 // 买入 卖出页面
-const BuySell = r => require.ensure([], () => r(require('@/page/deal/buy-sell')), 'buySell')
+const BuySell = r => require.ensure([], () => r(require('@/page/deal/buy-sell/buy-sell')), 'buySell')
 
 
 let myRoutes = [
