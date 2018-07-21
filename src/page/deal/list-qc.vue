@@ -3,40 +3,35 @@
         <header-bar></header-bar>
 
         <van-collapse v-model="activeName" accordion>
-            <van-collapse-item name="1" class="list-item">
+            <van-collapse-item v-for="(item, index) in dataList" :key="index" :name="index" class="list-item">
                 <div slot="title">
                     <van-row>
                         <van-col span="10">
                             <van-row type="flex" align="center">
-                                <van-col span="7" class="list-logo">
-                                    <img src="@/assets/logo.png" alt="">
+                                <van-col class="list-logo">
+                                    <!-- <img src="@/assets/logo.png" alt=""> -->
+                                    <img :src="item.icon_url" alt="">
                                 </van-col>
-                                <van-col span="17">
-                                    <h1>ZB</h1>
-                                    <p>量：2381.67万</p>
+                                <van-col class="col1" span="17">
+                                    <h1>{{item.symbol}}</h1>
+                                    <p>量：{{item.dealCount}}</p>
                                 </van-col>
                             </van-row>
                         </van-col>
                         <van-col span="14">
                             <van-row type="flex" align="center">
                                 <van-col span="16" class="align-r">
-                                    <h2>QC4.6488</h2>
-                                    <p>¥4.6488</p>
+                                    <h2>QC{{item.QCPrice}}</h2>
+                                    <p>¥{{item.HYDPrice}}</p>
                                 </van-col>
                                 <van-col span="8" class="list-tip">
-                                    <van-button type="primary" size="small">-3.77%</van-button>
+                                    <van-button type="primary" size="small">{{item.QCChange}}</van-button>
                                 </van-col>
                             </van-row>
                         </van-col>
                     </van-row>
                 </div>
-                提供多样店铺模板，快速搭建网上商城
-            </van-collapse-item>
-            <van-collapse-item title="有赞零售" name="2">
-                网店吸粉获客、会员分层营销、一机多种收款，告别经营低效和客户流失
-            </van-collapse-item>
-            <van-collapse-item title="有赞美业" name="3">
-                线上拓客，随时预约，贴心顺手的开单收银
+                <!-- 提供多样店铺模板，快速搭建网上商城 -->
             </van-collapse-item>
         </van-collapse>
 
@@ -52,26 +47,48 @@
     import HeaderBar from '@/components/Header'
     import FooterBar from '@/components/Footer'
 
+    import { listQc, testjj, testjj2 } from '@/service/getData'
+
     export default {
         data() {
             return {
-                activeName: ''
+                activeName: '',
+                dataList: []
             }
         },
         components: {
             HeaderBar, FooterBar
         },
+        created() {
+            // this.goTest()
+            this.getList()
+        },
         methods: {
-
+            async goTest(){
+                let data = await testjj('123', '456');
+                
+                let data2 = await testjj2(0, 0)
+            },
+            async getList() {
+                let accessToken = 'c0RFeGNMcXBySDJkL2xmTjFSaUlTdjlNNlB0ZTV4MnlFMjFuTGFjQlBpamlHOEpENkR6K0ZYNGo3TTJlS0svc2tsaEJMRVFKbEVvTG1ab1RsbHo5S2Z1ZElRT3dwT1FQNnR1blZXblpydFJNcCs0b2pVRHN4c3E5eWhybnVnYUNyMG1va0NySFZQVzJ3S2ZGVGFRWWczblZqS2MxWEtOMGplUm55OVZIa1lzPQ=='
+                let data = await listQc(accessToken)
+                if(data.status===200) {
+                    this.dataList = data.data
+                }
+                console.log('get data: ', this.dataList)
+            }
         }
     }
 </script>
 
 <style lang="scss" scoped>
     .list-item {
+        /deep/ .van-cell {
+            padding: 10px;
+        }
         .van-col {
             >h1 {
-
+                font-size: 18px;
             }
             >h2 {
                 color: green;
@@ -91,11 +108,16 @@
             }
         }
         .list-logo {
+            margin-right: 10px;
             >img {
                 width: 40px;
                 height: 40px;
                 border-radius: 50%;
+                vertical-align: middle;
             }
+        }
+        /deep/ .van-collapse-item__content {
+            padding: 0;
         }
     }
 </style>

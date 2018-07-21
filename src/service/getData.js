@@ -6,6 +6,9 @@ import {getStore} from '../config/mUtils'
 export const testjj = (platform, curVersion) => fetch('/api/appBase/checkAppVersion', { platform, curVersion }, 'POST');
 export const testjj2 = (parentId, sameLevel) => fetch('/api/appArticle/areaList', { parentId, sameLevel }, 'POST');
 
+// list-QC
+export const listQc = (accessToken) => fetch('/api/exchange/assetParsList', { accessToken }, 'POST');
+
 /**
  * 账号密码登录
  */
