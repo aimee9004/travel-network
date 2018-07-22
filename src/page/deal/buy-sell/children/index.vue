@@ -80,27 +80,6 @@
             </van-col>
         </van-row>
 
-        <van-row class="bottom-tabs">
-            <van-col span="6">当前委托</van-col>
-            <van-col span="6">历史委托</van-col>
-            <van-col span="6"><van-icon name=""></van-icon></van-col>
-        </van-row>
-
-        <div class="bottom-list" :class="{buyClass: activeName===0, sellClass: activeName===1}">
-            <van-row v-for="(item, index) in 4" :key="index">
-                <van-col class="first" span="10">
-                    <p><span class="speci1">卖出</span><span class="speci2">EOS 1159.65</span></p>
-                    <p><span>委托价格</span><span class="speci3">QC 55.17</span></p>
-                </van-col>
-                <van-col class="second" span="11">
-                    <p><span>成交数量</span><span class="speci4">EOS 1159.65</span></p>
-                    <p><span>成交价格</span><span class="speci4">QC 55.170</span></p>
-                </van-col>
-                <van-col class="third" span="3">06:26<br>16:17</van-col>
-            </van-row>
-        </div>
-
-
     </div>
 </template>
 
@@ -123,6 +102,12 @@
                 default: function() {
                     return []
                 }
+            },
+            currentList: {
+                type: Array,
+                default: function() {
+                    return []
+                }
             }
         },
         data() {
@@ -137,7 +122,7 @@
             
         },
         methods: {
-            
+
         }   
     }
 </script>
@@ -302,6 +287,14 @@
             border-top: 1px solid #ddd;
             margin-bottom: 10px;
             background-color: white;
+            button {
+                border: none;
+            }
+        }
+        .on {
+            /deep/ .van-button__text {
+                color: red;
+            }
         }
     }
     .bottom-list {

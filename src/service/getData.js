@@ -9,8 +9,10 @@ export const testjj2 = (parentId, sameLevel) => fetch('/api/appArticle/areaList'
 // list-QC
 export const listQc = (accessToken) => fetch('/api/exchange/assetParsList', { accessToken }, 'POST');
 
-// buy-sell
-export const buyList = (accessToken, assetId, type) => fetch('/api/exchange/assetOrderDeepInfo', { accessToken, assetId, type }, 'POST');
+// buy-sell 
+export const buySellList = (accessToken, assetId, type) => fetch('/api/exchange/assetOrderDeepInfo', { accessToken, assetId, type }, 'POST');
+export const currentOrder = (accessToken, assetId, type) => fetch('api/exchange/myCurOrders', { accessToken, assetId, type }, 'POST');
+export const dealOrder = (accessToken, assetId, type) => fetch('api/exchange/myDealOrders', { accessToken, assetId, type }, 'POST');
 
 /**
  * 账号密码登录
