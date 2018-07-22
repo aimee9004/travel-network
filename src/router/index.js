@@ -25,7 +25,7 @@ let myRoutes = [
     name: 'listQc',
     component: ListQc
   }, {
-    path: '/buy-sell',
+    path: '/buy-sell/:id',
     name: 'buySell',
     component: BuySell
   }

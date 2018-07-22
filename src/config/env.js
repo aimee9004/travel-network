@@ -10,6 +10,7 @@
 let baseUrl = ''; 
 let routerMode = 'hash';
 let imgBaseUrl = '';
+let accessToken = 'c0RFeGNMcXBySDJkL2xmTjFSaUlTdjlNNlB0ZTV4MnlFMjFuTGFjQlBpamlHOEpENkR6K0ZYNGo3TTJlS0svc2tsaEJMRVFKbEVvTG1ab1RsbHo5S2Z1ZElRT3dwT1FQNnR1blZXblpydFJNcCs0b2pVRHN4c3E5eWhybnVnYUNyMG1va0NySFZQVzJ3S2ZGVGFRWWczblZqS2MxWEtOMGplUm55OVZIa1lzPQ==';
 
 
 if (process.env.NODE_ENV == 'development') {
@@ -25,4 +26,5 @@ export {
 	baseUrl,
 	routerMode,
 	imgBaseUrl,
+	accessToken
 }

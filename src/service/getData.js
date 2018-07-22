@@ -9,6 +9,9 @@ export const testjj2 = (parentId, sameLevel) => fetch('/api/appArticle/areaList'
 // list-QC
 export const listQc = (accessToken) => fetch('/api/exchange/assetParsList', { accessToken }, 'POST');
 
+// buy-sell
+export const buyList = (accessToken, assetId, type) => fetch('/api/exchange/assetOrderDeepInfo', { accessToken, assetId, type }, 'POST');
+
 /**
  * 账号密码登录
  */

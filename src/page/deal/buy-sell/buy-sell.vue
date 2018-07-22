@@ -2,9 +2,9 @@
     <div class="buy-sell">
         <header-bar></header-bar>
 
-        <van-tabs v-model="activeName" swipeable >
+        <van-tabs v-model="activeName" @click="activeClick">
             <van-tab title="买入">
-                <children-index></children-index>
+                <children-index :activeName="activeName" :dataList="dataList"></children-index>
             </van-tab>
             <van-tab title="卖出">
                 <children-index :activeName="activeName"></children-index>
@@ -26,17 +26,38 @@
 
     import ChildrenIndex from './children/index'
 
+    import { buyList } from '@/service/getData'
+
     export default {
         data() {
             return {
-                activeName: 0
+                activeName: 0,
+                dataList: []
             }
         },
         components: {
             HeaderBar, FooterBar, ChildrenIndex
         },
+        created() {
+            this.getList()
+        },
         methods: {
-
+            activeClick(index, title) {
+                this.activeName = index
+                this.getList()
+            },
+            async getList() {
+                let accessToken = 'c0RFeGNMcXBySDJkL2xmTjFSaUlTdjlNNlB0ZTV4MnlFMjFuTGFjQlBpamlHOEpENkR6K0ZYNGo3TTJlS0svc2tsaEJMRVFKbEVvTG1ab1RsbHo5S2Z1ZElRT3dwT1FQNnR1blZXblpydFJNcCs0b2pVRHN4c3E5eWhybnVnYUNyMG1va0NySFZQVzJ3S2ZGVGFRWWczblZqS2MxWEtOMGplUm55OVZIa1lzPQ=='
+                let assetId = this.$route.params.id
+                let type = 'buy'
+                if(this.activeName === 1) {
+                    type = 'sell'
+                }
+                let data = await buyList(accessToken, assetId, type)
+                if(data.status === 200) {
+                    this.dataList = data.data
+                }
+            }
         }
     }
 </script>

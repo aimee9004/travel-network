@@ -4,7 +4,7 @@
 
         <van-collapse v-model="activeName" accordion>
             <van-collapse-item v-for="(item, index) in dataList" :key="index" :name="index" class="list-item">
-                <div slot="title">
+                <div slot="title" @click="goDetail(item)">
                     <van-row>
                         <van-col span="10">
                             <van-row type="flex" align="center">
@@ -75,7 +75,15 @@
                 if(data.status===200) {
                     this.dataList = data.data
                 }
-                console.log('get data: ', this.dataList)
+            },
+            goDetail(item) {
+                console.log(item)
+                this.$router.push({
+                    name: 'buySell',
+                    params: {
+                        id: item.id
+                    }
+                })
             }
         }
     }

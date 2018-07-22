@@ -110,11 +110,19 @@
     Vue.use(Row).use(Col).use(Field).use(CellGroup)
     .use(Button).use(Progress).use(Icon)
 
+
+
     export default {
         props: {
             activeName: {
                 type: Number,
                 default: 0
+            },
+            dataList: {
+                type: Array,
+                default: function() {
+                    return []
+                }
             }
         },
         data() {
@@ -122,8 +130,14 @@
                 trustPrice: '',
                 trustNum: '',
                 dealZb: '可买ZB',
-                dealQc: '可用QC'
+                dealQc: '可用QC',
             }
+        },
+        created() {
+            
+        },
+        methods: {
+            
         }   
     }
 </script>
@@ -335,6 +349,7 @@
         }
         &.buyClass {
             .van-row {
+                border-bottom: 1px solid #f44;
                 .van-col {
                     .speci1, .speci4 {
                         color: #f44;
@@ -344,6 +359,7 @@
         }
         &.sellClass {
             .van-row {
+                border-bottom: 1px solid rgb(0, 159, 80);
                 .van-col {
                     .speci1, .speci4 {
                         color: rgb(0, 159, 80);

@@ -1,5 +1,5 @@
 import {
-	baseUrl
+	baseUrl, accessToken
 } from './env'
 
 export default async(url = '', data = {}, type = 'GET', method = 'fetch') => {
