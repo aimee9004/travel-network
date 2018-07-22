@@ -54,7 +54,6 @@
                 buySellType: 'buy',
                 dataList: [],
                 currentList: [],
-                accessToken: 'c0RFeGNMcXBySDJkL2xmTjFSaUlTdjlNNlB0ZTV4MnlFMjFuTGFjQlBpamlHOEpENkR6K0ZYNGo3TTJlS0svc2tsaEJMRVFKbEVvTG1ab1RsbHo5S2Z1ZElRT3dwT1FQNnR1blZXblpydFJNcCs0b2pVRHN4c3E5eWhybnVnYUNyMG1va0NySFZQVzJ3S2ZGVGFRWWczblZqS2MxWEtOMGplUm55OVZIa1lzPQ==',
                 assetId: this.$route.params.id,
                 orderType: 'current'
             }
@@ -71,7 +70,11 @@
             goOrderList(type) {
                 console.log(type)
                 this.orderType = type
-                this.$emit('orderChange', type)
+                if(this.orderType === 'current') {
+                    this.getCurrentList()
+                }else {
+                    this.getDealList()
+                }
             },
             activeClick(index, title) {
                 this.activeName = index
@@ -85,30 +88,23 @@
                 this.getCurrentList()
             },
             async getList() {                
-                let data = await buySellList(this.accessToken, this.assetId, this.buySellType)
+                let data = await buySellList(this.assetId, this.buySellType)
                 if(data.status === 200) {
                     this.dataList = data.data
                 }
             },
             async getCurrentList() {
-                let data = await currentOrder(this.accessToken, this.assetId, this.buySellType)
+                let data = await currentOrder(this.assetId, this.buySellType)
                 if(data.status === 200) {
                     this.currentList = data.data
                 }
             },
             async getDealList() {
-                let data = await dealOrder(this.accessToken, this.assetId, this.buySellType)
+                let data = await dealOrder(this.assetId, this.buySellType)
                 if(data.status === 200) {
                     this.currentList = data.data
                 }
             },
-            orderChange(type) {
-                if(type === 'current') {
-                    this.getCurrentList()
-                }else {
-                    this.getDealList()
-                }
-            }
         }
     }
 </script>

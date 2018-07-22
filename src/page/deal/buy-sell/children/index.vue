@@ -34,8 +34,8 @@
                 </van-cell-group>
                 <p class="sub-title clear">交易额 <span>0.00 QC</span></p>
 
-                <van-button v-if='activeName===0' class="red-btn">买入 BTC</van-button>
-                <van-button v-if='activeName===1' class="green-btn">卖出 BTC</van-button>
+                <van-button @click="goBuy" v-if='activeName===0' class="red-btn">买入 BTC</van-button>
+                <van-button @click="goSell" v-if='activeName===1' class="green-btn">卖出 BTC</van-button>
 
                 <van-cell-group class="marginTB10">
                     <van-field class="input-class" :class="{colorRed: activeName===0, colorGreen: activeName===1}"
@@ -85,11 +85,11 @@
 
 <script>
     import Vue from 'vue'
-    import { Row, Col, Field, CellGroup, Button, Progress, Icon } from 'vant'
+    import { Row, Col, Field, CellGroup, Button, Progress, Icon, Toast } from 'vant'
     Vue.use(Row).use(Col).use(Field).use(CellGroup)
-    .use(Button).use(Progress).use(Icon)
+    .use(Button).use(Progress).use(Icon).use(Toast)
 
-
+    import { addBuy, addSell } from '@/service/getData'
 
     export default {
         props: {
@@ -116,13 +116,52 @@
                 trustNum: '',
                 dealZb: '可买ZB',
                 dealQc: '可用QC',
+                assetId: this.$route.params.id,
             }
         },
         created() {
             
         },
         methods: {
+            async goBuy() {
+                let expPrice = /^([1-9][\d]{0,7}|0)(\.[\d]{1,2})?$/
+                if(!this.trustPrice) {
+                    Toast('价格不能为空')
+                    return
+                }
+                if(!expPrice.test(this.trustPrice)) {
+                    Toast('输入价格格式错误')
+                    return
+                }
+                let expNum = /^([1-9][0-9]*)$/
+                if(!this.trustNum) {
+                    Toast('数量不能为空')
+                    return
+                }
+                if(!expNum.test(this.trustNum)) {
+                    Toast('输入数量格式错误')
+                    return
+                }
+                this.getBuy()
+            },
+            async getBuy() {
+                let data = await addBuy(this.assetId, this.trustPrice, this.trustNum)
+            },
 
+            goSell() {
+                if(!this.trustPrice) {
+                    Toast('价格不能为空')
+                    return
+                }
+                if(!this.trustNum) {
+                    Toast('数量不能为空')
+                    return
+                }
+                this.getSell
+            },
+            async getSell() {
+                let data = await addSell(this.assetId, this.trustPrice, this.trustNum)
+            }
         }   
     }
 </script>

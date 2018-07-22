@@ -70,8 +70,7 @@
                 let data2 = await testjj2(0, 0)
             },
             async getList() {
-                let accessToken = 'c0RFeGNMcXBySDJkL2xmTjFSaUlTdjlNNlB0ZTV4MnlFMjFuTGFjQlBpamlHOEpENkR6K0ZYNGo3TTJlS0svc2tsaEJMRVFKbEVvTG1ab1RsbHo5S2Z1ZElRT3dwT1FQNnR1blZXblpydFJNcCs0b2pVRHN4c3E5eWhybnVnYUNyMG1va0NySFZQVzJ3S2ZGVGFRWWczblZqS2MxWEtOMGplUm55OVZIa1lzPQ=='
-                let data = await listQc(accessToken)
+                let data = await listQc()
                 if(data.status===200) {
                     this.dataList = data.data
                 }
