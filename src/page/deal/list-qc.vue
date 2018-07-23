@@ -14,15 +14,15 @@
                                 </van-col>
                                 <van-col class="col1" span="17">
                                     <h1>{{item.symbol}}</h1>
-                                    <p>量：{{item.dealCount}}</p>
+                                    <p>量：{{parseFloat(item.dealCount)}}</p>
                                 </van-col>
                             </van-row>
                         </van-col>
                         <van-col span="14">
                             <van-row type="flex" align="center">
                                 <van-col span="16" class="align-r">
-                                    <h2>QC{{item.QCPrice}}</h2>
-                                    <p>¥{{item.HYDPrice}}</p>
+                                    <h2>QC{{parseFloat(item.QCPrice)}}</h2>
+                                    <p>¥{{parseFloat(item.HYDPrice)}}</p>
                                 </van-col>
                                 <van-col span="8" class="list-tip">
                                     <van-button type="primary" size="small">{{item.QCChange}}</van-button>
@@ -81,6 +81,9 @@
                     name: 'buySell',
                     params: {
                         id: item.id
+                    },
+                    query: {
+                        price: parseFloat(item.QCPrice)
                     }
                 })
             }

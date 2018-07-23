@@ -11,8 +11,8 @@
         <van-row class="middle-content">
             <van-col span="12" class="left-content">
 
-                <h2 class="title">QC 4.6488</h2>
-                <p class="title-small">¥ 4.64</p>
+                <h2 class="title">QC {{$route.query.price}}</h2>
+                <p class="title-small">¥ {{$route.query.price}}</p>
                 <van-cell-group>
                     <van-field class="input-class"
                         v-model="trustPrice"
