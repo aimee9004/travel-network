@@ -102,12 +102,6 @@
                 default: function() {
                     return []
                 }
-            },
-            currentList: {
-                type: Array,
-                default: function() {
-                    return []
-                }
             }
         },
         data() {
@@ -333,70 +327,6 @@
         .on {
             /deep/ .van-button__text {
                 color: red;
-            }
-        }
-    }
-    .bottom-list {
-        margin: 10px;
-        .van-row {
-            font-size: 12px;
-            padding: 5px 10px;
-            text-align: left;
-            margin-bottom: 5px;
-            background-color: white;
-            border-bottom: 1px solid rgb(0, 159, 80);
-            &:last-child {
-                margin-bottom: 60px;
-            }
-            .van-col {
-                >p {
-                    >span {
-                        color: rgb(183, 183, 183);
-                    }
-                }
-                .speci1 {
-                    // color: rgb(0, 159, 80);
-                    font-size: 16px;
-                    margin-right: 3px;
-                }
-                .speci2 {
-                    font-size: 15px;
-                    color: #333;
-                }
-                .speci3 {
-                    font-size: 14px;
-                    color: #333;
-                    margin-left: 3px;
-                }
-                .speci4 {
-                    font-size: 14px;
-                    // color: rgb(0, 159, 80);
-                    margin-left: 3px;
-                }
-                &.third {
-                    text-align: right;
-                    color: rgb(183, 183, 183);
-                }
-            }
-        }
-        &.buyClass {
-            .van-row {
-                border-bottom: 1px solid #f44;
-                .van-col {
-                    .speci1, .speci4 {
-                        color: #f44;
-                    }
-                }
-            }
-        }
-        &.sellClass {
-            .van-row {
-                border-bottom: 1px solid rgb(0, 159, 80);
-                .van-col {
-                    .speci1, .speci4 {
-                        color: rgb(0, 159, 80);
-                    }
-                }
             }
         }
     }
