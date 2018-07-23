@@ -4,10 +4,10 @@
 
         <van-tabs v-model="activeName" @click="activeClick">
             <van-tab title="买入">
-                <children-index :activeName="activeName" :dataList="dataList"></children-index>
+                <children-index :activeName="activeName" :deepData="deepData" :curInfo="curInfo"></children-index>
             </van-tab>
             <van-tab title="卖出">
-                <children-index :activeName="activeName" :dataList="dataList"></children-index>
+                <children-index :activeName="activeName" :deepData="deepData" :curInfo="curInfo"></children-index>
             </van-tab>
             
         </van-tabs>
@@ -24,8 +24,8 @@
                     <p><span>委托价格</span><span class="speci3">QC 55.17</span></p>
                 </van-col>
                 <van-col class="second" span="11">
-                    <p><span>成交数量</span><span class="speci4">EOS {{parseFloat(item.amount)}}</span></p>
-                    <p><span>成交价格</span><span class="speci4">QC 55.170</span></p>
+                    <p><span>成交数量</span><span class="speci4">EOS {{parseFloat(item.deal_amount)}}</span></p>
+                    <p><span>成交价格</span><span class="speci4">QC {{parseFloat(item.deal_price)}}</span></p>
                 </van-col>
                 <van-col class="third" span="3">06:26<br>16:17</van-col>
             </van-row>
@@ -45,14 +45,15 @@
 
     import ChildrenIndex from './children/index'
 
-    import { buySellList, currentOrder, dealOrder } from '@/service/getData'
+    import { buySellList, currentOrder, dealOrder, assetCurInfo } from '@/service/getData'
 
     export default {
         data() {
             return {
                 activeName: 0,
                 buySellType: 'buy',
-                dataList: [],
+                deepData: {},
+                curInfo: {},
                 currentList: [],
                 assetId: this.$route.params.id,
                 orderType: 'current'
@@ -62,8 +63,10 @@
             HeaderBar, FooterBar, ChildrenIndex
         },
         created() {
-            this.getList()
             this.getCurrentList()
+        },
+        mounted() {
+            this.getList()
         },
         methods: {
 
@@ -84,23 +87,31 @@
                 }else {
                     this.buySellType = 'buy'
                 }
-                this.getList()
                 this.getCurrentList()
             },
             async getList() {                
-                let data = await buySellList(this.assetId, this.buySellType)
-                if(data.status === 200) {
-                    this.dataList = data.data
+                let buyList = await buySellList(this.GLOBAL.token, this.assetId, 'buy')
+                let sellList = await buySellList(this.GLOBAL.token, this.assetId, 'sell')
+                let curInfo = await assetCurInfo(this.GLOBAL.token, this.assetId)
+                if(buyList.status === 200) {
+                    this.deepData.buyList = buyList.data
                 }
+                if(sellList.status === 200) {
+                    this.deepData.sellList = sellList.data
+                }
+                if(curInfo.status === 200) {
+                    this.curInfo = curInfo.data
+                }
+                console.log(this.deepData)
             },
             async getCurrentList() {
-                let data = await currentOrder(this.assetId, this.buySellType)
+                let data = await currentOrder(this.GLOBAL.token, this.assetId, this.buySellType)
                 if(data.status === 200) {
                     this.currentList = data.data
                 }
             },
             async getDealList() {
-                let data = await dealOrder(this.assetId, this.buySellType)
+                let data = await dealOrder(this.GLOBAL.token, this.assetId, this.buySellType)
                 if(data.status === 200) {
                     this.currentList = data.data
                 }

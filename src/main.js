@@ -6,8 +6,11 @@ import App from './App'
 import router from './router'
 import Vant from 'vant'
 import 'vant/lib/vant-css/index.css';
-
 import './config/rem'
+import * as global_ from './config/env'
+
+Vue.prototype.GLOBAL = global_
+console.log('main GLOBAL', Vue.prototype.GLOBAL)
 
 Vue.config.productionTip = false
 // Vue.use(Vant)

@@ -23,7 +23,18 @@
         },
         methods: {   
             onClickRight() {
-                // Toast('按钮');
+                
+                let dd = {
+                    "status":403,
+                    "message":"请先登录！",
+                    "data":""
+                }
+                // this.showLogin()
+                android.toLogin(JSON.stringify(dd))
+            },
+
+            showLogin() {
+                android.toLogin({a: '123'})
             }
         }
     }

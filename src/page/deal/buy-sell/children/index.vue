@@ -11,8 +11,8 @@
         <van-row class="middle-content">
             <van-col span="12" class="left-content">
 
-                <h2 class="title">QC {{$route.query.price}}</h2>
-                <p class="title-small">¥ {{$route.query.price}}</p>
+                <h2 class="title">QC {{parseFloat(curInfo.QCPrice)}}</h2>
+                <p class="title-small">¥ {{parseFloat(curInfo.HYDPrice)}}</p>
                 <van-cell-group>
                     <van-field class="input-class"
                         v-model="trustPrice"
@@ -22,7 +22,7 @@
                         <span slot="button">QC</span>
                     </van-field>
                 </van-cell-group>
-                <p class="sub-title clear">折合CNY <span>¥ 0.00</span></p>
+                <p class="sub-title clear">折合CNY <span>¥ {{parseFloat(curInfo.HYDPrice)}}</span></p>
                 <van-cell-group>
                     <van-field class="input-class"
                         v-model="trustNum"
@@ -58,23 +58,23 @@
 
             </van-col>
             <van-col span="12" class="right-content">
-                <van-row v-for="(item, index) in 10" :key="'green'+index" class="green-list">
+                <van-row v-for="(item, index) in deepData.sellList" :key="'green'+index" class="green-list">
                     <van-col class="first" span="10">
-                        <span class="span-first">{{index+1}}</span>4.6732
+                        <span class="span-first">{{index+1}}</span>{{parseFloat(item.price)}}
                     </van-col>
                     <van-col class="second" span="14">
-                        <span class="span-second"></span>30.34
+                        <span class="span-second" :style="{width: (sellPercent(item.amount))+'%'}"></span>{{parseFloat(item.amount)}}
                     </van-col>
                 </van-row>
 
                 <van-progress :percentage="20" :show-pivot="false" color="#f44"></van-progress>
 
-                <van-row v-for="(item, index) in 10" :key="'red'+index" class="red-list">
+                <van-row v-for="(item, index) in deepData.buyList " :key="'red'+index" class="red-list">
                     <van-col class="first" span="10">
-                        <span class="span-first">{{index+1}}</span>4.6732
+                        <span class="span-first">{{index+1}}</span>{{parseFloat(item.price)}}
                     </van-col>
                     <van-col class="second" span="14">
-                        <span class="span-second"></span>30.34
+                        <span class="span-second" :style="{width: (buyPercent(item.amount))+'%'}"></span>{{parseFloat(item.amount)}}
                     </van-col>
                 </van-row>
             </van-col>
@@ -97,11 +97,36 @@
                 type: Number,
                 default: 0
             },
-            dataList: {
-                type: Array,
+            deepData: {
+                type: Object,
                 default: function() {
-                    return []
+                    return {
+                        sellList: [],
+                        buyList: [],
+                    }
                 }
+            },
+            curInfo: {
+                type: Object,
+                default: function() {
+                    return {}
+                }
+            }
+        },
+        computed: {
+            sellPercent(amount) {
+                let sum = 0
+                for(let i = 0; i < this.sellList.length; i++) {
+                    sum += this.sellList[i].amount
+                }
+                return amount/sum*100
+            },
+            buyPercent(amount) {
+                let sum = 0
+                for(let i = 0; i < this.buyList.length; i++) {
+                    sum += this.buyList[i].amount
+                }
+                return amount/sum*100
             }
         },
         data() {
@@ -139,7 +164,7 @@
                 this.getBuy()
             },
             async getBuy() {
-                let data = await addBuy(this.assetId, this.trustPrice, this.trustNum)
+                let data = await addBuy(this.GLOBAL.token, this.assetId, this.trustPrice, this.trustNum)
             },
 
             goSell() {
@@ -154,7 +179,7 @@
                 this.getSell
             },
             async getSell() {
-                let data = await addSell(this.assetId, this.trustPrice, this.trustNum)
+                let data = await addSell(this.GLOBAL.token, this.assetId, this.trustPrice, this.trustNum)
             }
         }   
     }
@@ -274,6 +299,7 @@
                 font-size: 12px;
                 &.first {
                     padding-right: 5px;
+                    text-align: left;
                     >span {
                         width: 18px;
                         height: 18px;
@@ -283,6 +309,7 @@
                         // background-color: rgb(135, 217, 189);
                         border-radius: 5px;
                         display: inline-block;
+                        text-align: center;
                     }
                 }
                 &.second {

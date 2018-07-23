@@ -10,7 +10,7 @@
 let baseUrl = ''; 
 let routerMode = 'hash';
 let imgBaseUrl = '';
-let accessToken = 'c0RFeGNMcXBySDJkL2xmTjFSaUlTdjlNNlB0ZTV4MnlFVDZSV05KdWdFTUd1ZG83SHJ6WlJYNGo3TTJlS0svc2tsaEJMRVFKbEVvTG1ab1RsbHo5S2Z1ZElRT3dwT1FQeUl2K1hWWk44TWJtYUZmaDNVUlZQUWZqTVlZWlhIWHJ5QVFES2VCVno2bE5tZWJjbFp0WWltRTRkMjZJTVRnZUp2YTVGa3BxRnhvPQ==';
+let token = '';
 
 
 if (process.env.NODE_ENV == 'development') {
@@ -22,9 +22,15 @@ if (process.env.NODE_ENV == 'development') {
     imgBaseUrl = '//elm.cangdu.org/img/';
 }
 
+function setToken(accessToken) {
+	token = accessToken
+}
+
+
 export {
 	baseUrl,
 	routerMode,
 	imgBaseUrl,
-	accessToken
+	setToken,
+	token
 }

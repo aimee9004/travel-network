@@ -1,5 +1,5 @@
 import {
-	baseUrl, accessToken
+	baseUrl
 } from './env'
 
 export default async(url = '', data = {}, type = 'GET', method = 'fetch') => {
@@ -40,6 +40,11 @@ export default async(url = '', data = {}, type = 'GET', method = 'fetch') => {
 		try {
 			const response = await fetch(url, requestConfig);
 			const responseJson = await response.json();
+			// 判断登录过期 重新登录
+			if(responseJson.status === 403) {
+				android.toLogin(JSON.stringify(responseJson))
+				return
+			}
 			return responseJson
 		} catch (error) {
 			throw new Error(error)

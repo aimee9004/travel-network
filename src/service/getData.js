@@ -1,22 +1,21 @@
 import fetch from '../config/fetch'
 import {getStore} from '../config/mUtils'
 
-let accessToken = 'c0RFeGNMcXBySDJkL2xmTjFSaUlTdjlNNlB0ZTV4MnlFVDZSV05KdWdFTUd1ZG83SHJ6WlJYNGo3TTJlS0svc2tsaEJMRVFKbEVvTG1ab1RsbHo5S2Z1ZElRT3dwT1FQeUl2K1hWWk44TWJtYUZmaDNVUlZQUWZqTVlZWlhIWHJ5QVFES2VCVno2bE5tZWJjbFp0WWltRTRkMjZJTVRnZUp2YTVGa3BxRnhvPQ==';
-
 
 // test
 export const testjj = (platform, curVersion) => fetch('/api/appBase/checkAppVersion', { platform, curVersion }, 'POST');
 export const testjj2 = (parentId, sameLevel) => fetch('/api/appArticle/areaList', { parentId, sameLevel }, 'POST');
 
 // list-QC
-export const listQc = () => fetch('/api/exchange/assetParsList', { accessToken: accessToken }, 'POST');
+export const listQc = (token) => fetch('/api/exchange/assetParsList', { accessToken: token }, 'POST');
 
 // buy-sell 
-export const buySellList = (assetId, type) => fetch('/api/exchange/assetOrderDeepInfo', { accessToken: accessToken, assetId, type }, 'POST');
-export const currentOrder = (assetId, type) => fetch('api/exchange/myCurOrders', { accessToken: accessToken, assetId, type }, 'POST');
-export const dealOrder = (assetId, type) => fetch('api/exchange/myDealOrders', { accessToken: accessToken, assetId, type }, 'POST');
-export const addBuy = (assetId, price, amount) => fetch('api/exchange/addBuy', { accessToken: accessToken, assetId, price, amount }, 'POST');
-export const addSell = (assetId, price, amount) => fetch('api/exchange/addSell', { accessToken: accessToken, assetId, price, amount }, 'POST');
+export const buySellList = (token, assetId, type) => fetch('/api/exchange/assetOrderDeepInfo', { accessToken: token, assetId, type }, 'POST');
+export const currentOrder = (token, assetId, type) => fetch('api/exchange/myCurOrders', { accessToken: token, assetId, type }, 'POST');
+export const dealOrder = (token, assetId, type) => fetch('api/exchange/myDealOrders', { accessToken: token, assetId, type }, 'POST');
+export const addBuy = (token, assetId, price, amount) => fetch('api/exchange/addBuy', { accessToken: token, assetId, price, amount }, 'POST');
+export const addSell = (token, assetId, price, amount) => fetch('api/exchange/addSell', { accessToken: token, assetId, price, amount }, 'POST');
+export const assetCurInfo = (token, assetId) => fetch('api/exchange/assetCurInfo', { accessToken: token, assetId }, 'POST');
 
 /**
  * 账号密码登录

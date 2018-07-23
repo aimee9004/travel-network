@@ -4,7 +4,7 @@
 
         <van-collapse v-model="activeName" accordion>
             <van-collapse-item v-for="(item, index) in dataList" :key="index" :name="index" class="list-item">
-                <div slot="title" @click="goDetail(item)">
+                <div slot="title">
                     <van-row>
                         <van-col span="10">
                             <van-row type="flex" align="center">
@@ -31,7 +31,11 @@
                         </van-col>
                     </van-row>
                 </div>
-                <!-- 提供多样店铺模板，快速搭建网上商城 -->
+                <img src="@/assets/logo.png" alt="">
+                <div>
+                    <van-button type="danger" @click="goDetail(item)" class="red-btn">买入 BTC</van-button>
+                    <van-button type="primary" @click="goDetail(item)" class="green-btn">卖出 BTC</van-button>
+                </div>
             </van-collapse-item>
         </van-collapse>
 
@@ -61,6 +65,10 @@
         },
         created() {
             // this.goTest()
+            let token = this.$route.query.token
+            token = 'c0RFeGNMcXBySDJkL2xmTjFSaUlTdjlNNlB0ZTV4MnlYdnVJWnJJTG5BWkZqMUVGd2JmUlU2blJCZUdPeWpTWGtsaEJMRVFKbEVvTG1ab1RsbHo5S2Z1ZElRT3dwT1FQSGk4UnlXa0RNbDNUL05QUENsOE9vYVJtMWpXMFd6Uy9qTUxzTWR4YjN5anpyVU43akFDUkk0aURRQ0pWQ2hxb3A5ZnVnU05uZHo0PQ=='
+            this.GLOBAL.setToken(token)
+            console.log('token: ', this.GLOBAL.token)
             this.getList()
         },
         methods: {
@@ -70,7 +78,7 @@
                 let data2 = await testjj2(0, 0)
             },
             async getList() {
-                let data = await listQc()
+                let data = await listQc(this.GLOBAL.token)
                 if(data.status===200) {
                     this.dataList = data.data
                 }
@@ -81,9 +89,6 @@
                     name: 'buySell',
                     params: {
                         id: item.id
-                    },
-                    query: {
-                        price: parseFloat(item.QCPrice)
                     }
                 })
             }
