@@ -24,7 +24,7 @@
                     <p><span>委托价格</span><span class="speci3">QC 55.17</span></p>
                 </van-col>
                 <van-col class="second" span="11">
-                    <p><span>成交数量</span><span class="speci4">EOS 1159.65</span></p>
+                    <p><span>成交数量</span><span class="speci4">EOS {{parseFloat(item.amount)}}</span></p>
                     <p><span>成交价格</span><span class="speci4">QC 55.170</span></p>
                 </van-col>
                 <van-col class="third" span="3">06:26<br>16:17</van-col>
@@ -121,13 +121,12 @@
     }
 
     .bottom-tabs {
-        margin-bottom: 60px;
         &.van-row {
             height: 50px;
             font-size: 14px;
             line-height: 50px;
             border-top: 1px solid #ddd;
-            margin-bottom: 50px;
+            // margin-bottom: 50px;
             background-color: white;
             button {
                 border: none;
@@ -136,6 +135,69 @@
         .on {
             /deep/ .van-button__text {
                 color: red;
+            }
+        }
+    }
+    
+    .bottom-list {
+        margin: 10px;
+        margin-bottom: 50px;
+        .van-row {
+            font-size: 12px;
+            padding: 5px 10px;
+            text-align: left;
+            margin-bottom: 5px;
+            background-color: white;
+            border-bottom: 1px solid rgb(0, 159, 80);
+            .van-col {
+                >p {
+                    >span {
+                        color: rgb(183, 183, 183);
+                    }
+                }
+                .speci1 {
+                    // color: rgb(0, 159, 80);
+                    font-size: 16px;
+                    margin-right: 3px;
+                }
+                .speci2 {
+                    font-size: 15px;
+                    color: #333;
+                }
+                .speci3 {
+                    font-size: 14px;
+                    color: #333;
+                    margin-left: 3px;
+                }
+                .speci4 {
+                    font-size: 14px;
+                    // color: rgb(0, 159, 80);
+                    margin-left: 3px;
+                }
+                &.third {
+                    text-align: right;
+                    color: rgb(183, 183, 183);
+                }
+            }
+        }
+        &.buyClass {
+            .van-row {
+                border-bottom: 1px solid #f44;
+                .van-col {
+                    .speci1, .speci4 {
+                        color: #f44;
+                    }
+                }
+            }
+        }
+        &.sellClass {
+            .van-row {
+                border-bottom: 1px solid rgb(0, 159, 80);
+                .van-col {
+                    .speci1, .speci4 {
+                        color: rgb(0, 159, 80);
+                    }
+                }
             }
         }
     }
