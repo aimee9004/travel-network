@@ -1,21 +1,23 @@
 <template>
     <div class="footer">
         <van-tabbar v-model="active">
-            <van-tabbar-item icon="market">
+            <van-tabbar-item icon="market"
+                :to="{ name: 'listQc' }"
+            >
                 <span>行情</span>
                 <img
                     slot="icon"
                     slot-scope="props"
                     :src="props.active ? marketIcon.active : marketIcon.normal"
-                    :to="{ name: 'listQc' }"
                 >
             </van-tabbar-item>
-            <van-tabbar-item icon="cach">
+            <van-tabbar-item icon="cach"
+                :to="{ name: 'buySell', params: {id: firstAssetId} }"
+            >
                 <span>现货</span>
                 <img
                     slot="icon"
                     slot-scope="props"
-                    :to="{ name: 'buySell', params: firstAssetId }"
                     :src="props.active ? cachIcon.active : cachIcon.normal" alt="">
             </van-tabbar-item>
         </van-tabbar>

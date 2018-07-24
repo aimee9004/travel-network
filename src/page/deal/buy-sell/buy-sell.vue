@@ -1,6 +1,7 @@
 <template>
     <div class="buy-sell">
         <header-bar></header-bar>
+        <footer-bar></footer-bar>
 
         <van-tabs v-model="activeName" @click="activeClick">
             <van-tab title="买入">
@@ -27,12 +28,12 @@
                     <p><span>成交数量</span><span class="speci4">EOS {{parseFloat(item.deal_amount)}}</span></p>
                     <p><span>成交价格</span><span class="speci4">QC {{parseFloat(item.deal_price)}}</span></p>
                 </van-col>
-                <van-col v-if="orderType==='current'" class="third" span="3">{{item.created_time}}</van-col>
+                <van-col v-if="orderType==='current'" class="third" span="3">{{timeProcess(item.created_time)}}</van-col>
                 <van-col v-if="orderType==='deal'" class="third" span="3">{{timeProcess(item.deal_time)}}</van-col>
             </van-row>
         </div>
         
-        <!-- <footer-bar></footer-bar> -->
+        
     </div>
 </template>
 
@@ -67,26 +68,58 @@
         created() {
             this.token = localStorage.getItem('token')
             this.getCurrentList()
-            this.getList()
+            this.getList()    
+            this.getCircleList() 
+            setInterval(() => {
+                this.getCircleList()
+            }, 5000)  
+            
         },
         mounted() {
             
         },
         methods: {
-            async getList() {                
+            async getCircleList() {
+                
                 let buyList = await assetOrderDeepInfo(this.token, this.assetId, 'buy')
                 let sellList = await assetOrderDeepInfo(this.token, this.assetId, 'sell')
-                let curInfo = await assetCurInfo(this.token, this.assetId)
+
                 if(buyList.status === 200) {
                     this.deepData.buyList = buyList.data
+                    let list = this.deepData.buyList
+                    if(list.length <= 0) {
+                        return
+                    }
+                    let max = +(list[0].amount)
+                    if(list.length > 1) {
+                        for(let i = 1; i < list.length; i++) {
+                            if(max < +list[i].amount) {
+                                max = +list[i].amount
+                            }
+                        }
+                        this.deepData.buyMax = max
+                    }
                 }
                 if(sellList.status === 200) {
                     this.deepData.sellList = sellList.data
+                    let list = this.deepData.sellList
+                    let max = +(list[0].amount)
+                    if(list.length > 1) {
+                        for(let i = 1; i < list.length; i++) {
+                            if(max < +list[i].amount) {
+                                max = +list[i].amount
+                            }
+                        }
+                        this.deepData.sellMax = max
+                        console.log('====', this.deepData)
+                    }
                 }
+            },
+            async getList() {  
+                let curInfo = await assetCurInfo(this.token, this.assetId)
                 if(curInfo.status === 200) {
                     this.curInfo = curInfo.data
                 }
-                console.log(this.deepData, curInfo)
             },
 
             // 订单 当前 历史切换事件
@@ -125,10 +158,14 @@
                 this.getCurrentList()
             },
 
-            timeProcess(time) {
-                let date = new Date(time)
-                console.log('time date: ', date)
-                return date.getMonth()+1+'<br />'+date.getDay()
+            timeProcess(timestamp) {  
+                let date = new Date(timestamp * 1000);//时间戳为10位需*1000，时间戳为13位的话不需乘1000
+                let Y = date.getFullYear() + '-';
+                let M = (date.getMonth()+1 < 10 ? '0'+(date.getMonth()+1) : date.getMonth()+1) + '-';
+                let D = date.getDate() + ' ';
+                let h = date.getHours() + ':';
+                let m = date.getMinutes();
+                return M+D+'\n'+h+m;   
             }
         }
     }
@@ -137,7 +174,7 @@
 <style lang="scss" scoped>
     .buy-sell {
         .van-tabs {
-            margin-top: 46px;
+            margin-top: 90px;
             /deep/ .van-tabs__wrap {
                 width: 50%;
                 border-bottom: 1px solid #ddd;

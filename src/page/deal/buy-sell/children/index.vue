@@ -29,13 +29,13 @@
                         clearable
                         placeholder="委托数量"
                     >
-                        <span slot="button">ZB</span>
+                        <span slot="button">{{curInfo.symbol}}</span>
                     </van-field>
                 </van-cell-group>
                 <p class="sub-title clear">交易额 <span>{{parseFloat(trustPrice*trustNum)}} QC</span></p>
 
-                <van-button @click="goBuy" v-if='activeName===0' class="red-btn">买入 BTC</van-button>
-                <van-button @click="goSell" v-if='activeName===1' class="green-btn">卖出 BTC</van-button>
+                <van-button @click="goBuy" v-if='activeName===0' class="red-btn">买入 {{curInfo.symbol}}</van-button>
+                <van-button @click="goSell" v-if='activeName===1' class="green-btn">卖出 {{curInfo.symbol}}</van-button>
 
                 <van-cell-group class="marginTB10">
                     <van-field class="input-class" :class="{colorRed: activeName===0, colorGreen: activeName===1}"
@@ -63,7 +63,7 @@
                         <span class="span-first">{{index+1}}</span>{{parseFloat(item.price)}}
                     </van-col>
                     <van-col class="second" span="14">
-                        <span class="span-second" :style="{width: sellPercent(item.amount)+'%'}"></span>{{parseFloat(item.amount)}}
+                        <span class="span-second" :style="{width: parseFloat(item.amount/deepData.sellMax*100)+'%'}"></span>{{parseFloat(item.amount)}}
                     </van-col>
                 </van-row>
 
@@ -74,7 +74,7 @@
                         <span class="span-first">{{index+1}}</span>{{parseFloat(item.price)}}
                     </van-col>
                     <van-col class="second" span="14">
-                        <span class="span-second" :style="{width: (buyPercent(item.amount))+'%'}"></span>{{parseFloat(item.amount)}}
+                        <span class="span-second" :style="{width: parseFloat(item.amount/deepData.buyMax*100)+'%'}"></span>{{parseFloat(item.amount)}}
                     </van-col>
                 </van-row>
             </van-col>
@@ -89,7 +89,7 @@
     Vue.use(Row).use(Col).use(Field).use(CellGroup)
     .use(Button).use(Progress).use(Icon).use(Toast)
 
-    import { addBuy, addSell } from '@/service/getData'
+    import { addBuy, addSell, paymentLink } from '@/service/getData'
 
     export default {
         props: {
@@ -123,28 +123,7 @@
                 trustNum: '',
                 dealZb: '可买ZB',
                 dealQc: '可用QC',
-                assetId: this.$route.params.id,
-                sellPercent: function(amount) {
-                    let sum = 0
-                    if(this.deepData.sellList.length <= 0) {
-                        return 0
-                    }else {
-                        for(let i = 0; i < this.deepData.sellList.length; i++) {
-                            sum += +this.deepData.sellList[i].amount
-                        }
-                        return +amount/sum*100
-                    }
-                },
-                buyPercent: function(amount) {
-                    let sum = 0
-                    if(this.deepData.buyList.length <= 0) {
-                        return 0
-                    }
-                    for(let i = 0; i < this.deepData.buyList.length; i++) {
-                        sum += +this.deepData.buyList[i].amount
-                    }
-                    return +amount/sum*100
-                }
+                assetId: this.$route.params.id
             }
         },
         created() {
@@ -174,6 +153,7 @@
             },
             async getBuy() {
                 let data = await addBuy(this.token, this.assetId, this.trustPrice, this.trustNum)
+                Toast(data.message)
             },
 
             goSell() {
@@ -185,10 +165,15 @@
                     Toast('数量不能为空')
                     return
                 }
-                this.getSell
+                this.getSell()
             },
             async getSell() {
-                let data = await addSell(this.token, this.assetId, this.trustPrice, this.trustNum)
+                let data = await paymentLink(this.token, this.curInfo.asset2_uid, this.trustNum, `以${this.trustPrice}QC的价格卖出${this.trustNum}${this.symbol}`)
+                if(data.status === 200) {
+                    location.href = data.data
+                }else {
+                    Toast(data.message)
+                }
             }
         }   
     }

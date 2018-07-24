@@ -37,9 +37,8 @@
                     <img src="@/assets/linePic.png" alt="">
                     <div class="layer"><p>图表还在路上...</p></div>
                 </div>
-                <div>
-                    <van-button type="danger" @click="goDetail(item)" class="red-btn">买入 BTC</van-button>
-                    <van-button type="primary" @click="goDetail(item)" class="green-btn">卖出 BTC</van-button>
+                <div class="buy-sell-btn">
+                    <van-button type="primary" @click="goDetail(item)" class="red-btn">买入/卖出{{item.symbol}}</van-button>
                 </div>
             </van-collapse-item>
         </van-collapse>
@@ -70,9 +69,9 @@
             HeaderBar, FooterBar
         },
         created() {
-            // this.goTest()
+            this.goTest()
             this.token = this.$route.query.token
-            this.token = 'c0RFeGNMcXBySDJkL2xmTjFSaUlTdjlNNlB0ZTV4MnlxR2ErTTdnQ3pGL2tiWFVTZjd4U0RxblJCZUdPeWpTWGtsaEJMRVFKbEVvTG1ab1RsbHo5S2Z1ZElRT3dwT1FQTis1RnlMRENMWVRITUd3ZFdNODJUT3M2RXRzai83SjRrd3p1TUtQOW1iT3RWb3hRU1hDYW5Fa2crOG1yUzg0TFpkSk9uLy92ejk4PQ=='
+            // this.token = 'c0RFeGNMcXBySDJkL2xmTjFSaUlTdjlNNlB0ZTV4MnlmaFhyM0Q1OE5FN3NIMEVhMStMRGlLblJCZUdPeWpTWGtsaEJMRVFKbEVvTG1ab1RsbHo5S2Z1ZElRT3dwT1FQUVp4OWtmRWZxckpYeE5reE1IWllacXFZSWFQU256QUhRNnFwU0ZnOElhVG53MEZYdzlpbFZqL3dmSU5oZFlMVjZINHR6elllcEdVPQ=='
             localStorage.setItem('token', this.token)
             this.getList()
         },
@@ -87,6 +86,7 @@
                 if(data.status===200) {
                     this.dataList = data.data
                     this.firstAssetId = this.dataList[0].id
+                    console.log('firstAssetId: ', this.firstAssetId)
                 }
             },
             goDetail(item) {
@@ -160,7 +160,7 @@
                 }
                 .layer {
                     position: absolute;
-                    background: rgba(0, 0, 0, .5);
+                    background: rgba(255, 255, 255, .5);
                     width: 100%;
                     height: 100%;
                     z-index: 5;
@@ -181,6 +181,12 @@
                 &+.van-button {
                     margin-left: 30px;
                 }
+            }
+        }
+        .buy-sell-btn {
+            .van-button {
+                background-color: blue;
+                border: 1px solid blue;
             }
         }
     }
