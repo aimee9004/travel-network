@@ -7,6 +7,7 @@
                     slot="icon"
                     slot-scope="props"
                     :src="props.active ? marketIcon.active : marketIcon.normal"
+                    :to="{ name: 'listQc' }"
                 >
             </van-tabbar-item>
             <van-tabbar-item icon="cach">
@@ -14,6 +15,7 @@
                 <img
                     slot="icon"
                     slot-scope="props"
+                    :to="{ name: 'buySell', params: firstAssetId }"
                     :src="props.active ? cachIcon.active : cachIcon.normal" alt="">
             </van-tabbar-item>
         </van-tabbar>
@@ -26,6 +28,12 @@
     import { Tabbar, TabbarItem } from 'vant'
     Vue.use(Tabbar).use(TabbarItem)
     export default {
+        props: {
+            firstAssetId: {
+                type: String,
+                default: ''
+            }
+        },
         data() {
             return {
                 active: 0,

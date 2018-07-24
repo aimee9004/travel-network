@@ -1,7 +1,7 @@
 <template>
     <div>
         <header-bar></header-bar>
-        <footer-bar></footer-bar>
+        <footer-bar :firstAssetId="firstAssetId"></footer-bar>
 
         <van-collapse v-model="activeName" accordion>
             <van-collapse-item v-for="(item, index) in dataList" :key="index" :name="index" class="list-item">
@@ -62,7 +62,8 @@
             return {
                 token: '',
                 activeName: '',
-                dataList: []
+                dataList: [],
+                firstAssetId: '',       // 列表的第一条数据 id
             }
         },
         components: {
@@ -71,7 +72,7 @@
         created() {
             // this.goTest()
             this.token = this.$route.query.token
-            this.token = 'c0RFeGNMcXBySDJkL2xmTjFSaUlTdjlNNlB0ZTV4Mnl6Q3AzVFlMTi9jY0lvQWhYdUxqQ3lxblJCZUdPeWpTWGtsaEJMRVFKbEVvTG1ab1RsbHo5S2Z1ZElRT3dwT1FQQUFDb0tKWjVwYzZIcUVqdStDNWhLR3VkM1h4VHJIUmw1SUM5bkJDbTJYTi8rL0JlclBuaUFhQ2lyWDV0SmhsQ2dtOHJYUVNzcnJ3PQ=='
+            this.token = 'c0RFeGNMcXBySDJkL2xmTjFSaUlTdjlNNlB0ZTV4MnlxR2ErTTdnQ3pGL2tiWFVTZjd4U0RxblJCZUdPeWpTWGtsaEJMRVFKbEVvTG1ab1RsbHo5S2Z1ZElRT3dwT1FQTis1RnlMRENMWVRITUd3ZFdNODJUT3M2RXRzai83SjRrd3p1TUtQOW1iT3RWb3hRU1hDYW5Fa2crOG1yUzg0TFpkSk9uLy92ejk4PQ=='
             localStorage.setItem('token', this.token)
             this.getList()
         },
@@ -85,6 +86,7 @@
                 let data = await listQc(this.token)
                 if(data.status===200) {
                     this.dataList = data.data
+                    this.firstAssetId = this.dataList[0].id
                 }
             },
             goDetail(item) {

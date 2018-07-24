@@ -32,7 +32,7 @@
                         <span slot="button">ZB</span>
                     </van-field>
                 </van-cell-group>
-                <p class="sub-title clear">交易额 <span>0.00 QC</span></p>
+                <p class="sub-title clear">交易额 <span>{{parseFloat(trustPrice*trustNum)}} QC</span></p>
 
                 <van-button @click="goBuy" v-if='activeName===0' class="red-btn">买入 BTC</van-button>
                 <van-button @click="goSell" v-if='activeName===1' class="green-btn">卖出 BTC</van-button>
@@ -43,7 +43,7 @@
                         disabled
                         placeholder="可买ZB"
                     >
-                        <span slot="button">0</span>
+                        <span slot="button">{{parseFloat(curInfo.QCBalance/curInfo.QCPrice)}}</span>
                     </van-field>
                 </van-cell-group>
                 <van-cell-group>
@@ -52,7 +52,7 @@
                         disabled
                         placeholder="可用QC"
                     >
-                        <span slot="button">0</span>
+                        <span slot="button">{{curInfo.QCBalance}}</span>
                     </van-field>
                 </van-cell-group>
 
