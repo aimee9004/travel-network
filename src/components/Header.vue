@@ -1,12 +1,10 @@
 <template>
-    <div>
+    <div class="header">
         <van-nav-bar
-            title="标题"
+            title="QC"
             left-text="返回"
-            right-text="按钮"
             left-arrow
             @click-left="$router.go(-1)"
-            @click-right="onClickRight"
         />
     </div>
 </template>
@@ -21,23 +19,21 @@
 
             }
         },
-        methods: {   
-            onClickRight() {
-                
-                let dd = {
-                    "status":403,
-                    "message":"请先登录！",
-                    "data":""
-                }
-                // this.showLogin()
-                android.toLogin(JSON.stringify(dd))
-            },
+        methods: {  
 
-            showLogin() {
-                android.toLogin({a: '123'})
-            }
         }
     }
 </script>
+
+<style lang="scss" scoped>
+    .header {
+        /deep/ .van-nav-bar {
+            z-index: 5;
+            position: fixed;
+            top: 0;
+            width: 100%;
+        }
+    }
+</style>
 
 

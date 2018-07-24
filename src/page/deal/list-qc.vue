@@ -1,6 +1,7 @@
 <template>
     <div>
         <header-bar></header-bar>
+        <footer-bar></footer-bar>
 
         <van-collapse v-model="activeName" accordion>
             <van-collapse-item v-for="(item, index) in dataList" :key="index" :name="index" class="list-item">
@@ -20,18 +21,22 @@
                         </van-col>
                         <van-col span="14">
                             <van-row type="flex" align="center">
-                                <van-col span="16" class="align-r">
+                                <van-col span="16" class="align-r" :class="{'red-info': item.QCChange>=0, 'green-info': item.QCChange<0}">
                                     <h2>QC{{parseFloat(item.QCPrice)}}</h2>
                                     <p>¥{{parseFloat(item.HYDPrice)}}</p>
                                 </van-col>
                                 <van-col span="8" class="list-tip">
-                                    <van-button type="primary" size="small">{{item.QCChange}}</van-button>
+                                    <van-button v-if="item.QCChange<0" type="primary" size="small">{{item.QCChange}}%</van-button>
+                                    <van-button v-if="item.QCChange>=0" type="danger" size="small">{{item.QCChange}}%</van-button>
                                 </van-col>
                             </van-row>
                         </van-col>
                     </van-row>
                 </div>
-                <img src="@/assets/logo.png" alt="">
+                <div class="outer-layer">
+                    <img src="@/assets/linePic.png" alt="">
+                    <div class="layer"><p>图表还在路上...</p></div>
+                </div>
                 <div>
                     <van-button type="danger" @click="goDetail(item)" class="red-btn">买入 BTC</van-button>
                     <van-button type="primary" @click="goDetail(item)" class="green-btn">卖出 BTC</van-button>
@@ -39,7 +44,6 @@
             </van-collapse-item>
         </van-collapse>
 
-        <footer-bar></footer-bar>
     </div>
 </template>
 
@@ -56,6 +60,7 @@
     export default {
         data() {
             return {
+                token: '',
                 activeName: '',
                 dataList: []
             }
@@ -65,10 +70,9 @@
         },
         created() {
             // this.goTest()
-            let token = this.$route.query.token
-            token = 'c0RFeGNMcXBySDJkL2xmTjFSaUlTdjlNNlB0ZTV4MnlYdnVJWnJJTG5BWkZqMUVGd2JmUlU2blJCZUdPeWpTWGtsaEJMRVFKbEVvTG1ab1RsbHo5S2Z1ZElRT3dwT1FQSGk4UnlXa0RNbDNUL05QUENsOE9vYVJtMWpXMFd6Uy9qTUxzTWR4YjN5anpyVU43akFDUkk0aURRQ0pWQ2hxb3A5ZnVnU05uZHo0PQ=='
-            this.GLOBAL.setToken(token)
-            console.log('token: ', this.GLOBAL.token)
+            this.token = this.$route.query.token
+            this.token = 'c0RFeGNMcXBySDJkL2xmTjFSaUlTdjlNNlB0ZTV4Mnl6Q3AzVFlMTi9jY0lvQWhYdUxqQ3lxblJCZUdPeWpTWGtsaEJMRVFKbEVvTG1ab1RsbHo5S2Z1ZElRT3dwT1FQQUFDb0tKWjVwYzZIcUVqdStDNWhLR3VkM1h4VHJIUmw1SUM5bkJDbTJYTi8rL0JlclBuaUFhQ2lyWDV0SmhsQ2dtOHJYUVNzcnJ3PQ=='
+            localStorage.setItem('token', this.token)
             this.getList()
         },
         methods: {
@@ -78,7 +82,7 @@
                 let data2 = await testjj2(0, 0)
             },
             async getList() {
-                let data = await listQc(this.GLOBAL.token)
+                let data = await listQc(this.token)
                 if(data.status===200) {
                     this.dataList = data.data
                 }
@@ -97,6 +101,9 @@
 </script>
 
 <style lang="scss" scoped>
+    .van-collapse {
+        margin-top: 100px;
+    }
     .list-item {
         /deep/ .van-cell {
             padding: 10px;
@@ -106,10 +113,20 @@
                 font-size: 18px;
             }
             >h2 {
-                color: green;
+                // color: green;
             }
             >p {
                 font-size: 12px;
+            }
+            &.red-info {
+                >h2 {
+                    color: #f44;
+                }
+            }
+            &.green-info {
+                >h2 {
+                    color: green;
+                }
             }
         }
         /deep/ .van-cell__right-icon {
@@ -133,6 +150,36 @@
         }
         /deep/ .van-collapse-item__content {
             padding: 0;
+            .outer-layer {
+                position: relative;
+                >img {
+                    width: 100%;
+                    display: block;
+                }
+                .layer {
+                    position: absolute;
+                    background: rgba(0, 0, 0, .5);
+                    width: 100%;
+                    height: 100%;
+                    z-index: 5;
+                    top: 0;
+                    text-align: center;
+                    >p {
+                        transform: translateY(-50%);
+                        top: 50%;
+                        position: relative;
+                        font-size: 18px;
+                    }
+                }
+            }
+            .van-button {
+                height: 30px;
+                line-height: 28px;
+                margin-bottom: 20px;
+                &+.van-button {
+                    margin-left: 30px;
+                }
+            }
         }
     }
 </style>

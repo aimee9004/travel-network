@@ -63,7 +63,7 @@
                         <span class="span-first">{{index+1}}</span>{{parseFloat(item.price)}}
                     </van-col>
                     <van-col class="second" span="14">
-                        <span class="span-second" :style="{width: (sellPercent(item.amount))+'%'}"></span>{{parseFloat(item.amount)}}
+                        <span class="span-second" :style="{width: sellPercent(item.amount)+'%'}"></span>{{parseFloat(item.amount)}}
                     </van-col>
                 </van-row>
 
@@ -114,32 +114,41 @@
             }
         },
         computed: {
-            sellPercent(amount) {
-                let sum = 0
-                for(let i = 0; i < this.sellList.length; i++) {
-                    sum += this.sellList[i].amount
-                }
-                return amount/sum*100
-            },
-            buyPercent(amount) {
-                let sum = 0
-                for(let i = 0; i < this.buyList.length; i++) {
-                    sum += this.buyList[i].amount
-                }
-                return amount/sum*100
-            }
+            
         },
         data() {
             return {
+                token: '',
                 trustPrice: '',
                 trustNum: '',
                 dealZb: '可买ZB',
                 dealQc: '可用QC',
                 assetId: this.$route.params.id,
+                sellPercent: function(amount) {
+                    let sum = 0
+                    if(this.deepData.sellList.length <= 0) {
+                        return 0
+                    }else {
+                        for(let i = 0; i < this.deepData.sellList.length; i++) {
+                            sum += +this.deepData.sellList[i].amount
+                        }
+                        return +amount/sum*100
+                    }
+                },
+                buyPercent: function(amount) {
+                    let sum = 0
+                    if(this.deepData.buyList.length <= 0) {
+                        return 0
+                    }
+                    for(let i = 0; i < this.deepData.buyList.length; i++) {
+                        sum += +this.deepData.buyList[i].amount
+                    }
+                    return +amount/sum*100
+                }
             }
         },
         created() {
-            
+            this.token = localStorage.getItem('token')
         },
         methods: {
             async goBuy() {
@@ -164,7 +173,7 @@
                 this.getBuy()
             },
             async getBuy() {
-                let data = await addBuy(this.GLOBAL.token, this.assetId, this.trustPrice, this.trustNum)
+                let data = await addBuy(this.token, this.assetId, this.trustPrice, this.trustNum)
             },
 
             goSell() {
@@ -179,7 +188,7 @@
                 this.getSell
             },
             async getSell() {
-                let data = await addSell(this.GLOBAL.token, this.assetId, this.trustPrice, this.trustNum)
+                let data = await addSell(this.token, this.assetId, this.trustPrice, this.trustNum)
             }
         }   
     }

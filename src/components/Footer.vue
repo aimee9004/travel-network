@@ -1,23 +1,22 @@
 <template>
-    <div>
+    <div class="footer">
         <van-tabbar v-model="active">
-            <van-tabbar-item icon="shop">标签</van-tabbar-item>
-            <van-tabbar-item icon="chat" dot>标签</van-tabbar-item>
-            <van-tabbar-item icon="records" info="5">标签</van-tabbar-item>
-            <van-tabbar-item icon="gold-coin" info="20">标签</van-tabbar-item>
-        </van-tabbar>
-        <!-- <van-tabbar v-model="active">
-            <van-tabbar-item icon="shop">
-                <span>自定义</span>
+            <van-tabbar-item icon="market">
+                <span>行情</span>
                 <img
-                slot="icon"
-                slot-scope="props"
-                :src="props.active ? icon.active : icon.normal"
+                    slot="icon"
+                    slot-scope="props"
+                    :src="props.active ? marketIcon.active : marketIcon.normal"
                 >
             </van-tabbar-item>
-            <van-tabbar-item icon="chat">标签</van-tabbar-item>
-            <van-tabbar-item icon="records">标签</van-tabbar-item>
-        </van-tabbar> -->
+            <van-tabbar-item icon="cach">
+                <span>现货</span>
+                <img
+                    slot="icon"
+                    slot-scope="props"
+                    :src="props.active ? cachIcon.active : cachIcon.normal" alt="">
+            </van-tabbar-item>
+        </van-tabbar>
 
     </div>
 </template>
@@ -29,7 +28,15 @@
     export default {
         data() {
             return {
-                active: 0
+                active: 0,
+                marketIcon: {
+                    normal: require('@/assets/marketNo.png'),
+                    active: require('@/assets/marketSel.png')
+                },
+                cachIcon: {
+                    normal: require('@/assets/cachNo.png'),
+                    active: require('@/assets/cachSel.png')
+                }
             }
         },
         methods: {   
@@ -37,5 +44,13 @@
         }
     }
 </script>
+
+<style lang="scss" scoped>
+    .footer {
+        /deep/ .van-tabbar--fixed {
+            top: 46px;
+        }
+    }
+</style>
 
 

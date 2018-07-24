@@ -20,18 +20,19 @@
         <div class="bottom-list" :class="{buyClass: activeName===0, sellClass: activeName===1}">
             <van-row v-for="(item, index) in currentList" :key="index">
                 <van-col class="first" span="10">
-                    <p><span class="speci1">卖出</span><span class="speci2">EOS 1159.65</span></p>
-                    <p><span>委托价格</span><span class="speci3">QC 55.17</span></p>
+                    <p><span class="speci1">卖出</span><span class="speci2">EOS {{parseFloat(item.depute_amount)}}</span></p>
+                    <p><span>委托价格</span><span class="speci3">QC {{parseFloat(item.depute_price)}}</span></p>
                 </van-col>
                 <van-col class="second" span="11">
                     <p><span>成交数量</span><span class="speci4">EOS {{parseFloat(item.deal_amount)}}</span></p>
                     <p><span>成交价格</span><span class="speci4">QC {{parseFloat(item.deal_price)}}</span></p>
                 </van-col>
-                <van-col class="third" span="3">06:26<br>16:17</van-col>
+                <van-col v-if="orderType==='current'" class="third" span="3">{{item.created_time}}</van-col>
+                <van-col v-if="orderType==='deal'" class="third" span="3">{{timeProcess(item.deal_time)}}</van-col>
             </van-row>
         </div>
         
-        <footer-bar></footer-bar>
+        <!-- <footer-bar></footer-bar> -->
     </div>
 </template>
 
@@ -45,11 +46,12 @@
 
     import ChildrenIndex from './children/index'
 
-    import { buySellList, currentOrder, dealOrder, assetCurInfo } from '@/service/getData'
+    import { assetOrderDeepInfo, myCurOrders, myDealOrders, assetCurInfo } from '@/service/getData'
 
     export default {
         data() {
             return {
+                token: '',
                 activeName: 0,
                 buySellType: 'buy',
                 deepData: {},
@@ -63,13 +65,31 @@
             HeaderBar, FooterBar, ChildrenIndex
         },
         created() {
+            this.token = localStorage.getItem('token')
             this.getCurrentList()
-        },
-        mounted() {
             this.getList()
         },
+        mounted() {
+            
+        },
         methods: {
+            async getList() {                
+                let buyList = await assetOrderDeepInfo(this.token, this.assetId, 'buy')
+                let sellList = await assetOrderDeepInfo(this.token, this.assetId, 'sell')
+                let curInfo = await assetCurInfo(this.token, this.assetId)
+                if(buyList.status === 200) {
+                    this.deepData.buyList = buyList.data
+                }
+                if(sellList.status === 200) {
+                    this.deepData.sellList = sellList.data
+                }
+                if(curInfo.status === 200) {
+                    this.curInfo = curInfo.data
+                }
+                console.log(this.deepData, curInfo)
+            },
 
+            // 订单 当前 历史切换事件
             goOrderList(type) {
                 console.log(type)
                 this.orderType = type
@@ -79,6 +99,21 @@
                     this.getDealList()
                 }
             },
+
+            async getCurrentList() {
+                let data = await myCurOrders(this.token, this.assetId, this.buySellType)
+                if(data.status === 200) {
+                    this.currentList = data.data
+                }
+            },
+            async getDealList() {
+                let data = await myDealOrders(this.token, this.assetId, this.buySellType)
+                if(data.status === 200) {
+                    this.currentList = data.data
+                }
+            },
+            
+            // tabs 页签切换
             activeClick(index, title) {
                 this.activeName = index
                 this.orderType = 'current'
@@ -89,33 +124,12 @@
                 }
                 this.getCurrentList()
             },
-            async getList() {                
-                let buyList = await buySellList(this.GLOBAL.token, this.assetId, 'buy')
-                let sellList = await buySellList(this.GLOBAL.token, this.assetId, 'sell')
-                let curInfo = await assetCurInfo(this.GLOBAL.token, this.assetId)
-                if(buyList.status === 200) {
-                    this.deepData.buyList = buyList.data
-                }
-                if(sellList.status === 200) {
-                    this.deepData.sellList = sellList.data
-                }
-                if(curInfo.status === 200) {
-                    this.curInfo = curInfo.data
-                }
-                console.log(this.deepData)
-            },
-            async getCurrentList() {
-                let data = await currentOrder(this.GLOBAL.token, this.assetId, this.buySellType)
-                if(data.status === 200) {
-                    this.currentList = data.data
-                }
-            },
-            async getDealList() {
-                let data = await dealOrder(this.GLOBAL.token, this.assetId, this.buySellType)
-                if(data.status === 200) {
-                    this.currentList = data.data
-                }
-            },
+
+            timeProcess(time) {
+                let date = new Date(time)
+                console.log('time date: ', date)
+                return date.getMonth()+1+'<br />'+date.getDay()
+            }
         }
     }
 </script>
@@ -123,11 +137,12 @@
 <style lang="scss" scoped>
     .buy-sell {
         .van-tabs {
-            // margin-bottom: 50px;
-        }
-        /deep/ .van-tabs__wrap {
-            width: 50%;
-            border-bottom: 1px solid #ddd;
+            margin-top: 46px;
+            /deep/ .van-tabs__wrap {
+                width: 50%;
+                border-bottom: 1px solid #ddd;
+                z-index: 0;
+            }
         }
     }
 

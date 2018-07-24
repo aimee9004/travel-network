@@ -10,7 +10,6 @@
 let baseUrl = ''; 
 let routerMode = 'hash';
 let imgBaseUrl = '';
-let token = '';
 
 
 if (process.env.NODE_ENV == 'development') {
@@ -22,15 +21,11 @@ if (process.env.NODE_ENV == 'development') {
     imgBaseUrl = '//elm.cangdu.org/img/';
 }
 
-function setToken(accessToken) {
-	token = accessToken
-}
+
 
 
 export {
 	baseUrl,
 	routerMode,
-	imgBaseUrl,
-	setToken,
-	token
+	imgBaseUrl
 }
