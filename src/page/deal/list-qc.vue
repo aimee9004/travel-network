@@ -69,10 +69,13 @@
             HeaderBar, FooterBar
         },
         created() {
-            this.goTest()
+            // this.goTest()
             this.token = this.$route.query.token
-            // this.token = 'c0RFeGNMcXBySDJkL2xmTjFSaUlTdjlNNlB0ZTV4MnlmaFhyM0Q1OE5FN3NIMEVhMStMRGlLblJCZUdPeWpTWGtsaEJMRVFKbEVvTG1ab1RsbHo5S2Z1ZElRT3dwT1FQUVp4OWtmRWZxckpYeE5reE1IWllacXFZSWFQU256QUhRNnFwU0ZnOElhVG53MEZYdzlpbFZqL3dmSU5oZFlMVjZINHR6elllcEdVPQ=='
+            // alert('1:'+this.token)
+            let baseUrl = this.$route.query.apiUrl
+            this.token = 'c0RFeGNMcXBySDJkL2xmTjFSaUlTdjlNNlB0ZTV4MnlhMnZEa0xnUEdhTDV3YitNUDdhMEdLblJCZUdPeWpTWGtsaEJMRVFKbEVvTG1ab1RsbHo5S2Z1ZElRT3dwT1FQbnptd1dJMVNRdytncUVDSERIMjY0dUxIeVNlUm5xY1BPUUVENi9aTkwvRWcweVVlaWUva3dmME1Uc1cxbjFETVRxSkJWVit6QnFBPQ=='
             localStorage.setItem('token', this.token)
+            localStorage.setItem('apiUrl', baseUrl)
             this.getList()
         },
         methods: {

@@ -1,6 +1,7 @@
 import {
 	baseUrl
 } from './env'
+import { Toast } from 'vant'
 
 export default async(url = '', data = {}, type = 'GET', method = 'fetch') => {
 	type = type.toUpperCase();
@@ -42,6 +43,7 @@ export default async(url = '', data = {}, type = 'GET', method = 'fetch') => {
 			const responseJson = await response.json();
 			// 判断登录过期 重新登录
 			if(responseJson.status === 403) {
+				Toast(responseJson.message)
 				android.toLogin(JSON.stringify(responseJson))
 				return
 			}

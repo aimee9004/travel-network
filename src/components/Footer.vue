@@ -49,8 +49,16 @@
                 }
             }
         },
-        methods: {   
-            
+        mounted() {
+            let curName = this.$route.name
+            if(curName === 'buySell') {
+                this.active = 1
+            }else {
+                this.active = 0
+            }
+        },
+        methods: {    
+
         }
     }
 </script>

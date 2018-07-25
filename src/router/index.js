@@ -19,9 +19,6 @@ const BuySell = r => require.ensure([], () => r(require('@/page/deal/buy-sell/bu
 let myRoutes = [
   {
     path: '/',
-    redirect: '/qc-list'
-  }, {
-    path: '/qc-list',
     name: 'listQc',
     component: ListQc
   }, {
