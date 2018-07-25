@@ -168,7 +168,9 @@
                 this.getSell()
             },
             async getSell() {
-                let data = await paymentLink(this.token, this.curInfo.asset2_uid, this.trustNum, `以${this.trustPrice}QC的价格卖出${this.trustNum}${this.symbol}`)
+                let jsonStr = JSON.stringify({price: this.trustPrice})
+                let memo = `以${this.trustPrice}QC的价格卖出${this.trustNum}${this.symbol}`
+                let data = await paymentLink(this.token, this.curInfo.asset2_uid, this.trustNum, memo, jsonStr)
                 if(data.status === 200) {
                     location.href = data.data
                 }else {

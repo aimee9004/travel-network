@@ -1,7 +1,6 @@
 <template>
     <div>
         <header-bar></header-bar>
-        <footer-bar :firstAssetId="firstAssetId"></footer-bar>
 
         <van-collapse v-model="activeName" accordion>
             <van-collapse-item v-for="(item, index) in dataList" :key="index" :name="index" class="list-item">
@@ -42,6 +41,8 @@
                 </div>
             </van-collapse-item>
         </van-collapse>
+        
+        <footer-bar :firstAssetId="firstAssetId"></footer-bar>
 
     </div>
 </template>
@@ -69,9 +70,9 @@
             HeaderBar, FooterBar
         },
         created() {
-            this.goTest()
+            // this.goTest()
             this.token = this.$route.query.token
-            // this.token = 'c0RFeGNMcXBySDJkL2xmTjFSaUlTdjlNNlB0ZTV4MnlmaFhyM0Q1OE5FN3NIMEVhMStMRGlLblJCZUdPeWpTWGtsaEJMRVFKbEVvTG1ab1RsbHo5S2Z1ZElRT3dwT1FQUVp4OWtmRWZxckpYeE5reE1IWllacXFZSWFQU256QUhRNnFwU0ZnOElhVG53MEZYdzlpbFZqL3dmSU5oZFlMVjZINHR6elllcEdVPQ=='
+            this.token = 'c0RFeGNMcXBySDJkL2xmTjFSaUlTdjlNNlB0ZTV4Mnl1SjZUSEhpWmRVY2U4K3pUU3NoMUQ2blJCZUdPeWpTWGtsaEJMRVFKbEVvTG1ab1RsbHo5S2Z1ZElRT3dwT1FQYjNTNXlzeFFSMndXMkUrd3M1bk9oaGN6TCsxNTJUMTNJTGpuQzdQajFYM0VIVEMwSDRiMTF2bXdPUjhMOUlIVkovY0RUbGN6K2FnPQ=='
             localStorage.setItem('token', this.token)
             this.getList()
         },
@@ -104,7 +105,7 @@
 
 <style lang="scss" scoped>
     .van-collapse {
-        margin-top: 100px;
+        margin-top: 46px;
     }
     .list-item {
         /deep/ .van-cell {

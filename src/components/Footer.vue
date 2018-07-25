@@ -57,9 +57,9 @@
 
 <style lang="scss" scoped>
     .footer {
-        /deep/ .van-tabbar--fixed {
-            top: 46px;
-        }
+        // /deep/ .van-tabbar--fixed {
+        //     top: 46px;
+        // }
     }
 </style>
 

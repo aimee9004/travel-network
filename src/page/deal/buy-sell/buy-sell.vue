@@ -1,7 +1,6 @@
 <template>
     <div class="buy-sell">
         <header-bar></header-bar>
-        <footer-bar></footer-bar>
 
         <van-tabs v-model="activeName" @click="activeClick">
             <van-tab title="买入">
@@ -32,8 +31,8 @@
                 <van-col v-if="orderType==='deal'" class="third" span="3">{{timeProcess(item.deal_time)}}</van-col>
             </van-row>
         </div>
-        
-        
+                
+        <footer-bar></footer-bar>
     </div>
 </template>
 
@@ -67,6 +66,7 @@
         },
         created() {
             this.token = localStorage.getItem('token')
+            console.log('token: ', this.token)
             this.getCurrentList()
             this.getList()    
             this.getCircleList() 
@@ -103,6 +103,9 @@
                 if(sellList.status === 200) {
                     this.deepData.sellList = sellList.data
                     let list = this.deepData.sellList
+                    if(list.length <= 0) {
+                        return
+                    }   
                     let max = +(list[0].amount)
                     if(list.length > 1) {
                         for(let i = 1; i < list.length; i++) {
@@ -174,7 +177,7 @@
 <style lang="scss" scoped>
     .buy-sell {
         .van-tabs {
-            margin-top: 90px;
+            margin-top: 46px;
             /deep/ .van-tabs__wrap {
                 width: 50%;
                 border-bottom: 1px solid #ddd;
