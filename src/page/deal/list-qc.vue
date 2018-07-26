@@ -1,6 +1,6 @@
 <template>
     <div>
-        <header-bar></header-bar>
+        <header-bar :dataList="dataList"></header-bar>
 
         <van-collapse v-model="activeName" accordion>
             <van-collapse-item v-for="(item, index) in dataList" :key="index" :name="index" class="list-item">
