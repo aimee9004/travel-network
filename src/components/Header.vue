@@ -57,7 +57,7 @@
                 }
             },
             goSelect(item) {
-                // console.log(item)
+                console.log(item)
                 this.showSelType = false
                 this.currentType = item.symbol
                 this.$router.push({

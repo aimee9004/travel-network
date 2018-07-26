@@ -4,10 +4,10 @@
 
         <van-tabs v-model="activeName" @click="activeClick">
             <van-tab title="买入">
-                <children-index :activeName="activeName" :deepData="deepData" :curInfo="curInfo"></children-index>
+                <children-index :activeName="activeName" :deepData="deepData" :curInfo="curInfo" :percentageVal="percentageVal"></children-index>
             </van-tab>
             <van-tab title="卖出">
-                <children-index :activeName="activeName" :deepData="deepData" :curInfo="curInfo"></children-index>
+                <children-index :activeName="activeName" :deepData="deepData" :curInfo="curInfo" :percentageVal="percentageVal"></children-index>
             </van-tab>
             
         </van-tabs>
@@ -57,38 +57,44 @@
                 deepData: {},
                 curInfo: {},
                 currentList: [],
-                assetId: this.$route.params.id,
-                orderType: 'current'
+                assetId: '',
+                orderType: 'current',
+                percentageVal: 0
             }
         },
         components: {
             HeaderBar, FooterBar, ChildrenIndex
         },
         beforeRouteUpdate (to, from, next) {
-            // 在当前路由改变，但是该组件被复用时调用
-            // 举例来说，对于一个带有动态参数的路径 /foo/:id，在 /foo/1 和 /foo/2 之间跳转的时候，
-            // 由于会渲染同样的 Foo 组件，因此组件实例会被复用。而这个钩子就会在这个情况下被调用。
-            // 可以访问组件实例 `this`
-            console.log('to:', to)
+            this.assetId = to.params.id
             this.getCurrentList()
             this.getList()    
             this.getCircleList() 
+            next()
         },
         created() {
             this.token = localStorage.getItem('token')
+            this.assetId = this.$route.params.id
             // alert('2:'+this.token)
-            this.getCurrentList()
-            this.getList()    
-            this.getCircleList() 
-            // setInterval(() => {
-            //     this.getCircleList()
-            // }, 5000)  
+
+            this.loadProgress()          
             
         },
         mounted() {
             
         },
         methods: {
+            loadProgress(cb) {
+                this.$Progress.start()
+                this.getCurrentList()
+                this.getList()    
+                this.getCircleList() 
+                let timer = setInterval(() => {
+                    this.getCircleList()    
+                    this.$Progress.finish()
+                    this.$Progress.start()
+                }, 5000)  
+            },
             async getCircleList() {
                 
                 let buyList = await assetOrderDeepInfo(this.token, this.assetId, 'buy')

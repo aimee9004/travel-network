@@ -5,6 +5,7 @@ import { routerMode } from '../config/env'
 Vue.use(Router)
 
 const HelloWorld = r => require.ensure([], () => r(require('@/components/HelloWorld')), 'helloworld')
+const Demo = r => require.ensure([], () => r(require('@/page/demo/demo')), 'demo')
 
 /**
  * 交易模块
@@ -25,6 +26,10 @@ let myRoutes = [
     path: '/buy-sell/:id',
     name: 'buySell',
     component: BuySell
+  }, {
+    path: '/demo',
+    name: 'demo',
+    component: Demo
   }
 ]
 

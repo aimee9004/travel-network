@@ -72,7 +72,7 @@
         created() {
             // this.goTest()
             this.token = this.$route.query.token
-            // alert('1:'+this.token)
+            alert('token:'+this.token+'++++'+this.$route.path)
             let baseUrl = this.$route.query.apiUrl
             this.token = 'c0RFeGNMcXBySDJkL2xmTjFSaUlTdjlNNlB0ZTV4MnlhMnZEa0xnUEdhTDV3YitNUDdhMEdLblJCZUdPeWpTWGtsaEJMRVFKbEVvTG1ab1RsbHo5S2Z1ZElRT3dwT1FQbnptd1dJMVNRdytncUVDSERIMjY0dUxIeVNlUm5xY1BPUUVENi9aTkwvRWcweVVlaWUva3dmME1Uc1cxbjFETVRxSkJWVit6QnFBPQ=='
             localStorage.setItem('token', this.token)

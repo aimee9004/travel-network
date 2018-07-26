@@ -67,7 +67,8 @@
                     </van-col>
                 </van-row>
 
-                <van-progress :percentage="20" :show-pivot="false" color="#f44"></van-progress>
+                <!-- <vue-progress-bar></vue-progress-bar> -->
+                <van-progress :percentage="percentageVal" :show-pivot="false" color="#f44"></van-progress>
 
                 <van-row v-for="(item, index) in deepData.buyList " :key="'red'+index" class="red-list">
                     <van-col class="first" span="10">
@@ -100,10 +101,7 @@
             deepData: {
                 type: Object,
                 default: function() {
-                    return {
-                        // sellList: [],
-                        // buyList: [],
-                    }
+                    return {}
                 }
             },
             curInfo: {
@@ -111,6 +109,10 @@
                 default: function() {
                     return {}
                 }
+            },
+            percentageVal: {
+                type: Number,
+                default: 0
             }
         },
         computed: {
