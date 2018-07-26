@@ -101,8 +101,8 @@
                 type: Object,
                 default: function() {
                     return {
-                        sellList: [],
-                        buyList: [],
+                        // sellList: [],
+                        // buyList: [],
                     }
                 }
             },

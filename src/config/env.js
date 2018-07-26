@@ -14,11 +14,13 @@ let imgBaseUrl = '';
 
 if (process.env.NODE_ENV == 'development') {
 	imgBaseUrl = '/img/';
+	// baseUrl = localStorage.getItem('apiUrl')
 	// baseUrl = 'https://www.travel-network.xin/mixin-apis'
 
 }else if(process.env.NODE_ENV == 'production'){
-	baseUrl = '//elm.cangdu.org';
-    imgBaseUrl = '//elm.cangdu.org/img/';
+	// baseUrl = localStorage.getItem('apiUrl')
+	baseUrl = 'https://www.travel-network.xin/mixin-apis';
+    imgBaseUrl = '//https://www.travel-network.xin/mixin-apis/img/';
 }
 
 

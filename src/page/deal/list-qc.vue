@@ -72,8 +72,11 @@
         created() {
             // this.goTest()
             this.token = this.$route.query.token
-            this.token = 'c0RFeGNMcXBySDJkL2xmTjFSaUlTdjlNNlB0ZTV4Mnl1SjZUSEhpWmRVY2U4K3pUU3NoMUQ2blJCZUdPeWpTWGtsaEJMRVFKbEVvTG1ab1RsbHo5S2Z1ZElRT3dwT1FQYjNTNXlzeFFSMndXMkUrd3M1bk9oaGN6TCsxNTJUMTNJTGpuQzdQajFYM0VIVEMwSDRiMTF2bXdPUjhMOUlIVkovY0RUbGN6K2FnPQ=='
+            // alert('1:'+this.token)
+            let baseUrl = this.$route.query.apiUrl
+            this.token = 'c0RFeGNMcXBySDJkL2xmTjFSaUlTdjlNNlB0ZTV4MnlhMnZEa0xnUEdhTDV3YitNUDdhMEdLblJCZUdPeWpTWGtsaEJMRVFKbEVvTG1ab1RsbHo5S2Z1ZElRT3dwT1FQbnptd1dJMVNRdytncUVDSERIMjY0dUxIeVNlUm5xY1BPUUVENi9aTkwvRWcweVVlaWUva3dmME1Uc1cxbjFETVRxSkJWVit6QnFBPQ=='
             localStorage.setItem('token', this.token)
+            localStorage.setItem('apiUrl', baseUrl)
             this.getList()
         },
         methods: {

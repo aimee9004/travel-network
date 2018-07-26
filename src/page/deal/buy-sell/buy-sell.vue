@@ -66,7 +66,7 @@
         },
         created() {
             this.token = localStorage.getItem('token')
-            console.log('token: ', this.token)
+            // alert('2:'+this.token)
             this.getCurrentList()
             this.getList()    
             this.getCircleList() 
