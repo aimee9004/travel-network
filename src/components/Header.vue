@@ -19,6 +19,7 @@
                     </div>
                 </div>
             </div>
+            <van-icon @click="goShutDown" name="dianyuan" slot="right"></van-icon>
         </van-nav-bar>
     </div>
 </template>
@@ -43,6 +44,9 @@
             this.getList()
         },
         methods: { 
+            goShutDown() {
+                
+            },
             async getList() {
                 let data = await listQc(this.token)
                 if(data.status===200) {

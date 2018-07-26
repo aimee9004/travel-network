@@ -72,9 +72,14 @@
         created() {
             // this.goTest()
             this.token = this.$route.query.token
-            alert('token:'+this.token+'++++'+this.$route.path)
             let baseUrl = this.$route.query.apiUrl
-            this.token = 'c0RFeGNMcXBySDJkL2xmTjFSaUlTdjlNNlB0ZTV4MnlhMnZEa0xnUEdhTDV3YitNUDdhMEdLblJCZUdPeWpTWGtsaEJMRVFKbEVvTG1ab1RsbHo5S2Z1ZElRT3dwT1FQbnptd1dJMVNRdytncUVDSERIMjY0dUxIeVNlUm5xY1BPUUVENi9aTkwvRWcweVVlaWUva3dmME1Uc1cxbjFETVRxSkJWVit6QnFBPQ=='
+            if(!!this.token) {
+                this.token = localStorage.getItem('token')
+            }
+            if(!!baseUrl) {
+                baseUrl = localStorage.getItem('apiUrl')
+            }
+            // this.token = 'c0RFeGNMcXBySDJkL2xmTjFSaUlTdjlNNlB0ZTV4MnlEVG50WTVjYlpSWnpJS3RMTkE1OW9KTmdaRWdJN2ZkYmtsaEJMRVFKbEVvTG1ab1RsbHo5S2Z1ZElRT3dwT1FQamtDRi9XVTkxQWhiRTVyRUUzZ0pPNU9qSkVMbWNObXJJZjZnN1RMdThOUE5WZGJlMW00QW5EbEMxd1FyWUROck5ZTGMrbHAvNEVnPQ=='
             localStorage.setItem('token', this.token)
             localStorage.setItem('apiUrl', baseUrl)
             this.getList()
@@ -109,6 +114,7 @@
 <style lang="scss" scoped>
     .van-collapse {
         margin-top: 46px;
+        margin-bottom: 50px;
     }
     .list-item {
         /deep/ .van-cell {

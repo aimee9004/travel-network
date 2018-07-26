@@ -75,7 +75,6 @@
         created() {
             this.token = localStorage.getItem('token')
             this.assetId = this.$route.params.id
-            // alert('2:'+this.token)
 
             this.loadProgress()          
             

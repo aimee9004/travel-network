@@ -19,7 +19,7 @@ const BuySell = r => require.ensure([], () => r(require('@/page/deal/buy-sell/bu
 
 let myRoutes = [
   {
-    path: '/',
+    path: '/exchange',
     name: 'listQc',
     component: ListQc
   }, {
