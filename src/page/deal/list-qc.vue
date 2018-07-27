@@ -73,13 +73,18 @@
             // this.goTest()
             this.token = this.$route.query.token
             let baseUrl = this.$route.query.apiUrl
-            if(!!this.token) {
-                this.token = localStorage.getItem('token')
+            
+            if (process.env.NODE_ENV == 'development') {
+                this.token = 'c0RFeGNMcXBySDJkL2xmTjFSaUlTdjlNNlB0ZTV4MnlESnZEYzVJUDMweDZtdGVCWit4TDRaTmdaRWdJN2ZkYmtsaEJMRVFKbEVvTG1ab1RsbHo5S2Z1ZElRT3dwT1FQNjkxdEdTOExZdlE3NHlyc2ZkV0VxMkhWc0ZqMXRQMlhOd1lyaVJmSW1pQllCQ0YzcUUyRDdYUnM4cHc3SHREcTUveGJVR1FDMmhvPQ=='
+            }else if(process.env.NODE_ENV == 'production'){
+                if(!this.token) {
+                    this.token = localStorage.getItem('token')
+                }
+                if(!baseUrl) {
+                    baseUrl = localStorage.getItem('apiUrl')
+                }
             }
-            if(!!baseUrl) {
-                baseUrl = localStorage.getItem('apiUrl')
-            }
-            // this.token = 'c0RFeGNMcXBySDJkL2xmTjFSaUlTdjlNNlB0ZTV4MnlEVG50WTVjYlpSWnpJS3RMTkE1OW9KTmdaRWdJN2ZkYmtsaEJMRVFKbEVvTG1ab1RsbHo5S2Z1ZElRT3dwT1FQamtDRi9XVTkxQWhiRTVyRUUzZ0pPNU9qSkVMbWNObXJJZjZnN1RMdThOUE5WZGJlMW00QW5EbEMxd1FyWUROck5ZTGMrbHAvNEVnPQ=='
+            
             localStorage.setItem('token', this.token)
             localStorage.setItem('apiUrl', baseUrl)
             this.getList()
@@ -195,8 +200,9 @@
         }
         .buy-sell-btn {
             .van-button {
-                background-color: blue;
-                border: 1px solid blue;
+                background-color: #0057ff;
+                border: 1px solid #0057ff;
+                margin-top: 20px;
             }
         }
     }
