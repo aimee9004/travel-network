@@ -33,7 +33,7 @@
                     </van-row>
                 </div>
                 <div class="outer-layer">
-                    <img src="@/assets/linePic.png" alt="">
+                    <img src="../../assets/linePic.png" alt="">
                     <div class="layer"><p>图表还在路上...</p></div>
                 </div>
                 <div class="buy-sell-btn">
@@ -75,7 +75,7 @@
             let baseUrl = this.$route.query.apiUrl
             
             if (process.env.NODE_ENV == 'development') {
-                this.token = 'c0RFeGNMcXBySDJkL2xmTjFSaUlTdjlNNlB0ZTV4MnlESnZEYzVJUDMweDZtdGVCWit4TDRaTmdaRWdJN2ZkYmtsaEJMRVFKbEVvTG1ab1RsbHo5S2Z1ZElRT3dwT1FQNjkxdEdTOExZdlE3NHlyc2ZkV0VxMkhWc0ZqMXRQMlhOd1lyaVJmSW1pQllCQ0YzcUUyRDdYUnM4cHc3SHREcTUveGJVR1FDMmhvPQ=='
+                this.token = 'c0RFeGNMcXBySDJkL2xmTjFSaUlTdjlNNlB0ZTV4Mnk4UTNkQitIcnVVcFhjc0IxSFhMSEpkT3RHRzBTTUxDeWtsaEJMRVFKbEVvTG1ab1RsbHo5S2Z1ZElRT3dwT1FQbEFvVlJ4c0tpVHBEdXh5eXRabERqOXdob0ViRzhDS0ZTYVJYTlZadk9YVmVXTmtuK2NEWDdLQ1FBT1BXeGxFUDN6eW1Id0tZenNVPQ=='
             }else if(process.env.NODE_ENV == 'production'){
                 if(!this.token) {
                     this.token = localStorage.getItem('token')
@@ -178,7 +178,7 @@
                     background: rgba(255, 255, 255, .5);
                     width: 100%;
                     height: 100%;
-                    z-index: 5;
+                    z-index: 3;
                     top: 0;
                     text-align: center;
                     >p {

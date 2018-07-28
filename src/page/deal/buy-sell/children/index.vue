@@ -39,11 +39,10 @@
 
                 <van-cell-group class="marginTB10">
                     <van-field class="input-class" :class="{colorRed: activeName===0, colorGreen: activeName===1}"
-                        v-model="dealZb"
+                        :value="`可买${curInfo.symbol}`"
                         disabled
-                        placeholder="可买ZB"
                     >
-                        <span slot="button">{{parseFloat(curInfo.QCBalance/curInfo.QCPrice)}}</span>
+                        <span slot="button">{{parseFloat(curInfo.QCPrice)===0?'任意拿':parseFloat(curInfo.QCBalance/curInfo.QCPrice)}}</span>
                     </van-field>
                 </van-cell-group>
                 <van-cell-group>
