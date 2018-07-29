@@ -65,9 +65,12 @@
 
 <style lang="scss" scoped>
     .footer {
-        // /deep/ .van-tabbar--fixed {
-        //     top: 46px;
-        // }
+        .van-tabbar {
+            height: 1rem;
+        }
+        /deep/ .van-tabbar-item {
+            font-size: .22rem;
+        }
     }
 </style>
 

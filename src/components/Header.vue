@@ -2,7 +2,7 @@
     <div class="header">
         <van-nav-bar
             title="QC"
-            left-text="返回"
+            left-text=""
             left-arrow
             @click-left="$router.go(-1)"
         >
@@ -82,9 +82,16 @@
             position: fixed;
             top: 0;
             width: 100%;
+            height: .88rem;
+            line-height: .85rem;
         }
         /deep/ .van-nav-bar__title {
             max-width: 100%;
+            font-size: .36rem;
+        }
+        /deep/ .van-icon {
+            font-size: .4rem;
+            line-height: .88rem
         }
         .type-btn {
             display: inline-block;
@@ -100,23 +107,23 @@
             background: rgba(0,0,0,.5);
             .type-info {
                 background-color: white;
-                padding: 30px 20px;
+                padding: .55rem .3rem;
                 // white-space: normal;
                 // word-break: break-word;
                 // text-overflow: initial;
                 // text-align: left;    
                 display: flex;
                 flex-wrap: wrap;
-                justify-content: space-around;
+                justify-content: center;
                 >span {
                     display: inline-block;
-                    font-size: 14px;
+                    font-size: .24rem;
                     text-align: center;
                     margin: 0 15px;
                     >img {
                         display: block;
-                        width: 60px;
-                        height: 60px;
+                        width: 1rem;
+                        height: 1rem;
                         border-radius: 50%;
                     }
                 }

@@ -27,8 +27,8 @@
                     <p><span>成交数量</span><span class="speci4">EOS {{parseFloat(item.deal_amount)}}</span></p>
                     <p><span>成交价格</span><span class="speci4">QC {{parseFloat(item.deal_price)}}</span></p>
                 </van-col>
-                <van-col v-if="orderType==='current'" class="third" span="3">{{timeProcess(item.created_time)}}</van-col>
-                <van-col v-if="orderType==='deal'" class="third" span="3">{{timeProcess(item.deal_time)}}</van-col>
+                <van-col v-cloak v-if="orderType==='current'" class="third" span="3">{{timeProcess(item.created_time)}}</van-col>
+                <van-col v-cloak v-if="orderType==='deal'" class="third" span="3">{{timeProcess(item.deal_time)}}</van-col>
             </van-row>
         </div>
                 
@@ -192,20 +192,23 @@
 <style lang="scss" scoped>
     .buy-sell {
         .van-tabs {
-            margin-top: 46px;
+            margin-top: .88rem;
             /deep/ .van-tabs__wrap {
                 width: 50%;
                 border-bottom: 1px solid #ddd;
                 z-index: 0;
+            }
+            /deep/ .van-tab {
+                font-size: .32rem;
             }
         }
     }
 
     .bottom-tabs {
         &.van-row {
-            height: 50px;
+            height: 1rem;
             font-size: 14px;
-            line-height: 50px;
+            line-height: 1rem;
             border-top: 1px solid #ddd;
             // margin-bottom: 50px;
             background-color: white;
@@ -215,7 +218,7 @@
         }
         .on {
             /deep/ .van-button__text {
-                color: red;
+                color: #0057ff;
             }
         }
     }
@@ -224,7 +227,7 @@
         margin: 10px;
         margin-bottom: 50px;
         .van-row {
-            font-size: 12px;
+            font-size: .24rem;
             padding: 5px 10px;
             text-align: left;
             margin-bottom: 5px;
@@ -238,24 +241,29 @@
                 }
                 .speci1 {
                     // color: rgb(0, 159, 80);
-                    font-size: 16px;
+                    font-size: .34rem;
                     margin-right: 3px;
                 }
                 .speci2 {
-                    font-size: 15px;
+                    font-size: .32rem;
                     color: #333;
                 }
                 .speci3 {
-                    font-size: 14px;
+                    font-size: .3rem;
                     color: #333;
                     margin-left: 3px;
                 }
                 .speci4 {
-                    font-size: 14px;
+                    font-size: .3rem;
                     // color: rgb(0, 159, 80);
                     margin-left: 3px;
                 }
+                &.second {
+                    margin-top: .08rem;
+                }
                 &.third {
+                    font-size: .24rem;
+                    margin-top: .12rem;
                     text-align: right;
                     color: rgb(183, 183, 183);
                 }

@@ -32,17 +32,17 @@
                         <span slot="button">{{curInfo.symbol}}</span>
                     </van-field>
                 </van-cell-group>
-                <p class="sub-title clear">交易额 <span>{{parseFloat(trustPrice*trustNum)}} QC</span></p>
+                <p class="sub-title clear">交易额 <span>{{parseFloat(+trustPrice*+trustNum)}} QC</span></p>
 
-                <van-button @click="goBuy" v-if='activeName===0' class="red-btn">买入 {{curInfo.symbol}}</van-button>
-                <van-button @click="goSell" v-if='activeName===1' class="green-btn">卖出 {{curInfo.symbol}}</van-button>
+                <van-button @click="goBuy" type="danger" v-if='activeName===0'>买入 {{curInfo.symbol}}</van-button>
+                <van-button @click="goSell" type="primary" v-if='activeName===1'>卖出 {{curInfo.symbol}}</van-button>
 
                 <van-cell-group class="marginTB10">
                     <van-field class="input-class" :class="{colorRed: activeName===0, colorGreen: activeName===1}"
                         :value="`可买${curInfo.symbol}`"
                         disabled
                     >
-                        <span slot="button">{{parseFloat(curInfo.QCPrice)===0?'任意拿':parseFloat(curInfo.QCBalance/curInfo.QCPrice)}}</span>
+                        <span slot="button">{{parseFloat(curInfo.QCPrice)===0?'--':parseFloat(curInfo.QCBalance/curInfo.QCPrice)}}</span>
                     </van-field>
                 </van-cell-group>
                 <van-cell-group>
@@ -213,7 +213,8 @@
         right: 0;
         width: 50%;
         height: 44px;
-        font-size: 15px;
+        font-size: .32rem;
+        color: #9c9ea3;
         line-height: 44px;
         background-color: white;
         border-left: 1px solid #ddd;
@@ -234,11 +235,11 @@
     .middle-content {
         background-color: white;
         .title {
-            font-size: 20px;
+            font-size: .36rem;
             color: #f44;
         }
         .title-small {
-            font-size: 14px;
+            font-size: .28rem;
             margin-bottom: 10px;
             color: #f44;
         }
@@ -246,27 +247,17 @@
             padding: 10px;
             text-align: left;
             .sub-title {
-                font-size: 14px;
-                margin: 15px 0;
+                font-size: .24rem;
+                margin: .18rem 0;
                 >span {
                     float: right;
                     color: #f44;
                 }
             }
-            .van-button--default {
+            .van-button {
                 width: 100%;
-            }
-            .red-btn {
-                border: 1px solid #f44;
-                /deep/ .van-button__text {
-                    color: #f44;
-                }
-            }
-            .green-btn {
-                border: 1px solid rgb(0, 159, 80);
-                /deep/ .van-button__text {
-                    color: rgb(0, 159, 80);
-                }
+                height: .88rem;
+                line-height: .86rem
             }
         }
         .right-content {
@@ -293,18 +284,19 @@
                 }
             }
             .van-col {
-                font-size: 12px;
+                font-size: .24rem;
                 &.first {
                     padding-right: 5px;
                     text-align: left;
                     >span {
-                        width: 18px;
-                        height: 18px;
-                        line-height: 18px;
+                        width: .33rem;
+                        height: .33rem;
+                        line-height: .33rem;
                         color: white;
-                        margin-right: 5px;
+                        font-size: .22rem;
+                        margin-right: .2rem;
                         // background-color: rgb(135, 217, 189);
-                        border-radius: 5px;
+                        border-radius: 3px;
                         display: inline-block;
                         text-align: center;
                     }
@@ -318,7 +310,7 @@
                         // background-color: rgba(135, 217, 189, .5);
                         display: inline-block;
                         width: 100%;
-                        height: 18px;
+                        height: .33rem;
                         right: 0;
                         position: absolute;
                     }

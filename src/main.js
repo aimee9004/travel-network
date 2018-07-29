@@ -7,7 +7,7 @@ import router from './router'
 // import Vant from 'vant'
 import 'vant/lib/vant-css/index.css';
 import './style/iconfont.css';
-import './config/rem'
+// import './config/rem'
 import VueProgressBar from 'vue-progressbar'
 
 const options = {

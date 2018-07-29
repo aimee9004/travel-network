@@ -37,7 +37,7 @@
                     <div class="layer"><p>图表还在路上...</p></div>
                 </div>
                 <div class="buy-sell-btn">
-                    <van-button type="primary" @click="goDetail(item)" class="red-btn">买入/卖出{{item.symbol}}</van-button>
+                    <van-button type="primary" @click="goDetail(item)">买入/卖出{{item.symbol}}</van-button>
                 </div>
             </van-collapse-item>
         </van-collapse>
@@ -118,8 +118,8 @@
 
 <style lang="scss" scoped>
     .van-collapse {
-        margin-top: 46px;
-        margin-bottom: 50px;
+        margin-top: .88rem;
+        margin-bottom: 1rem;
     }
     .list-item {
         /deep/ .van-cell {
@@ -127,13 +127,14 @@
         }
         .van-col {
             >h1 {
-                font-size: 18px;
+                font-size: .32rem;
             }
             >h2 {
                 // color: green;
+                font-size: .32rem;
             }
             >p {
-                font-size: 12px;
+                font-size: .24rem;
             }
             &.red-info {
                 >h2 {
@@ -151,16 +152,17 @@
             margin-left: 0;
         }
         .list-tip {
-            margin-left: 5px;
-            /deep/ .van-button__text {
+            margin-left: .2rem;
+            .van-button {
                 color: white;
+                font-size: .28rem;
             }
         }
         .list-logo {
-            margin-right: 10px;
+            margin-right: .2rem;
             >img {
-                width: 40px;
-                height: 40px;
+                width: .7rem;
+                height: .7rem;
                 border-radius: 50%;
                 vertical-align: middle;
             }
@@ -185,14 +187,19 @@
                         transform: translateY(-50%);
                         top: 50%;
                         position: relative;
-                        font-size: 18px;
+                        font-size: .24rem;
                     }
                 }
             }
             .van-button {
-                height: 30px;
-                line-height: 28px;
                 margin-bottom: 20px;
+                font-size: .28rem;
+                line-height: .28rem;
+                height: .74rem;
+                width: 2.7rem;
+                background-color: #0057ff;
+                border: 1px solid #0057ff;
+                margin-top: 20px;
                 &+.van-button {
                     margin-left: 30px;
                 }
@@ -200,9 +207,6 @@
         }
         .buy-sell-btn {
             .van-button {
-                background-color: #0057ff;
-                border: 1px solid #0057ff;
-                margin-top: 20px;
             }
         }
     }
