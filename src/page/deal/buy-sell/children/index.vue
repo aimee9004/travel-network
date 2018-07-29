@@ -57,6 +57,9 @@
 
             </van-col>
             <van-col span="12" class="right-content">
+                <div style="font-size: .3rem;">
+                    <!-- {{deepData}} -->
+                </div>
                 <van-row v-for="(item, index) in deepData.sellList" :key="'green'+index" class="green-list">
                     <van-col class="first" span="10">
                         <span class="span-first">{{index+1}}</span>{{parseFloat(item.price)}}
@@ -100,7 +103,10 @@
             deepData: {
                 type: Object,
                 default: function() {
-                    return {}
+                    return {
+                        sellList: [],
+                        buyList: []
+                    }
                 }
             },
             curInfo: {

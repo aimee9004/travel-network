@@ -9,7 +9,7 @@
             <van-tab title="卖出">
                 <children-index :activeName="activeName" :deepData="deepData" :curInfo="curInfo" :percentageVal="percentageVal"></children-index>
             </van-tab>
-            
+
         </van-tabs>
 
         <van-row class="bottom-tabs">
@@ -31,7 +31,7 @@
                 <van-col v-cloak v-if="orderType==='deal'" class="third" span="3">{{timeProcess(item.deal_time)}}</van-col>
             </van-row>
         </div>
-                
+
         <footer-bar></footer-bar>
     </div>
 </template>
@@ -54,7 +54,10 @@
                 token: '',
                 activeName: 0,
                 buySellType: 'buy',
-                deepData: {},
+                deepData: {
+                    sellList: [],
+                    buyList: []
+                },
                 curInfo: {},
                 currentList: [],
                 assetId: '',
@@ -68,34 +71,35 @@
         beforeRouteUpdate (to, from, next) {
             this.assetId = to.params.id
             this.getCurrentList()
-            this.getList()    
-            this.getCircleList() 
+            this.getCurInfo()
+            this.getDeepList()
             next()
         },
         created() {
             this.token = localStorage.getItem('token')
             this.assetId = this.$route.params.id
 
-            this.loadProgress()          
-            
+            this.loadProgress()
+
         },
         mounted() {
-            
+
         },
         methods: {
             loadProgress(cb) {
                 this.$Progress.start()
                 this.getCurrentList()
-                this.getList()    
-                this.getCircleList() 
+                this.getCurInfo()
+                this.getDeepList()
                 let timer = setInterval(() => {
-                    this.getCircleList()    
+                    this.getCurInfo()
+                    this.getDeepList()
                     this.$Progress.finish()
                     this.$Progress.start()
-                }, 5000)  
+                }, 5000)
             },
-            async getCircleList() {
-                
+            async getDeepList() {
+
                 let buyList = await assetOrderDeepInfo(this.token, this.assetId, 'buy')
                 let sellList = await assetOrderDeepInfo(this.token, this.assetId, 'sell')
 
@@ -106,34 +110,20 @@
                         return
                     }
                     let max = +(list[0].amount)
-                    if(list.length > 1) {
-                        for(let i = 1; i < list.length; i++) {
-                            if(max < +list[i].amount) {
-                                max = +list[i].amount
-                            }
-                        }
-                        this.deepData.buyMax = max
-                    }
+                    this.deepData.buyMax = this.getMax(list, max)
+
                 }
                 if(sellList.status === 200) {
                     this.deepData.sellList = sellList.data
                     let list = this.deepData.sellList
                     if(list.length <= 0) {
                         return
-                    }   
-                    let max = +(list[0].amount)
-                    if(list.length > 1) {
-                        for(let i = 1; i < list.length; i++) {
-                            if(max < +list[i].amount) {
-                                max = +list[i].amount
-                            }
-                        }
-                        this.deepData.sellMax = max
-                        console.log('====', this.deepData)
                     }
+                    let max = +(list[0].amount)
+                    this.deepData.sellMax = this.getMax(list, max)
                 }
             },
-            async getList() {  
+            async getCurInfo() {
                 let curInfo = await assetCurInfo(this.token, this.assetId)
                 if(curInfo.status === 200) {
                     this.curInfo = curInfo.data
@@ -163,7 +153,7 @@
                     this.currentList = data.data
                 }
             },
-            
+
             // tabs 页签切换
             activeClick(index, title) {
                 this.activeName = index
@@ -176,14 +166,25 @@
                 this.getCurrentList()
             },
 
-            timeProcess(timestamp) {  
+            timeProcess(timestamp) {
                 let date = new Date(timestamp * 1000);//时间戳为10位需*1000，时间戳为13位的话不需乘1000
                 let Y = date.getFullYear() + '-';
                 let M = (date.getMonth()+1 < 10 ? '0'+(date.getMonth()+1) : date.getMonth()+1) + '-';
                 let D = date.getDate() + ' ';
                 let h = date.getHours() + ':';
                 let m = date.getMinutes();
-                return M+D+'\n'+h+m;   
+                return M+D+'\n'+h+m;
+            },
+            getMax(list, initMax) {
+                let max = initMax
+                if(list.length > 1) {
+                    for(let i = 1; i < list.length; i++) {
+                        if(max < +list[i].amount) {
+                            max = +list[i].amount
+                        }
+                    }
+                    return max
+                }
             }
         }
     }
@@ -222,7 +223,7 @@
             }
         }
     }
-    
+
     .bottom-list {
         margin: 10px;
         margin-bottom: 50px;
