@@ -11,8 +11,8 @@
         <van-row class="middle-content">
             <van-col span="12" class="left-content">
 
-                <h2 class="title">QC {{parseFloat(curInfo.QCPrice)}}</h2>
-                <p class="title-small">¥ {{parseFloat(curInfo.HYDPrice)}}</p>
+                <h2 v-cloak class="title">QC {{curInfo.QCPrice}}</h2>
+                <p class="title-small">¥ {{curInfo.HYDPrice}}</p>
                 <van-cell-group>
                     <van-field class="input-class"
                         v-model="trustPrice"
@@ -22,7 +22,7 @@
                         <span slot="button">QC</span>
                     </van-field>
                 </van-cell-group>
-                <p class="sub-title clear">折合CNY <span>¥ {{parseFloat(curInfo.HYDPrice)}}</span></p>
+                <p class="sub-title clear">折合CNY <span>¥ {{curInfo.HYDPrice}}</span></p>
                 <van-cell-group>
                     <van-field class="input-class"
                         v-model="trustNum"
@@ -38,11 +38,11 @@
                 <van-button @click="goSell" type="primary" v-if='activeName===1'>卖出 {{curInfo.symbol}}</van-button>
 
                 <van-cell-group class="marginTB10">
-                    <van-field class="input-class" :class="{colorRed: activeName===0, colorGreen: activeName===1}"
+                    <van-field v-if="!!curInfo.symbol" class="input-class" :class="{colorRed: activeName===0, colorGreen: activeName===1}"
                         :value="`可买${curInfo.symbol}`"
                         disabled
                     >
-                        <span slot="button">{{parseFloat(curInfo.QCPrice)===0?'--':parseFloat(curInfo.QCBalance/curInfo.QCPrice)}}</span>
+                        <span slot="button">{{curInfo.QCPrice===0?'--':parseFloat(curInfo.QCBalance/curInfo.QCPrice)}}</span>
                     </van-field>
                 </van-cell-group>
                 <van-cell-group>
@@ -177,7 +177,8 @@
                 let memo = `以${this.trustPrice}QC的价格卖出${this.trustNum}${this.symbol}`
                 let data = await paymentLink(this.token, this.curInfo.asset2_uid, this.trustNum, memo, jsonStr)
                 if(data.status === 200) {
-                    location.href = data.data
+                    // location.href = data.data
+                    window.open(data.data,"_blank");
                 }else {
                     Toast(data.message)
                 }

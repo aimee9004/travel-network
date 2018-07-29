@@ -87,7 +87,6 @@
         },
         methods: {
             loadProgress(cb) {
-                this.$Progress.start()
                 this.getCurrentList()
                 this.getCurInfo()
                 this.getDeepList()
@@ -100,8 +99,6 @@
                 let timer = setInterval(() => {
                     this.getCurInfo()
                     this.getDeepList()
-                    this.$Progress.finish()
-                    this.$Progress.start()
 
                     this.cycleLoadingBar()
 
@@ -135,7 +132,12 @@
             async getCurInfo() {
                 let curInfo = await assetCurInfo(this.token, this.assetId)
                 if(curInfo.status === 200) {
-                    this.curInfo = curInfo.data
+                    if(!!curInfo.data) {
+                        this.curInfo = curInfo.data
+                        console.log('curInfo: ', this.curInfo)
+                        this.curInfo.QCPrice = parseFloat(this.curInfo.QCPrice)
+                        this.curInfo.HYDPrice = parseFloat(this.curInfo.HYDPrice)
+                    }
                 }
             },
 

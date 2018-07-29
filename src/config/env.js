@@ -18,8 +18,8 @@ if (process.env.NODE_ENV == 'development') {
 	// baseUrl = 'https://www.travel-network.xin/mixin-apis'
 
 }else if(process.env.NODE_ENV == 'production'){
-	// baseUrl = localStorage.getItem('apiUrl')
-	baseUrl = 'https://www.travel-network.xin/mixin-apis';
+	baseUrl = localStorage.getItem('apiUrl')
+	// baseUrl = 'https://www.travel-network.xin/mixin-apis';
     imgBaseUrl = '//https://www.travel-network.xin/mixin-apis/img/';
 }
 

@@ -69,13 +69,18 @@
         components: {
             HeaderBar, FooterBar
         },
+        beforeRouteEnter(to, from, next) {
+            next(vm => {
+                vm.firstAssetId = from.params.id
+            })
+        },
         created() {
             // this.goTest()
             this.token = this.$route.query.token
             let baseUrl = this.$route.query.apiUrl
             
             if (process.env.NODE_ENV == 'development') {
-                this.token = 'c0RFeGNMcXBySDJkL2xmTjFSaUlTdjlNNlB0ZTV4Mnk4UTNkQitIcnVVcFhjc0IxSFhMSEpkT3RHRzBTTUxDeWtsaEJMRVFKbEVvTG1ab1RsbHo5S2Z1ZElRT3dwT1FQbEFvVlJ4c0tpVHBEdXh5eXRabERqOXdob0ViRzhDS0ZTYVJYTlZadk9YVmVXTmtuK2NEWDdLQ1FBT1BXeGxFUDN6eW1Id0tZenNVPQ=='
+                this.token = 'c0RFeGNMcXBySDJkL2xmTjFSaUlTdjlNNlB0ZTV4MnkzeXRGUnUrZ0tkY2liNlQ2RVA1VUV0T3RHRzBTTUxDeWtsaEJMRVFKbEVvTG1ab1RsbHo5S2Z1ZElRT3dwT1FQZUNLNXNDdlJNWXRXcGFJTlVuL0V5WUUxdDZDUUZEZ3hsVlZxTENLUnplTWJZc0cwVWM0cmM5YkNoeStlMHdnWUdUa1RHakpvNzhrPQ=='
             }else if(process.env.NODE_ENV == 'production'){
                 if(!this.token) {
                     this.token = localStorage.getItem('token')
@@ -99,8 +104,9 @@
                 let data = await listQc(this.token)
                 if(data.status===200) {
                     this.dataList = data.data
-                    this.firstAssetId = this.dataList[0].id
-                    console.log('firstAssetId: ', this.firstAssetId)
+                    if(!this.firstAssetId) {
+                        this.firstAssetId = this.dataList[0].id
+                    }
                 }
             },
             goDetail(item) {
@@ -111,6 +117,11 @@
                         id: item.id
                     }
                 })
+            }
+        },
+        watch: {
+            $route(from, to, next) {
+                console.log('from: ', from)
             }
         }
     }
