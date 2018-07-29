@@ -1,6 +1,6 @@
 <template>
     <div class="buy-sell">
-        <header-bar></header-bar>
+        <header-bar :headTitle="curInfo.symbol"></header-bar>
 
         <van-tabs v-model="activeName" @click="activeClick">
             <van-tab title="买入">
@@ -62,7 +62,7 @@
                 currentList: [],
                 assetId: '',
                 orderType: 'current',
-                percentageVal: 0
+                percentageVal: 0      
             }
         },
         components: {
@@ -91,11 +91,20 @@
                 this.getCurrentList()
                 this.getCurInfo()
                 this.getDeepList()
+
+                // loading progress
+                setTimeout(() => {
+                    this.cycleLoadingBar()
+                }, 300)
+
                 let timer = setInterval(() => {
                     this.getCurInfo()
                     this.getDeepList()
                     this.$Progress.finish()
                     this.$Progress.start()
+
+                    this.cycleLoadingBar()
+
                 }, 5000)
             },
             async getDeepList() {
@@ -185,6 +194,16 @@
                     }
                     return max
                 }
+            },
+            cycleLoadingBar() {
+                let timerIn = setInterval(() => {
+                    this.percentageVal++; 
+                    // console.log(this.percentageVal); 
+                    if (this.percentageVal == 100) { 
+                        this.percentageVal = 0
+                        clearInterval(timerIn); 
+                    } 
+                }, 50)
             }
         }
     }

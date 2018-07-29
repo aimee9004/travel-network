@@ -57,9 +57,6 @@
 
             </van-col>
             <van-col span="12" class="right-content">
-                <div style="font-size: .3rem;">
-                    <!-- {{deepData}} -->
-                </div>
                 <van-row v-for="(item, index) in deepData.sellList" :key="'green'+index" class="green-list">
                     <van-col class="first" span="10">
                         <span class="span-first">{{index+1}}</span>{{parseFloat(item.price)}}
@@ -69,8 +66,9 @@
                     </van-col>
                 </van-row>
 
-                <!-- <vue-progress-bar></vue-progress-bar> -->
-                <van-progress :percentage="percentageVal" :show-pivot="false" color="#f44"></van-progress>
+                <!-- <keep-alive> -->
+                    <van-progress v-if="percentageVal>0 && (deepData.sellList.length>0 || deepData.buyList.length>0)" :percentage="percentageVal" :show-pivot="false" color="#f44"></van-progress>
+                <!-- </keep-alive> -->
 
                 <van-row v-for="(item, index) in deepData.buyList " :key="'red'+index" class="red-list">
                     <van-col class="first" span="10">
@@ -189,6 +187,12 @@
 </script>
 
 <style lang="scss" scoped>
+    .fade-enter-active, .fade-leave-active {
+        transition: opacity .5s;
+    }
+    .fade-enter, .fade-leave-to /* .fade-leave-active below version 2.1.8 */ {
+        opacity: 0;
+    }
     .marginTB10 {
         margin: 10px 0;
     }
@@ -324,6 +328,7 @@
             }
             .van-progress {
                 margin: 10px 5px 10px 0;
+                height: 2px;
             }
         }
         .input-class {

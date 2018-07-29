@@ -8,9 +8,9 @@
         >
             <div slot="title"> 
                 <span class="type-btn" @click="goOpen">{{currentType}}
-                    <van-icon :name="showSelType===true?'xiaosanjiaoup':'xiaosanjiaodown'"></van-icon>
+                    <van-icon v-if="showHeadList" :name="showSelType===true?'xiaosanjiaoup':'xiaosanjiaodown'"></van-icon>
                 </span>    
-                <div class="type-layer" v-if="showSelType">
+                <div class="type-layer" v-if="showSelType && showHeadList">
                     <div class="type-info">
                         <span @click="goSelect(item)" v-for="(item, index) in dataList" :key="index">
                             <img :src="item.icon_url" alt="">
@@ -31,6 +31,16 @@
 
     import { listQc } from '@/service/getData'
     export default {
+        props: {
+            showHeadList: {
+                type: Boolean,
+                default: true
+            },
+            headTitle: {
+                type: String,
+                default: ''
+            }
+        },
         data() {
             return {
                 token: '',
@@ -45,7 +55,7 @@
         },
         methods: { 
             goShutDown() {
-                
+                android.close()
             },
             async getList() {
                 let data = await listQc(this.token)
@@ -70,6 +80,11 @@
                         id: item.id
                     }
                 })
+            }
+        },
+        watch: {
+            headTitle(val) {
+                this.currentType = val
             }
         }
     }
