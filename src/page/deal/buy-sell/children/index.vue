@@ -32,7 +32,7 @@
                         <span slot="button">{{curInfo.symbol}}</span>
                     </van-field>
                 </van-cell-group>
-                <p class="sub-title clear">交易额 <span>{{parseFloat(+trustPrice*+trustNum)}} QC</span></p>
+                <p class="sub-title clear">交易额 <span>{{getProperNum(+trustPrice*+trustNum)}} QC</span></p>
 
                 <van-button @click="goBuy" type="danger" v-if='activeName===0'>买入 {{curInfo.symbol}}</van-button>
                 <van-button @click="goSell" type="primary" v-if='activeName===1'>卖出 {{curInfo.symbol}}</van-button>
@@ -42,7 +42,7 @@
                         :value="`可买${curInfo.symbol}`"
                         disabled
                     >
-                        <span slot="button">{{curInfo.QCPrice===0?'--':parseFloat(curInfo.QCBalance/curInfo.QCPrice)}}</span>
+                        <span slot="button">{{curInfo.QCPrice===0?'--':getProperNum(curInfo.QCBalance/curInfo.QCPrice)}}</span>
                     </van-field>
                 </van-cell-group>
                 <van-cell-group>
@@ -51,7 +51,7 @@
                         disabled
                         placeholder="可用QC"
                     >
-                        <span slot="button">{{curInfo.QCBalance}}</span>
+                        <span slot="button">{{getProperNum(curInfo.QCBalance)}}</span>
                     </van-field>
                 </van-cell-group>
 
@@ -59,10 +59,10 @@
             <van-col span="12" class="right-content">
                 <van-row v-for="(item, index) in deepData.sellList" :key="'green'+index" class="green-list">
                     <van-col class="first" span="10">
-                        <span class="span-first">{{index+1}}</span>{{parseFloat(item.price)}}
+                        <span class="span-first">{{index+1}}</span>{{getProperNum(item.price)}}
                     </van-col>
                     <van-col class="second" span="14">
-                        <span class="span-second" :style="{width: parseFloat(item.amount/deepData.sellMax*100)+'%'}"></span>{{parseFloat(item.amount)}}
+                        <span class="span-second" :style="{width: getProperNum(item.amount/deepData.sellMax*100)+'%'}"></span>{{getProperNum(item.amount)}}
                     </van-col>
                 </van-row>
 
@@ -72,10 +72,10 @@
 
                 <van-row v-for="(item, index) in deepData.buyList " :key="'red'+index" class="red-list">
                     <van-col class="first" span="10">
-                        <span class="span-first">{{index+1}}</span>{{parseFloat(item.price)}}
+                        <span class="span-first">{{index+1}}</span>{{getProperNum(item.price)}}
                     </van-col>
                     <van-col class="second" span="14">
-                        <span class="span-second" :style="{width: parseFloat(item.amount/deepData.buyMax*100)+'%'}"></span>{{parseFloat(item.amount)}}
+                        <span class="span-second" :style="{width: getProperNum(item.amount/deepData.buyMax*100)+'%'}"></span>{{getProperNum(item.amount)}}
                     </van-col>
                 </van-row>
             </van-col>
@@ -91,6 +91,7 @@
     .use(Button).use(Progress).use(Icon).use(Toast)
 
     import { addBuy, addSell, paymentLink } from '@/service/getData'
+    import { getProperNum } from '@/config/mUtils'
 
     export default {
         props: {
@@ -128,7 +129,8 @@
                 trustNum: '',
                 dealZb: '可买ZB',
                 dealQc: '可用QC',
-                assetId: this.$route.params.id
+                assetId: this.$route.params.id,
+                getProperNum: getProperNum
             }
         },
         created() {

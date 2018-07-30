@@ -14,15 +14,15 @@
                                 </van-col>
                                 <van-col class="col1" span="17">
                                     <h1>{{item.symbol}}</h1>
-                                    <p>量：{{parseFloat(item.dealCount)}}</p>
+                                    <p>量：{{getProperNum(item.dealCount)}}</p>
                                 </van-col>
                             </van-row>
                         </van-col>
                         <van-col span="14">
                             <van-row type="flex" align="center">
                                 <van-col span="16" class="align-r" :class="{'red-info': item.QCChange>=0, 'green-info': item.QCChange<0}">
-                                    <h2>QC{{parseFloat(item.QCPrice)}}</h2>
-                                    <p>¥{{parseFloat(item.HYDPrice)}}</p>
+                                    <h2>QC{{getProperNum(item.QCPrice)}}</h2>
+                                    <p>¥{{getProperNum(item.HYDPrice)}}</p>
                                 </van-col>
                                 <van-col span="8" class="list-tip">
                                     <van-button v-if="item.QCChange<0" type="primary" size="small">{{item.QCChange}}%</van-button>
@@ -33,11 +33,12 @@
                     </van-row>
                 </div>
                 <div class="outer-layer">
-                    <img src="../../assets/linePic.png" alt="">
+                    <!-- <img src="../../assets/linePic.png" alt=""> -->
+                    <img :src="kChart" alt="">
                     <div class="layer"><p>图表还在路上...</p></div>
                 </div>
                 <div class="buy-sell-btn">
-                    <van-button type="primary" @click="goDetail(item)">买入/卖出{{item.symbol}}</van-button>
+                    <van-button type="default" plain @click="goDetail(item)">买入/卖出{{item.symbol}}</van-button>
                 </div>
             </van-collapse-item>
         </van-collapse>
@@ -56,6 +57,7 @@
     import FooterBar from '@/components/Footer'
 
     import { listQc, testjj, testjj2 } from '@/service/getData'
+    import { getProperNum } from '@/config/mUtils'
 
     export default {
         data() {
@@ -64,6 +66,8 @@
                 activeName: '',
                 dataList: [],
                 firstAssetId: '',       // 列表的第一条数据 id
+                kChart: require('../../assets/linePic.png'),
+                getProperNum: getProperNum
             }
         },
         components: {
@@ -79,7 +83,7 @@
             this.token = this.$route.query.token
             
             if (process.env.NODE_ENV == 'development') {
-                this.token = 'c0RFeGNMcXBySDJkL2xmTjFSaUlTdjlNNlB0ZTV4MnlsdUx1U0ZmOHBuYkhuK3Y3eFd0ZDM5T3RHRzBTTUxDeWtsaEJMRVFKbEVvTG1ab1RsbHo5S2Z1ZElRT3dwT1FQUTB6MFVFZFhJUDBUamFSZEdmUmwzc3A0Z2pjeFJQU2VNTFkyOXBkOXhrV3I3NlBUQ1d2ZitZdGtmSDZmTlVuQVJWcjVDOURzWnl3PQ=='
+                this.token = 'c0RFeGNMcXBySDJkL2xmTjFSaUlTdjlNNlB0ZTV4MnlCQmxSR3Fnc214T2pMTEhTS3VEaHJ0T3RHRzBTTUxDeWtsaEJMRVFKbEVvTG1ab1RsbHo5S2Z1ZElRT3dwT1FQQmNpbnc0cEkxdm14d3JLM0JqK25xZ0QyZlhwaE8zbkdMNjF5N2owd2hTVThRS25vK0tneTMzUzludmtFaGJwNkk2ZzRNUnA0cUxZPQ=='
             }else if(process.env.NODE_ENV == 'production'){
                 if(!this.token) {
                     this.token = localStorage.getItem('token')
@@ -112,11 +116,6 @@
                         id: item.id
                     }
                 })
-            }
-        },
-        watch: {
-            $route(from, to, next) {
-                console.log('from: ', from)
             }
         }
     }
@@ -203,8 +202,10 @@
                 line-height: .28rem;
                 height: .74rem;
                 width: 2.7rem;
-                background-color: #0057ff;
+                // background-color: #0057ff;
                 border: 1px solid #0057ff;
+                color: #0057ff;
+                border-radius: 5px;
                 margin-top: 20px;
                 &+.van-button {
                     margin-left: 30px;
