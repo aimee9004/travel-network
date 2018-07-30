@@ -80,15 +80,19 @@
                 </van-row>
             </van-col>
         </van-row>
+<!-- :close-on-click-overlay="false"  -->
+        <van-popup v-model="showPay" position="bottom"> 
+            <iframe :src="newPayUrl"></iframe>
+        </van-popup>
 
     </div>
 </template>
 
 <script>
     import Vue from 'vue'
-    import { Row, Col, Field, CellGroup, Button, Progress, Icon, Toast } from 'vant'
+    import { Row, Col, Field, CellGroup, Button, Progress, Icon, Toast, Popup } from 'vant'
     Vue.use(Row).use(Col).use(Field).use(CellGroup)
-    .use(Button).use(Progress).use(Icon).use(Toast)
+    .use(Button).use(Progress).use(Icon).use(Toast).use(Popup)
 
     import { addBuy, addSell, paymentLink } from '@/service/getData'
     import { getProperNum } from '@/config/mUtils'
@@ -130,7 +134,9 @@
                 dealZb: '可买ZB',
                 dealQc: '可用QC',
                 assetId: this.$route.params.id,
-                getProperNum: getProperNum
+                getProperNum: getProperNum,
+                showPay: false,
+                newPayUrl: ''
             }
         },
         created() {
@@ -138,7 +144,8 @@
         },
         methods: {
             async goBuy() {
-                let expPrice = /^([1-9][\d]{0,7}|0)(\.[\d]{1,2})?$/
+                let expPrice = /^[0-9]+([.]{1}[0-9]{1,6}){0,1}$/
+                
                 if(!this.trustPrice) {
                     Toast('价格不能为空')
                     return
@@ -148,6 +155,7 @@
                     return
                 }
                 let expNum = /^([1-9][0-9]*)$/
+                
                 if(!this.trustNum) {
                     Toast('数量不能为空')
                     return
@@ -160,27 +168,43 @@
             },
             async getBuy() {
                 let data = await addBuy(this.token, this.assetId, this.trustPrice, this.trustNum)
-                Toast(data.message)
+                if(data.message !== '') {
+                    Toast(data.message)
+                }
             },
 
             goSell() {
+                let expPrice = /^[0-9]+([.]{1}[0-9]{1,6}){0,1}$/
+                
                 if(!this.trustPrice) {
                     Toast('价格不能为空')
                     return
                 }
+                if(!expPrice.test(this.trustPrice)) {
+                    Toast('输入价格格式错误')
+                    return
+                }
+                let expNum = /^([1-9][0-9]*)$/
+                
                 if(!this.trustNum) {
                     Toast('数量不能为空')
+                    return
+                }
+                if(!expNum.test(this.trustNum)) {
+                    Toast('输入数量格式错误')
                     return
                 }
                 this.getSell()
             },
             async getSell() {
                 let jsonStr = JSON.stringify({price: this.trustPrice})
-                let memo = `以${this.trustPrice}QC的价格卖出${this.trustNum}${this.symbol}`
+                let memo = `以${this.trustPrice}QC的价格卖出${this.trustNum}${this.curInfo.symbol}`
                 let data = await paymentLink(this.token, this.curInfo.asset2_uid, this.trustNum, memo, jsonStr)
                 if(data.status === 200) {
-                    // location.href = data.data
-                    window.open(data.data,"_blank");
+                    this.newPayUrl = data.data
+                    this.showPay = true
+                    console.log('new pay url: ', this.newPayUrl)
+                    // window.open(data.data,"_blank");
                 }else {
                     Toast(data.message)
                 }
@@ -358,6 +382,14 @@
             /deep/ .van-button__text {
                 color: red;
             }
+        }
+    }
+    .van-popup--bottom {
+        height: 75%;
+        >iframe {
+            height: 100%;
+            border: none;
+            width: 100%;
         }
     }
 </style>

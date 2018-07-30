@@ -141,7 +141,7 @@
                 if(curInfo.status === 200) {
                     if(!!curInfo.data) {
                         this.curInfo = curInfo.data
-                        console.log('curInfo: ', this.curInfo)
+                        // console.log('curInfo: ', this.curInfo)
                         this.curInfo.QCPrice = this.getProperNum(this.curInfo.QCPrice)
                         this.curInfo.HYDPrice = this.getProperNum(this.curInfo.HYDPrice)
                     }

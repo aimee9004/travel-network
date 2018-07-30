@@ -35,7 +35,9 @@
                 <div class="outer-layer">
                     <!-- <img src="../../assets/linePic.png" alt=""> -->
                     <img :src="kChart" alt="">
-                    <div class="layer"><p>图表还在路上...</p></div>
+                    <div class="layer">
+                        <!-- <p>图表还在路上...</p> -->
+                    </div>
                 </div>
                 <div class="buy-sell-btn">
                     <van-button type="default" plain @click="goDetail(item)">买入/卖出{{item.symbol}}</van-button>
@@ -66,7 +68,7 @@
                 activeName: '',
                 dataList: [],
                 firstAssetId: '',       // 列表的第一条数据 id
-                kChart: require('../../assets/linePic.png'),
+                kChart: require('../../assets/linePic2.png'),
                 getProperNum: getProperNum
             }
         },
@@ -83,7 +85,7 @@
             this.token = this.$route.query.token
             
             if (process.env.NODE_ENV == 'development') {
-                this.token = 'c0RFeGNMcXBySDJkL2xmTjFSaUlTdjlNNlB0ZTV4MnlCQmxSR3Fnc214T2pMTEhTS3VEaHJ0T3RHRzBTTUxDeWtsaEJMRVFKbEVvTG1ab1RsbHo5S2Z1ZElRT3dwT1FQQmNpbnc0cEkxdm14d3JLM0JqK25xZ0QyZlhwaE8zbkdMNjF5N2owd2hTVThRS25vK0tneTMzUzludmtFaGJwNkk2ZzRNUnA0cUxZPQ=='
+                this.token = 'c0RFeGNMcXBySDJkL2xmTjFSaUlTdjlNNlB0ZTV4Mnk2WjMzWDhJWVN6SGJhM3FsR1BjQmROT3RHRzBTTUxDeWtsaEJMRVFKbEVvTG1ab1RsbHo5S2Z1ZElRT3dwT1FQYTJ4Mkh1Y2RxUGMvQmk1Z0dEelljZ0h4S1pCMndKdXBWaGIxWDBnc3RkU2plN1hUSnRKQnQ1bzdwVm9iNWVzUm5SQTVBUnVnZnVrPQ=='
             }else if(process.env.NODE_ENV == 'production'){
                 if(!this.token) {
                     this.token = localStorage.getItem('token')
@@ -182,7 +184,7 @@
                 }
                 .layer {
                     position: absolute;
-                    background: rgba(255, 255, 255, .5);
+                    // background: rgba(255, 255, 255, .5);
                     width: 100%;
                     height: 100%;
                     z-index: 3;
