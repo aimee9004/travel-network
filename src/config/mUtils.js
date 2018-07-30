@@ -1,3 +1,17 @@
+
+/**
+ * 获取 URL 参数
+ */
+export const getUrlParam = (name) => {
+    var reg = new RegExp("(^|&)"+name+"=([^&]*)(&|$)"); 
+    var r =  window.location.search.substr(1).match(reg);
+    var strValue = "";
+    if (r!=null){
+        strValue= unescape(r[2]);
+    }
+    return strValue;
+}
+
 /**
  * 存储localStorage
  */

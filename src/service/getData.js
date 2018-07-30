@@ -11,6 +11,9 @@ if (process.env.NODE_ENV == 'development') {
 export const testjj = (platform, curVersion) => fetch(envBaseUrl+'/appBase/checkAppVersion', { platform, curVersion }, 'POST');
 export const testjj2 = (parentId, sameLevel) => fetch(envBaseUrl+'/appArticle/areaList', { parentId, sameLevel }, 'POST');
 
+// debug to server
+export const debugReport = (act, pars, returnData, otherData) => fetch(envBaseUrl+'/appBase/debugReport', { act, pars, returnData, otherData }, 'POST');
+
 // list-QC
 export const listQc = (token) => fetch(envBaseUrl+'/exchange/assetParsList', { accessToken: token }, 'POST');
 

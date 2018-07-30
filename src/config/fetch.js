@@ -1,6 +1,8 @@
 import { baseUrl } from './env'
 import { Toast } from 'vant'
 
+import { debugReport } from '@/service/getData'
+
 export default async(url = '', data = {}, type = 'GET', method = 'fetch') => {
 	type = type.toUpperCase();
 	url = baseUrl + url;
@@ -37,6 +39,7 @@ export default async(url = '', data = {}, type = 'GET', method = 'fetch') => {
 		}
 		
 		try {
+			let statusCodes = [400, 401, 402, 403, 404, 405, 406, 407, 408, 409, 410, 411, 412, 413, 414, 415, 416, 417, 418, 421, 422, 423, 424, 425, 426, 449, 451]
 			const response = await fetch(url, requestConfig);
 			const responseJson = await response.json();
 			// 判断登录过期 重新登录
@@ -44,6 +47,9 @@ export default async(url = '', data = {}, type = 'GET', method = 'fetch') => {
 				Toast(responseJson.message)
 				android.toLogin(JSON.stringify(responseJson))
 				return
+			}
+			if(statusCodes.indexOf(responseJson.status) !== -1 || !responseJson.status) {
+				let debugInfo = await debugReport(url, data, responseJson)
 			}
 			return responseJson
 		} catch (error) {

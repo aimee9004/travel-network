@@ -77,21 +77,16 @@
         created() {
             // this.goTest()
             this.token = this.$route.query.token
-            let baseUrl = this.$route.query.apiUrl
             
             if (process.env.NODE_ENV == 'development') {
-                this.token = 'c0RFeGNMcXBySDJkL2xmTjFSaUlTdjlNNlB0ZTV4MnkzeXRGUnUrZ0tkY2liNlQ2RVA1VUV0T3RHRzBTTUxDeWtsaEJMRVFKbEVvTG1ab1RsbHo5S2Z1ZElRT3dwT1FQZUNLNXNDdlJNWXRXcGFJTlVuL0V5WUUxdDZDUUZEZ3hsVlZxTENLUnplTWJZc0cwVWM0cmM5YkNoeStlMHdnWUdUa1RHakpvNzhrPQ=='
+                this.token = 'c0RFeGNMcXBySDJkL2xmTjFSaUlTdjlNNlB0ZTV4MnlsdUx1U0ZmOHBuYkhuK3Y3eFd0ZDM5T3RHRzBTTUxDeWtsaEJMRVFKbEVvTG1ab1RsbHo5S2Z1ZElRT3dwT1FQUTB6MFVFZFhJUDBUamFSZEdmUmwzc3A0Z2pjeFJQU2VNTFkyOXBkOXhrV3I3NlBUQ1d2ZitZdGtmSDZmTlVuQVJWcjVDOURzWnl3PQ=='
             }else if(process.env.NODE_ENV == 'production'){
                 if(!this.token) {
                     this.token = localStorage.getItem('token')
                 }
-                if(!baseUrl) {
-                    baseUrl = localStorage.getItem('apiUrl')
-                }
             }
             
             localStorage.setItem('token', this.token)
-            localStorage.setItem('apiUrl', baseUrl)
             this.getList()
         },
         methods: {
