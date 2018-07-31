@@ -38,8 +38,14 @@
                 <van-button @click="goSell" type="primary" v-if='activeName===1'>卖出 {{curInfo.symbol}}</van-button>
 
                 <van-cell-group class="marginTB10">
-                    <van-field v-if="!!curInfo.symbol" class="input-class" :class="{colorRed: activeName===0, colorGreen: activeName===1}"
+                    <van-field v-if="!!curInfo.symbol && activeName===0" class="input-class colorRed"
                         :value="`可买${curInfo.symbol}`"
+                        disabled
+                    >
+                        <span slot="button">{{curInfo.QCPrice===0?'--':parseFloat(curInfo.QCBalance/curInfo.QCPrice)}}</span>
+                    </van-field>
+                    <van-field v-if="!!curInfo.symbol && activeName===1" class="input-class colorGreen"
+                        :value="`可卖${curInfo.symbol}`"
                         disabled
                     >
                         <span slot="button">{{curInfo.QCPrice===0?'--':parseFloat(curInfo.QCBalance/curInfo.QCPrice)}}</span>
@@ -126,7 +132,7 @@
                 token: '',
                 trustPrice: '',
                 trustNum: '',
-                dealZb: '可买ZB',
+                dealZb: '',
                 dealQc: '可用QC',
                 assetId: this.$route.params.id
             }
@@ -183,7 +189,7 @@
                     Toast(data.message)
                 }
             }
-        }   
+        }
     }
 </script>
 
