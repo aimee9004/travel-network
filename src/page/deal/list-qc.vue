@@ -20,13 +20,13 @@
                         </van-col>
                         <van-col span="14">
                             <van-row type="flex" align="center">
-                                <van-col span="16" class="align-r" :class="{'red-info': item.QCChange>=0, 'green-info': item.QCChange<0}">
+                                <van-col span="16" class="align-r" :class="{'red-info': item.QCChange<0, 'green-info': item.QCChange>=0}">
                                     <h2>QC{{getProperNum(item.QCPrice)}}</h2>
                                     <p>¥{{getProperNum(item.HYDPrice)}}</p>
                                 </van-col>
                                 <van-col span="8" class="list-tip">
-                                    <van-button v-if="item.QCChange<0" type="primary" size="small">{{item.QCChange}}%</van-button>
-                                    <van-button v-if="item.QCChange>=0" type="danger" size="small">{{item.QCChange}}%</van-button>
+                                    <van-button :type="item.QCChange>=0?'primary':'danger'" size="small">{{item.QCChange}}%</van-button>
+                                    <!-- <van-button v-if="item.QCChange>=0" type="danger" size="small">{{item.QCChange}}%</van-button> -->
                                 </van-col>
                             </van-row>
                         </van-col>
@@ -81,11 +81,12 @@
             })
         },
         created() {
+            this.$toast.loading({mask: true, message: '加载中...', duration: 0})
             // this.goTest()
             this.token = this.$route.query.token
             
             if (process.env.NODE_ENV == 'development') {
-                this.token = 'c0RFeGNMcXBySDJkL2xmTjFSaUlTdjlNNlB0ZTV4Mnk2WjMzWDhJWVN6SGJhM3FsR1BjQmROT3RHRzBTTUxDeWtsaEJMRVFKbEVvTG1ab1RsbHo5S2Z1ZElRT3dwT1FQYTJ4Mkh1Y2RxUGMvQmk1Z0dEelljZ0h4S1pCMndKdXBWaGIxWDBnc3RkU2plN1hUSnRKQnQ1bzdwVm9iNWVzUm5SQTVBUnVnZnVrPQ=='
+                this.token = 'c0RFeGNMcXBySDJkL2xmTjFSaUlTdjlNNlB0ZTV4MnlEZ1VJcGhJNVFvUGpWSXhHZkUrbVY5T3RHRzBTTUxDeWtsaEJMRVFKbEVvTG1ab1RsbHo5S2Z1ZElRT3dwT1FQdUt5U1hCbDVsSGJoa1JSNUVvSHJiL0ZrQUFrWEZpVW5KVm56d3pFWHBUZWJTMTRZV3hvQUJjTTdVM2U1c0FyeU5sUEJTVjV1cEswPQ=='
             }else if(process.env.NODE_ENV == 'production'){
                 if(!this.token) {
                     this.token = localStorage.getItem('token')
@@ -104,6 +105,7 @@
             async getList() {
                 let data = await listQc(this.token)
                 if(data.status===200) {
+                    this.$toast.clear()
                     this.dataList = data.data
                     if(!this.firstAssetId) {
                         this.firstAssetId = this.dataList[0].id
