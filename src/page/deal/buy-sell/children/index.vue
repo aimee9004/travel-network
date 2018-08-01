@@ -32,7 +32,7 @@
                         <span slot="button">{{curInfo.symbol}}</span>
                     </van-field>
                 </van-cell-group>
-                <p class="sub-title clear">交易额 <span>{{parseFloat(+trustPrice*+trustNum)}} QC</span></p>
+                <p class="sub-title clear">交易额 <span>{{getProperNum(+trustPrice*+trustNum)}} QC</span></p>
 
                 <van-button @click="goBuy" type="danger" v-if='activeName===0'>买入 {{curInfo.symbol}}</van-button>
                 <van-button @click="goSell" type="primary" v-if='activeName===1'>卖出 {{curInfo.symbol}}</van-button>
@@ -42,7 +42,7 @@
                         :value="`可买${curInfo.symbol}`"
                         disabled
                     >
-                        <span slot="button">{{curInfo.QCPrice===0?'--':parseFloat(curInfo.QCBalance/curInfo.QCPrice)}}</span>
+                        <span slot="button">{{curInfo.QCPrice===0?'--':getProperNum(curInfo.QCBalance/curInfo.QCPrice)}}</span>
                     </van-field>
                     <van-field v-if="!!curInfo.symbol && activeName===1" class="input-class colorGreen"
                         :value="`可卖${curInfo.symbol}`"
@@ -57,7 +57,7 @@
                         disabled
                         placeholder="可用QC"
                     >
-                        <span slot="button">{{curInfo.QCBalance}}</span>
+                        <span slot="button">{{getProperNum(curInfo.QCBalance)}}</span>
                     </van-field>
                 </van-cell-group>
 
@@ -65,10 +65,10 @@
             <van-col span="12" class="right-content">
                 <van-row v-for="(item, index) in deepData.sellList" :key="'green'+index" class="green-list">
                     <van-col class="first" span="10">
-                        <span class="span-first">{{index+1}}</span>{{parseFloat(item.price)}}
+                        <span class="span-first">{{index+1}}</span>{{getProperNum(item.price)}}
                     </van-col>
                     <van-col class="second" span="14">
-                        <span class="span-second" :style="{width: parseFloat(item.amount/deepData.sellMax*100)+'%'}"></span>{{parseFloat(item.amount)}}
+                        <span class="span-second" :style="{width: getProperNum(item.amount/deepData.sellMax*100)+'%'}"></span>{{getProperNum(item.amount)}}
                     </van-col>
                 </van-row>
 
@@ -78,25 +78,32 @@
 
                 <van-row v-for="(item, index) in deepData.buyList " :key="'red'+index" class="red-list">
                     <van-col class="first" span="10">
-                        <span class="span-first">{{index+1}}</span>{{parseFloat(item.price)}}
+                        <span class="span-first">{{index+1}}</span>{{getProperNum(item.price)}}
                     </van-col>
                     <van-col class="second" span="14">
-                        <span class="span-second" :style="{width: parseFloat(item.amount/deepData.buyMax*100)+'%'}"></span>{{parseFloat(item.amount)}}
+                        <span class="span-second" :style="{width: getProperNum(item.amount/deepData.buyMax*100)+'%'}"></span>{{getProperNum(item.amount)}}
                     </van-col>
                 </van-row>
             </van-col>
         </van-row>
+<!-- :close-on-click-overlay="false"  -->
+        <van-popup v-model="showPay" position="bottom"> 
+            <van-icon @click="shutDownLayer" name="dianyuan"></van-icon>
+            <iframe :src="newPayUrl">
+            </iframe>
+        </van-popup>
 
     </div>
 </template>
 
 <script>
     import Vue from 'vue'
-    import { Row, Col, Field, CellGroup, Button, Progress, Icon, Toast } from 'vant'
+    import { Row, Col, Field, CellGroup, Button, Progress, Icon, Toast, Popup } from 'vant'
     Vue.use(Row).use(Col).use(Field).use(CellGroup)
-    .use(Button).use(Progress).use(Icon).use(Toast)
+    .use(Button).use(Progress).use(Icon).use(Toast).use(Popup)
 
     import { addBuy, addSell, paymentLink } from '@/service/getData'
+    import { getProperNum } from '@/config/mUtils'
 
     export default {
         props: {
@@ -134,15 +141,22 @@
                 trustNum: '',
                 dealZb: '',
                 dealQc: '可用QC',
-                assetId: this.$route.params.id
+                assetId: this.$route.params.id,
+                getProperNum: getProperNum,
+                showPay: false,
+                newPayUrl: ''
             }
         },
         created() {
             this.token = localStorage.getItem('token')
         },
         methods: {
+            shutDownLayer() {
+                this.showPay = false
+            },
             async goBuy() {
-                let expPrice = /^([1-9][\d]{0,7}|0)(\.[\d]{1,2})?$/
+                let expPrice = /^[0-9]+([.]{1}[0-9]{1,6}){0,1}$/
+                
                 if(!this.trustPrice) {
                     Toast('价格不能为空')
                     return
@@ -152,6 +166,7 @@
                     return
                 }
                 let expNum = /^([1-9][0-9]*)$/
+                
                 if(!this.trustNum) {
                     Toast('数量不能为空')
                     return
@@ -164,27 +179,44 @@
             },
             async getBuy() {
                 let data = await addBuy(this.token, this.assetId, this.trustPrice, this.trustNum)
-                Toast(data.message)
+                if(data.message !== '') {
+                    Toast(data.message)
+                }
             },
 
             goSell() {
+
+                let expPrice = /^[0-9]+([.]{1}[0-9]{1,6}){0,1}$/
+                
                 if(!this.trustPrice) {
                     Toast('价格不能为空')
                     return
                 }
+                if(!expPrice.test(this.trustPrice)) {
+                    Toast('输入价格格式错误')
+                    return
+                }
+                let expNum = /^([1-9][0-9]*)$/
+                
                 if(!this.trustNum) {
                     Toast('数量不能为空')
+                    return
+                }
+                if(!expNum.test(this.trustNum)) {
+                    Toast('输入数量格式错误')
                     return
                 }
                 this.getSell()
             },
             async getSell() {
                 let jsonStr = JSON.stringify({price: this.trustPrice})
-                let memo = `以${this.trustPrice}QC的价格卖出${this.trustNum}${this.symbol}`
+                let memo = `以${this.trustPrice}QC的价格卖出${this.trustNum}${this.curInfo.symbol}`
                 let data = await paymentLink(this.token, this.curInfo.asset2_uid, this.trustNum, memo, jsonStr)
                 if(data.status === 200) {
-                    // location.href = data.data
-                    window.open(data.data,"_blank");
+                    this.newPayUrl = data.data
+                    this.showPay = true
+                    console.log('new pay url: ', this.newPayUrl)
+                    // window.open(data.data,"_blank");
                 }else {
                     Toast(data.message)
                 }
@@ -362,6 +394,20 @@
             /deep/ .van-button__text {
                 color: red;
             }
+        }
+    }
+    .van-popup--bottom {
+        height: 100%;
+        .van-icon-dianyuan {
+            float: left;
+            font-size: .6rem;
+            margin: .2rem;
+            color: #38f;
+        }
+        >iframe {
+            height: 100%;
+            border: none;
+            width: 100%;
         }
     }
 </style>

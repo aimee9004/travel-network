@@ -13,6 +13,13 @@ export const getUrlParam = (name) => {
 }
 
 /**
+ * 保留四位小数 向上取整
+ */
+export const getProperNum =(num) => {
+    return Math.ceil(num*10000)/10000
+}
+
+/**
  * 存储localStorage
  */
 export const setStore = (name, content) => {

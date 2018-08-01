@@ -20,12 +20,12 @@
         <div class="bottom-list" :class="{buyClass: activeName===0, sellClass: activeName===1}">
             <van-row v-for="(item, index) in currentList" :key="index">
                 <van-col class="first" span="10">
-                    <p><span class="speci1">卖出</span><span class="speci2">EOS {{parseFloat(item.depute_amount)}}</span></p>
-                    <p><span>委托价格</span><span class="speci3">QC {{parseFloat(item.depute_price)}}</span></p>
+                    <p><span class="speci1">卖出</span><span class="speci2">EOS {{getProperNum(item.depute_amount)}}</span></p>
+                    <p><span>委托价格</span><span class="speci3">QC {{getProperNum(item.depute_price)}}</span></p>
                 </van-col>
                 <van-col class="second" span="11">
-                    <p><span>成交数量</span><span class="speci4">EOS {{parseFloat(item.deal_amount)}}</span></p>
-                    <p><span>成交价格</span><span class="speci4">QC {{parseFloat(item.deal_price)}}</span></p>
+                    <p><span>成交数量</span><span class="speci4">EOS {{getProperNum(item.deal_amount)}}</span></p>
+                    <p><span>成交价格</span><span class="speci4">QC {{getProperNum(item.deal_price)}}</span></p>
                 </van-col>
                 <van-col v-cloak v-if="orderType==='current'" class="third" span="3">{{timeProcess(item.created_time)}}</van-col>
                 <van-col v-cloak v-if="orderType==='deal'" class="third" span="3">{{timeProcess(item.deal_time)}}</van-col>
@@ -47,6 +47,7 @@
     import ChildrenIndex from './children/index'
 
     import { assetOrderDeepInfo, myCurOrders, myDealOrders, assetCurInfo } from '@/service/getData'
+    import { getProperNum } from '@/config/mUtils'
 
     export default {
         data() {
@@ -62,7 +63,9 @@
                 currentList: [],
                 assetId: '',
                 orderType: 'current',
-                percentageVal: 0      
+                percentageVal: 0,
+                timer: null,
+                getProperNum: getProperNum
             }
         },
         components: {
@@ -73,6 +76,10 @@
             this.getCurrentList()
             this.getCurInfo()
             this.getDeepList()
+            next()
+        },
+        beforeRouteLeave(to, from, next) {
+            clearInterval(this.timer)
             next()
         },
         created() {
@@ -96,7 +103,7 @@
                     this.cycleLoadingBar()
                 }, 300)
 
-                let timer = setInterval(() => {
+                this.timer = setInterval(() => {
                     this.getCurInfo()
                     this.getDeepList()
 
@@ -134,9 +141,9 @@
                 if(curInfo.status === 200) {
                     if(!!curInfo.data) {
                         this.curInfo = curInfo.data
-                        console.log('curInfo: ', this.curInfo)
-                        this.curInfo.QCPrice = parseFloat(this.curInfo.QCPrice)
-                        this.curInfo.HYDPrice = parseFloat(this.curInfo.HYDPrice)
+                        // console.log('curInfo: ', this.curInfo)
+                        this.curInfo.QCPrice = this.getProperNum(this.curInfo.QCPrice)
+                        this.curInfo.HYDPrice = this.getProperNum(this.curInfo.HYDPrice)
                     }
                 }
             },
