@@ -209,7 +209,7 @@
                 this.getSell()
             },
             async getSell() {
-                let jsonStr = JSON.stringify({price: this.trustPrice})
+                let jsonStr = JSON.stringify({price: this.trustPrice, assetsPairId: this.assetId})
                 let memo = `以${this.trustPrice}QC的价格卖出${this.trustNum}${this.curInfo.symbol}`
                 let data = await paymentLink(this.token, this.curInfo.asset2_uid, this.trustNum, memo, jsonStr)
                 if(data.status === 200) {
