@@ -165,13 +165,13 @@
                     Toast('输入价格格式错误')
                     return
                 }
-                let expNum = /^([1-9][0-9]*)$/
+                // let expNum = /^([1-9][0-9]*)$/
                 
                 if(!this.trustNum) {
                     Toast('数量不能为空')
                     return
                 }
-                if(!expNum.test(this.trustNum)) {
+                if(!expPrice.test(this.trustNum)) {
                     Toast('输入数量格式错误')
                     return
                 }
@@ -202,7 +202,7 @@
                     Toast('数量不能为空')
                     return
                 }
-                if(!expNum.test(this.trustNum)) {
+                if(!expPrice.test(this.trustNum)) {
                     Toast('输入数量格式错误')
                     return
                 }
