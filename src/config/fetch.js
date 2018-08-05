@@ -48,9 +48,9 @@ export default async(url = '', data = {}, type = 'GET', method = 'fetch') => {
 				android.toLogin(JSON.stringify(responseJson))
 				return
 			}
-			if(statusCodes.indexOf(responseJson.status) !== -1 || !responseJson.status) {
-				let debugInfo = await debugReport(url, data, responseJson)
-			}
+			// if(statusCodes.indexOf(responseJson.status) !== -1 || !responseJson.status) {
+			// 	let debugInfo = await debugReport(url, data, responseJson)
+			// }
 			return responseJson
 		} catch (error) {
 			throw new Error(error)

@@ -20,14 +20,17 @@
         <div class="bottom-list" :class="{buyClass: activeName===0, sellClass: activeName===1}">
             <van-row v-for="(item, index) in currentList" :key="index">
                 <van-col class="first" span="10">
-                    <p><span class="speci1">卖出</span><span class="speci2">EOS {{getProperNum(item.depute_amount)}}</span></p>
+                    <p><span class="speci1">{{buySellType==='buy'?'买入':'卖出'}}</span><span class="speci2">{{item.symbol}} {{getProperNum(item.depute_amount)}}</span></p>
                     <p><span>委托价格</span><span class="speci3">QC {{getProperNum(item.depute_price)}}</span></p>
                 </van-col>
                 <van-col class="second" span="11">
-                    <p><span>成交数量</span><span class="speci4">EOS {{getProperNum(item.deal_amount)}}</span></p>
+                    <p><span>成交数量</span><span class="speci4">{{item.symbol}} {{getProperNum(item.deal_amount)}}</span></p>
                     <p><span>成交价格</span><span class="speci4">QC {{getProperNum(item.deal_price)}}</span></p>
                 </van-col>
-                <van-col v-cloak v-if="orderType==='current'" class="third" span="3">{{timeProcess(item.created_time)}}</van-col>
+                <van-col v-cloak v-if="orderType==='current'" class="third" span="3">
+                    <van-icon name="lajikuang" @click="goDel(item)"></van-icon>
+                    <!-- <van-icon name="dianyuan"></van-icon> -->
+                </van-col>
                 <van-col v-cloak v-if="orderType==='deal'" class="third" span="3">{{timeProcess(item.deal_time)}}</van-col>
             </van-row>
         </div>
@@ -38,7 +41,7 @@
 
 <script>
     import Vue from 'vue'
-    import { Tab, Tabs } from 'vant'
+    import { Tab, Tabs, Toast } from 'vant'
     Vue.use(Tab).use(Tabs);
 
     import HeaderBar from '@/components/Header'
@@ -46,7 +49,7 @@
 
     import ChildrenIndex from './children/index'
 
-    import { assetOrderDeepInfo, myCurOrders, myDealOrders, assetCurInfo } from '@/service/getData'
+    import { assetOrderDeepInfo, myCurOrders, myDealOrders, assetCurInfo, cancelSellOrder } from '@/service/getData'
     import { getProperNum } from '@/config/mUtils'
 
     export default {
@@ -106,6 +109,12 @@
                 this.timer = setInterval(() => {
                     this.getCurInfo()
                     this.getDeepList()
+                    console.log('orderType: ', this.orderType)
+                    if(this.orderType === 'current') {
+                        this.getCurrentList()
+                    }else {
+                        this.getDealList()
+                    }
 
                     this.cycleLoadingBar()
 
@@ -169,6 +178,20 @@
                 let data = await myDealOrders(this.token, this.assetId, this.buySellType)
                 if(data.status === 200) {
                     this.currentList = data.data
+                }
+            },
+
+            // 删除
+            goDel(item) {
+                console.log(item)
+                this.getDel(item.uid)
+            },
+            async getDel(uid) {
+                let data = await cancelSellOrder(this.token, uid, '')
+                if(data.status === 200) {
+                    this.getCurrentList()
+                }else {
+                    Toast(data.message)
                 }
             },
 

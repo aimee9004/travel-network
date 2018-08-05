@@ -21,10 +21,11 @@ export const listQc = (token) => fetch(envBaseUrl+'/exchange/assetParsList', { a
 export const assetOrderDeepInfo = (token, assetId, type) => fetch(envBaseUrl+'/exchange/assetOrderDeepInfo', { accessToken: token, assetId, type }, 'POST');
 export const myCurOrders = (token, assetId, type) => fetch(envBaseUrl+'/exchange/myCurOrders', { accessToken: token, assetId, type }, 'POST');
 export const myDealOrders = (token, assetId, type) => fetch(envBaseUrl+'/exchange/myDealOrders', { accessToken: token, assetId, type }, 'POST');
-export const addBuy = (token, assetId, price, amount) => fetch(envBaseUrl+'/exchange/addBuy', { accessToken: token, assetId, price, amount }, 'POST');
+export const addBuy = (token, assetPairId, price, amount) => fetch(envBaseUrl+'/exchange/addBuy', { accessToken: token, assetPairId, price, amount }, 'POST');
 export const addSell = (token, assetId, price, amount) => fetch(envBaseUrl+'/exchange/addSell', { accessToken: token, assetId, price, amount }, 'POST');
 export const paymentLink = (token, assetUId, amount, memo, otherData) => fetch(envBaseUrl+'/exchange/paymentLink', { accessToken: token, assetUId, amount, memo, otherData }, 'POST');
 export const assetCurInfo = (token, assetId) => fetch(envBaseUrl+'/exchange/assetCurInfo', { accessToken: token, assetId }, 'POST');
+export const cancelSellOrder = (token, orderUid, memberId) => fetch(envBaseUrl+'/exchange/cancelSellOrder', { token, orderUid, memberId }, 'POST');
 
 /**
  * 账号密码登录

@@ -45,7 +45,7 @@
                         <span slot="button">{{curInfo.QCPrice===0?'--':getProperNum(curInfo.QCBalance/curInfo.QCPrice)}}</span>
                     </van-field>
                     <van-field v-if="!!curInfo.symbol && activeName===1" class="input-class colorGreen"
-                        :value="`可卖${curInfo.symbol}`"
+                        :value="`可用${curInfo.symbol}`"
                         disabled
                     >
                         <span slot="button">{{curInfo.QCPrice===0?'--':parseFloat(curInfo.QCBalance/curInfo.QCPrice)}}</span>
@@ -55,7 +55,7 @@
                     <van-field class="input-class" :class="{colorRed: activeName===0, colorGreen: activeName===1}"
                         v-model="dealQc"
                         disabled
-                        placeholder="可用QC"
+                        placeholder="可兑QC"
                     >
                         <span slot="button">{{getProperNum(curInfo.QCBalance)}}</span>
                     </van-field>
@@ -140,7 +140,7 @@
                 trustPrice: '',
                 trustNum: '',
                 dealZb: '',
-                dealQc: '可用QC',
+                dealQc: '可兑QC',
                 assetId: this.$route.params.id,
                 getProperNum: getProperNum,
                 showPay: false,

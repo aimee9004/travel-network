@@ -23,12 +23,17 @@
   font-family: 'vant-icon', 'custom-iconfont' !important;
 }
 
-
 .van-icon-xiaosanjiaodown:before { content: "\e60e"; }
 
 .van-icon-xiaosanjiaoup:before { content: "\e60f"; }
 
 .van-icon-dianyuan:before { content: "\e60c"; }
+
+.van-icon-shuaxin:before { content: "\e62e"; }
+
+.van-icon-lajikuang:before { content: "\e60b"; }
+
+
 
 
 

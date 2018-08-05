@@ -25,8 +25,8 @@
                                     <p>¥{{getProperNum(item.HYDPrice)}}</p>
                                 </van-col>
                                 <van-col span="8" class="list-tip">
-                                    <van-button :type="item.QCChange>=0?'primary':'danger'" size="small">{{item.QCChange}}%</van-button>
-                                    <!-- <van-button v-if="item.QCChange>=0" type="danger" size="small">{{item.QCChange}}%</van-button> -->
+                                    <van-button :type="item.QCChange>=0?'primary':'danger'" size="small">{{Math.ceil(item.QCChange*100)/100}}%</van-button>
+                                    <!-- <van-button v-if="item.QCChange>=0" type="danger" size="small">{{Math.ceil(item.QCChange*100)/100}}%</van-button> -->
                                 </van-col>
                             </van-row>
                         </van-col>
@@ -86,7 +86,7 @@
             this.token = this.$route.query.token
             
             if (process.env.NODE_ENV == 'development') {
-                this.token = 'c0RFeGNMcXBySDJkL2xmTjFSaUlTdjlNNlB0ZTV4MnlEZ1VJcGhJNVFvUGpWSXhHZkUrbVY5T3RHRzBTTUxDeWtsaEJMRVFKbEVvTG1ab1RsbHo5S2Z1ZElRT3dwT1FQdUt5U1hCbDVsSGJoa1JSNUVvSHJiL0ZrQUFrWEZpVW5KVm56d3pFWHBUZWJTMTRZV3hvQUJjTTdVM2U1c0FyeU5sUEJTVjV1cEswPQ=='
+                this.token = 'c0RFeGNMcXBySDJkL2xmTjFSaUlTdjlNNlB0ZTV4MnlvVEMvYnJnLytQY2JFUnhOeU9QWFhOT3RHRzBTTUxDeWtsaEJMRVFKbEVvTG1ab1RsbHo5S2Z1ZElRT3dwT1FQb0VTQ09NUktKdCtIcUVqdStDNWhLUHUxaHk2TjAxTjdKZndCSjB0dUJZd2JaL09pcW8vT1cyT3JHeFh2OUk5aHpDWG9PNnAvc1k4PQ=='
             }else if(process.env.NODE_ENV == 'production'){
                 if(!this.token) {
                     this.token = localStorage.getItem('token')
