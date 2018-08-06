@@ -29,7 +29,6 @@
                 </van-col>
                 <van-col v-cloak v-if="orderType==='current'" class="third current" span="3">
                     <van-icon name="lajikuang" @click="goDel(item)"></van-icon>
-                    <!-- <van-icon name="dianyuan"></van-icon> -->
                 </van-col>
                 <van-col v-cloak v-if="orderType==='deal'" class="third" span="3">{{timeProcess(item.deal_time)}}</van-col>
             </van-row>
@@ -128,21 +127,19 @@
                 if(buyList.status === 200) {
                     this.deepData.buyList = buyList.data
                     let list = this.deepData.buyList
-                    if(list.length <= 0) {
-                        return
+                    if(list.length > 0) {
+                        let max = +(list[0].amount)
+                        this.deepData.buyMax = this.getMax(list, max)
                     }
-                    let max = +(list[0].amount)
-                    this.deepData.buyMax = this.getMax(list, max)
 
                 }
                 if(sellList.status === 200) {
                     this.deepData.sellList = sellList.data
                     let list = this.deepData.sellList
-                    if(list.length <= 0) {
-                        return
+                    if(list.length > 0) {
+                        let max = +(list[0].amount)
+                        this.deepData.sellMax = this.getMax(list, max)
                     }
-                    let max = +(list[0].amount)
-                    this.deepData.sellMax = this.getMax(list, max)
                 }
             },
             async getCurInfo() {

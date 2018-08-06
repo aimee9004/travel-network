@@ -26,7 +26,6 @@
                                 </van-col>
                                 <van-col span="8" class="list-tip">
                                     <van-button :type="item.QCChange>=0?'primary':'danger'" size="small">{{Math.ceil(item.QCChange*100)/100}}%</van-button>
-                                    <!-- <van-button v-if="item.QCChange>=0" type="danger" size="small">{{Math.ceil(item.QCChange*100)/100}}%</van-button> -->
                                 </van-col>
                             </van-row>
                         </van-col>
@@ -86,7 +85,7 @@
             this.token = this.$route.query.token
             
             if (process.env.NODE_ENV == 'development') {
-                this.token = 'c0RFeGNMcXBySDJkL2xmTjFSaUlTdjlNNlB0ZTV4MnlwWUlJSkgzMHc1RVRDQS9ZUGRwbTBOT3RHRzBTTUxDeWtsaEJMRVFKbEVvTG1ab1RsbHo5S2Z1ZElRT3dwT1FQVDlUZzNMaXQweVVySHVJMFRzQndybmtQTVZBR0JPbUw2TUFoY3oySC9jTGo2VDJQOHVlaUtneE9vUEZUZFF5bmtsOEhRQXlPTlZVPQ=='
+                this.token = 'c0RFeGNMcXBySDJkL2xmTjFSaUlTdjlNNlB0ZTV4MnkvVnJtWmphejFlaDMrOExEMHZxdlU5T3RHRzBTTUxDeWtsaEJMRVFKbEVvTG1ab1RsbHo5S2Z1ZElRT3dwT1FQTkt6aDByZmNESzVHKzVYeE1hVXk1WlY3QnpmZldYT2NzUjJQZHI4NFZXMzdqNTdOLzBsMFpTbjZZd2pUNmtmeGtUWGxxNW9pdkRFPQ=='
             }else if(process.env.NODE_ENV == 'production'){
                 if(!this.token) {
                     this.token = localStorage.getItem('token')

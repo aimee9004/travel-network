@@ -48,7 +48,7 @@
                         :value="`可用${curInfo.symbol}`"
                         disabled
                     >
-                        <span slot="button">{{curInfo.QCPrice===0?'--':parseFloat(curInfo.QCBalance/curInfo.QCPrice)}}</span>
+                        <span slot="button">{{curInfo.QCPrice===0?'--':getProperNum(curInfo.QCBalance/curInfo.QCPrice)}}</span>
                     </van-field>
                 </van-cell-group>
                 <van-cell-group>
@@ -63,7 +63,7 @@
 
             </van-col>
             <van-col span="12" class="right-content">
-                <van-row v-for="(item, index) in deepData.sellList" :key="'green'+index" class="green-list">
+                <van-row v-if="deepData.sellList.length>0" v-for="(item, index) in deepData.sellList" :key="'green'+index" class="green-list">
                     <van-col class="first" span="10">
                         <span class="span-first">{{index+1}}</span>{{getProperNum(item.price)}}
                     </van-col>
@@ -76,7 +76,7 @@
                     <van-progress v-if="percentageVal>0 && (deepData.sellList.length>0 || deepData.buyList.length>0)" :percentage="percentageVal" :show-pivot="false" color="#f44"></van-progress>
                 <!-- </keep-alive> -->
 
-                <van-row v-for="(item, index) in deepData.buyList " :key="'red'+index" class="red-list">
+                <van-row v-if="deepData.buyList.length>0" v-for="(item, index) in deepData.buyList " :key="'red'+index" class="red-list">
                     <van-col class="first" span="10">
                         <span class="span-first">{{index+1}}</span>{{getProperNum(item.price)}}
                     </van-col>
