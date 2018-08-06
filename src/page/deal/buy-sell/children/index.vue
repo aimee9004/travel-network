@@ -93,8 +93,7 @@
 <!-- :close-on-click-overlay="false"  -->
         <van-popup v-model="showPay" position="bottom"> 
             <van-icon @click="shutDownLayer" name="dianyuan"></van-icon>
-            <iframe :src="newPayUrl">
-            </iframe>
+            <iframe :src="newPayUrl"></iframe>
         </van-popup>
 
     </div>
@@ -189,6 +188,11 @@
                 if(data.message !== '') {
                     Toast(data.message)
                 }
+                if(data.status === 200) {
+                    this.trustNum = ''
+                    this.trustPrice = ''
+                    this.$emit('goHandle')
+                }
             },
 
             goSell() {
@@ -220,12 +224,22 @@
                 let memo = `以${this.trustPrice}QC的价格卖出${this.trustNum}${this.curInfo.symbol}`
                 let data = await paymentLink(this.token, this.curInfo.asset2_uid, this.trustNum, memo, jsonStr)
                 if(data.status === 200) {
-                    this.newPayUrl = data.data
                     this.showPay = true
+                    this.newPayUrl = data.data
                     console.log('new pay url: ', this.newPayUrl)
                     // window.open(data.data,"_blank");
                 }else {
                     Toast(data.message)
+                }
+            }
+        },
+        watch: {
+            showPay(val) {
+                if(!val && this.newPayUrl !== '') {
+                    this.$emit('goHandle')
+                    this.trustNum = ''
+                    this.trustPrice = ''
+                    this.newPayUrl = ''
                 }
             }
         }

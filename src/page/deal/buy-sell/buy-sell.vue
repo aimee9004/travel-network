@@ -4,10 +4,24 @@
 
         <van-tabs v-model="activeName" @click="activeClick">
             <van-tab title="买入">
-                <children-index :activeName="activeName" :deepData="deepData" :curInfo="curInfo" :percentageVal="percentageVal"></children-index>
+                <children-index 
+                    :activeName="activeName" 
+                    :deepData="deepData" 
+                    :curInfo="curInfo" 
+                    :percentageVal="percentageVal"
+                    @goHandle="goHandle"
+                >
+                </children-index>
             </van-tab>
             <van-tab title="卖出">
-                <children-index :activeName="activeName" :deepData="deepData" :curInfo="curInfo" :percentageVal="percentageVal"></children-index>
+                <children-index 
+                    :activeName="activeName" 
+                    :deepData="deepData" 
+                    :curInfo="curInfo" 
+                    :percentageVal="percentageVal"
+                    @goHandle="goHandle"
+                >
+                </children-index>
             </van-tab>
 
         </van-tabs>
@@ -67,6 +81,7 @@
                 orderType: 'current',
                 percentageVal: 0,
                 timer: null,
+                timerIn: null,
                 getProperNum: getProperNum
             }
         },
@@ -87,6 +102,7 @@
         created() {
             this.token = localStorage.getItem('token')
             this.assetId = this.$route.params.id
+            
 
             this.loadProgress()
 
@@ -96,27 +112,24 @@
         },
         methods: {
             loadProgress(cb) {
-                this.getCurrentList()
+                this.cycleLoadingBar()
                 this.getCurInfo()
                 this.getDeepList()
-
-                // loading progress
-                setTimeout(() => {
-                    this.cycleLoadingBar()
-                }, 300)
+                if(this.orderType === 'current') {
+                    this.getCurrentList()
+                }else {
+                    this.getDealList()
+                }
 
                 this.timer = setInterval(() => {
+                    this.cycleLoadingBar()
                     this.getCurInfo()
                     this.getDeepList()
-                    console.log('orderType: ', this.orderType)
                     if(this.orderType === 'current') {
                         this.getCurrentList()
                     }else {
                         this.getDealList()
                     }
-
-                    this.cycleLoadingBar()
-
                 }, 5000)
             },
             async getDeepList() {
@@ -156,13 +169,12 @@
 
             // 订单 当前 历史切换事件
             goOrderList(type) {
-                console.log(type)
+                clearInterval(this.timer)
+                clearInterval(this.timerIn); 
+
                 this.orderType = type
-                if(this.orderType === 'current') {
-                    this.getCurrentList()
-                }else {
-                    this.getDealList()
-                }
+                this.loadProgress()
+
             },
 
             async getCurrentList() {
@@ -199,6 +211,8 @@
 
             // tabs 页签切换
             activeClick(index, title) {
+                clearInterval(this.timer)
+                clearInterval(this.timerIn); 
                 this.activeName = index
                 this.orderType = 'current'
                 if(this.activeName === 1) {
@@ -206,7 +220,14 @@
                 }else {
                     this.buySellType = 'buy'
                 }
-                this.getCurrentList()
+
+                this.loadProgress()
+            },
+
+            goHandle() {
+                clearInterval(this.timer)
+                clearInterval(this.timerIn); 
+                this.loadProgress()
             },
 
             timeProcess(timestamp) {
@@ -230,12 +251,16 @@
                 }
             },
             cycleLoadingBar() {
-                let timerIn = setInterval(() => {
+                this.percentageVal = 0
+                if(!!this.timerIn) {
+                    clearInterval(this.timerIn);
+                }
+                this.timerIn = setInterval(() => {
                     this.percentageVal++; 
                     // console.log(this.percentageVal); 
                     if (this.percentageVal == 100) { 
                         this.percentageVal = 0
-                        clearInterval(timerIn); 
+                        clearInterval(this.timerIn); 
                     } 
                 }, 50)
             }
