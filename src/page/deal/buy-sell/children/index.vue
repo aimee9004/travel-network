@@ -64,12 +64,14 @@
             </van-col>
             <van-col span="12" class="right-content">
                 <van-row v-if="deepData.sellList.length>0" v-for="(item, index) in deepData.sellList" :key="'green'+index" class="green-list">
-                    <van-col class="first" span="10">
-                        <span class="span-first">{{index+1}}</span>{{getProperNum(item.price)}}
-                    </van-col>
-                    <van-col class="second" span="14">
-                        <span class="span-second" :style="{width: getProperNum(item.amount/deepData.sellMax*100)+'%'}"></span>{{getProperNum(item.amount)}}
-                    </van-col>
+                    <van-button @click="getDeepInfo(item)">
+                        <van-col class="first" span="10">
+                            <span class="span-first">{{index+1}}</span>{{getProperNum(item.price)}}
+                        </van-col>
+                        <van-col class="second" span="14">
+                            <span class="span-second" :style="{width: getProperNum(item.amount/deepData.sellMax*100)+'%'}"></span>{{getProperNum(item.amount)}}
+                        </van-col>
+                    </van-button>
                 </van-row>
 
                 <!-- <keep-alive> -->
@@ -77,12 +79,14 @@
                 <!-- </keep-alive> -->
 
                 <van-row v-if="deepData.buyList.length>0" v-for="(item, index) in deepData.buyList " :key="'red'+index" class="red-list">
-                    <van-col class="first" span="10">
-                        <span class="span-first">{{index+1}}</span>{{getProperNum(item.price)}}
-                    </van-col>
-                    <van-col class="second" span="14">
-                        <span class="span-second" :style="{width: getProperNum(item.amount/deepData.buyMax*100)+'%'}"></span>{{getProperNum(item.amount)}}
-                    </van-col>
+                    <van-button @click="getDeepInfo(item)">
+                        <van-col class="first" span="10">
+                            <span class="span-first">{{index+1}}</span>{{getProperNum(item.price)}}
+                        </van-col>
+                        <van-col class="second" span="14">
+                            <span class="span-second" :style="{width: getProperNum(item.amount/deepData.buyMax*100)+'%'}"></span>{{getProperNum(item.amount)}}
+                        </van-col>
+                    </van-button>
                 </van-row>
             </van-col>
         </van-row>
@@ -151,6 +155,9 @@
             this.token = localStorage.getItem('token')
         },
         methods: {
+            getDeepInfo(item) {
+                console.log(item)
+            },
             shutDownLayer() {
                 this.showPay = false
             },
@@ -314,6 +321,15 @@
             padding: 10px 0 10px 5px;
             .van-row {
                 margin: 5px 0;
+                .van-button {
+                    padding: 0;
+                    font-size: inherit;
+                    border: none;
+                    height: inherit;
+                    width: 100%;
+                    line-height: inherit;
+                    display: block;   
+                }
                 &.green-list {
                     .span-first {
                         background-color: rgb(135, 217, 189);

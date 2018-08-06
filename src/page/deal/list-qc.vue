@@ -85,7 +85,7 @@
             this.token = this.$route.query.token
             
             if (process.env.NODE_ENV == 'development') {
-                this.token = 'c0RFeGNMcXBySDJkL2xmTjFSaUlTdjlNNlB0ZTV4MnkvVnJtWmphejFlaDMrOExEMHZxdlU5T3RHRzBTTUxDeWtsaEJMRVFKbEVvTG1ab1RsbHo5S2Z1ZElRT3dwT1FQTkt6aDByZmNESzVHKzVYeE1hVXk1WlY3QnpmZldYT2NzUjJQZHI4NFZXMzdqNTdOLzBsMFpTbjZZd2pUNmtmeGtUWGxxNW9pdkRFPQ=='
+                this.token = 'c0RFeGNMcXBySDJkL2xmTjFSaUlTdjlNNlB0ZTV4MnlZSnZhWkNhRzVPZkIyY3dYQ2VoZ3pkT3RHRzBTTUxDeWtsaEJMRVFKbEVvTG1ab1RsbHo5S2Z1ZElRT3dwT1FQSVpTT0NPMTBmMCtaanZxbzV2QXJzRmJCcGljOW41VXNiS0IyV3ZBVGVkVVhuVU82U0J4K2hiNFBiekMrQUR4Z1ZYcXBRelVwWGFRPQ=='
             }else if(process.env.NODE_ENV == 'production'){
                 if(!this.token) {
                     this.token = localStorage.getItem('token')
