@@ -26,6 +26,7 @@ export const addSell = (token, assetId, price, amount) => fetch(envBaseUrl+'/exc
 export const paymentLink = (token, assetUId, amount, memo, otherData) => fetch(envBaseUrl+'/exchange/paymentLink', { accessToken: token, assetUId, amount, memo, otherData }, 'POST');
 export const assetCurInfo = (token, assetId) => fetch(envBaseUrl+'/exchange/assetCurInfo', { accessToken: token, assetId }, 'POST');
 export const cancelSellOrder = (token, orderUid, memberId) => fetch(envBaseUrl+'/exchange/cancelSellOrder', { accessToken: token, orderUid, memberId }, 'POST');
+export const cancelBuyOrder = (token, orderUid, memberId) => fetch(envBaseUrl+'/exchange/cancelBuyOrder', { accessToken: token, orderUid, memberId }, 'POST');
 
 /**
  * 账号密码登录

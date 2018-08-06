@@ -27,7 +27,7 @@
                     <p><span>成交数量</span><span class="speci4">{{item.symbol}} {{getProperNum(item.deal_amount)}}</span></p>
                     <p><span>成交价格</span><span class="speci4">QC {{getProperNum(item.deal_price)}}</span></p>
                 </van-col>
-                <van-col v-cloak v-if="orderType==='current'" class="third" span="3">
+                <van-col v-cloak v-if="orderType==='current'" class="third current" span="3">
                     <van-icon name="lajikuang" @click="goDel(item)"></van-icon>
                     <!-- <van-icon name="dianyuan"></van-icon> -->
                 </van-col>
@@ -49,7 +49,7 @@
 
     import ChildrenIndex from './children/index'
 
-    import { assetOrderDeepInfo, myCurOrders, myDealOrders, assetCurInfo, cancelSellOrder } from '@/service/getData'
+    import { assetOrderDeepInfo, myCurOrders, myDealOrders, assetCurInfo, cancelSellOrder, cancelBuyOrder } from '@/service/getData'
     import { getProperNum } from '@/config/mUtils'
 
     export default {
@@ -187,7 +187,12 @@
                 this.getDel(item.uid)
             },
             async getDel(uid) {
-                let data = await cancelSellOrder(this.token, uid, '')
+                let data = {}
+                if(this.buySellType === 'buy') {
+                    data = await cancelBuyOrder(this.token, uid, '')
+                }else {
+                    data = await cancelSellOrder(this.token, uid, '')
+                }
                 if(data.status === 200) {
                     this.getCurrentList()
                 }else {
@@ -318,6 +323,9 @@
                     margin-top: .12rem;
                     text-align: right;
                     color: rgb(183, 183, 183);
+                    &.current {
+                        margin-top: .24rem;
+                    }
                 }
             }
         }
