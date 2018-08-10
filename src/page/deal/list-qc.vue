@@ -21,7 +21,7 @@
                         <van-col span="14">
                             <van-row type="flex" align="center">
                                 <van-col span="16" class="align-r" :class="{'red-info': item.QCChange<0, 'green-info': item.QCChange>=0}">
-                                    <h2>QC{{getProperNum(item.QCPrice)}}</h2>
+                                    <h2>CEEC{{getProperNum(item.QCPrice)}}</h2>
                                     <p>¥{{getProperNum(item.HYDPrice)}}</p>
                                 </van-col>
                                 <van-col span="8" class="list-tip">
@@ -85,7 +85,7 @@
             this.token = this.$route.query.token
             
             if (process.env.NODE_ENV == 'development') {
-                this.token = 'c0RFeGNMcXBySDJkL2xmTjFSaUlTdjlNNlB0ZTV4MnlHdU12am5KS1hUeVBKN3k2SlpMaFJOT3RHRzBTTUxDeWtsaEJMRVFKbEVvTG1ab1RsbHo5S2Z1ZElRT3dwT1FQWkhMTytueWF1V2w0cnJTdkpPV2FaUVdVVW8xdG1PQW1UelZMMFJwblUwWFR2L1BPZk9ONXNMK29NUWpMQVF6dzQrYzhMVGZzUi9JPQ=='
+                this.token = 'c0RFeGNMcXBySDJkL2xmTjFSaUlTdjlNNlB0ZTV4MnltUmdXY3djcXhVaWlZTWU1eXdhSVM5T3RHRzBTTUxDeWtsaEJMRVFKbEVvTG1ab1RsbHo5S2Z1ZElRT3dwT1FQYmtTRDhuOFZHdXdhN0FFait0U0c3cGp6V2pBNmZUU3oyT1FFd3dKUmc4Y1ZiWFcrc1JYSEZ0ZnNwNlJmMFJkd2JmNmpMZTh2YkpFPQ=='
             }else if(process.env.NODE_ENV == 'production'){
                 if(!this.token) {
                     this.token = localStorage.getItem('token')

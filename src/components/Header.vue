@@ -1,7 +1,7 @@
 <template>
     <div class="header">
         <van-nav-bar
-            title="QC"
+            title="CEEC"
             left-text=""
             left-arrow
             @click-left="$router.go(-1)"
@@ -46,7 +46,7 @@
                 token: '',
                 showSelType: false,
                 dataList: [],
-                currentType: 'QC'
+                currentType: 'CEEC'
             }
         },
         created() {

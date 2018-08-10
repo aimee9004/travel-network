@@ -35,11 +35,11 @@
             <van-row v-for="(item, index) in currentList" :key="index">
                 <van-col class="first" span="10">
                     <p><span class="speci1">{{buySellType==='buy'?'买入':'卖出'}}</span><span class="speci2">{{item.symbol}} {{getProperNum(item.depute_amount)}}</span></p>
-                    <p><span>委托价格</span><span class="speci3">QC {{getProperNum(item.depute_price)}}</span></p>
+                    <p><span>委托价格</span><span class="speci3">CEEC {{getProperNum(item.depute_price)}}</span></p>
                 </van-col>
                 <van-col class="second" span="11">
                     <p><span>成交数量</span><span class="speci4">{{item.symbol}} {{getProperNum(item.deal_amount)}}</span></p>
-                    <p><span>成交价格</span><span class="speci4">QC {{getProperNum(item.deal_price)}}</span></p>
+                    <p><span>成交价格</span><span class="speci4">CEEC {{getProperNum(item.deal_price)}}</span></p>
                 </van-col>
                 <van-col v-cloak v-if="orderType==='current'" class="third current" span="3">
                     <van-icon name="lajikuang" @click="goDel(item)"></van-icon>

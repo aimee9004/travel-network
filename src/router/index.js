@@ -10,7 +10,7 @@ const Demo = r => require.ensure([], () => r(require('@/page/demo/demo')), 'demo
 /**
  * 交易模块
  */
-// 交易 QC 列表
+// 交易 CEEC 列表
 const ListQc = r => require.ensure([], () => r(require('@/page/deal/list-qc')), 'listQc') 
 
 // 买入 卖出页面

@@ -11,7 +11,7 @@
         <van-row class="middle-content">
             <van-col span="12" class="left-content">
 
-                <h2 v-cloak class="title">QC {{curInfo.QCPrice}}</h2>
+                <h2 v-cloak class="title">CEEC {{curInfo.QCPrice}}</h2>
                 <p class="title-small">¥ {{curInfo.HYDPrice}}</p>
                 <van-cell-group>
                     <van-field class="input-class"
@@ -19,10 +19,10 @@
                         clearable
                         placeholder="委托价格"
                     >
-                        <span slot="button">QC</span>
+                        <span slot="button">CEEC</span>
                     </van-field>
                 </van-cell-group>
-                <p class="sub-title clear">折合CNY <span>¥ {{curInfo.HYDPrice}}</span></p>
+                <p class="sub-title clear">折合CNY <span>¥ {{trustPrice || 0}}</span></p>
                 <van-cell-group>
                     <van-field class="input-class"
                         v-model="trustNum"
@@ -32,7 +32,7 @@
                         <span slot="button">{{curInfo.symbol}}</span>
                     </van-field>
                 </van-cell-group>
-                <p class="sub-title clear">交易额 <span>{{getProperNum(+trustPrice*+trustNum)}} QC</span></p>
+                <p class="sub-title clear">交易额 <span>{{getProperNum(+trustPrice*+trustNum)}} CEEC</span></p>
 
                 <van-button @click="goBuy" type="danger" v-if='activeName===0'>买入 {{curInfo.symbol}}</van-button>
                 <van-button @click="goSell" type="primary" v-if='activeName===1'>卖出 {{curInfo.symbol}}</van-button>
@@ -63,7 +63,7 @@
 
             </van-col>
             <van-col span="12" class="right-content">
-                <van-row v-if="deepData.sellList.length>0" v-for="(item, index) in deepData.sellList" :key="'green'+index" class="green-list">
+                <van-row v-if="deepData.sellList.length>0" v-for="(item, index) in deepData.sellList.slice(0,10)" :key="'green'+index" class="green-list">
                     <van-button @click="getDeepInfo(item)">
                         <van-col class="first" span="10">
                             <span class="span-first">{{index+1}}</span>{{getProperNum(item.price)}}
@@ -78,7 +78,7 @@
                     <van-progress v-if="percentageVal>0 && (deepData.sellList.length>0 || deepData.buyList.length>0)" :percentage="percentageVal" :show-pivot="false" color="#f44"></van-progress>
                 <!-- </keep-alive> -->
 
-                <van-row v-if="deepData.buyList.length>0" v-for="(item, index) in deepData.buyList " :key="'red'+index" class="red-list">
+                <van-row v-if="deepData.buyList.length>0" v-for="(item, index) in deepData.buyList.slice(0,10)" :key="'red'+index" class="red-list">
                     <van-button @click="getDeepInfo(item)">
                         <van-col class="first" span="10">
                             <span class="span-first">{{index+1}}</span>{{getProperNum(item.price)}}
@@ -156,6 +156,7 @@
         methods: {
             getDeepInfo(item) {
                 console.log(item)
+                this.trustPrice = item.price
             },
             shutDownLayer() {
                 this.showPay = false
