@@ -68,7 +68,8 @@
                 dataList: [],
                 firstAssetId: '',       // 列表的第一条数据 id
                 kChart: require('../../assets/linePic2.png'),
-                getProperNum: getProperNum
+                getProperNum: getProperNum,
+                timer: null
             }
         },
         components: {
@@ -78,6 +79,10 @@
             next(vm => {
                 vm.firstAssetId = from.params.id
             })
+        },
+        beforeRouteLeave(to, from, next) {
+            clearInterval(this.timer)
+            next()
         },
         created() {
             this.$toast.loading({mask: true, message: '加载中...', duration: 0})
@@ -93,9 +98,15 @@
             }
             
             localStorage.setItem('token', this.token)
-            this.getList()
+            this.init()
         },
         methods: {
+            init() {
+                this.getList()
+                this.timer = setInterval(() => {
+                    this.getList()
+                }, 10000)
+            },
             async goTest(){
                 let data = await testjj('123', '456');
                 
