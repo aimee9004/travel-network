@@ -16,6 +16,9 @@ const ListQc = r => require.ensure([], () => r(require('@/page/deal/list-qc')), 
 // 买入 卖出页面
 const BuySell = r => require.ensure([], () => r(require('@/page/deal/buy-sell/buy-sell')), 'buySell')
 
+// 分享页面
+const ShareOne = r => require.ensure([], () => r(require('@/page/share/share-one')), 'shareOne')
+
 
 let myRoutes = [
   {
@@ -26,6 +29,10 @@ let myRoutes = [
     path: '/buy-sell/:id',
     name: 'buySell',
     component: BuySell
+  }, {
+    path: '/share-one',
+    name: 'shareOne',
+    component: ShareOne
   }, {
     path: '/demo',
     name: 'demo',
