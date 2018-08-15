@@ -55,7 +55,7 @@
                     <van-field class="input-class" :class="{colorRed: activeName===0, colorGreen: activeName===1}"
                         v-model="dealQc"
                         disabled
-                        placeholder="可兑QC"
+                        placeholder="可兑CEEC"
                     >
                         <span slot="button">{{getProperNum(curInfo.QCBalance)}}</span>
                     </van-field>
@@ -143,7 +143,7 @@
                 trustPrice: '',
                 trustNum: '',
                 dealZb: '',
-                dealQc: '可兑QC',
+                dealQc: '可兑CEEC',
                 assetId: this.$route.params.id,
                 getProperNum: getProperNum,
                 showPay: false,
@@ -185,14 +185,19 @@
                 this.getBuy()
             },
             async getBuy() {
+                this.$toast.loading({mask: true, message: '加载中...', duration: 0})
                 let data = await addBuy(this.token, this.assetId, this.trustPrice, this.trustNum)
                 if(data.message !== '') {
+                    this.$toast.clear()
                     Toast(data.message)
                 }
                 if(data.status === 200) {
                     this.trustNum = ''
                     this.trustPrice = ''
                     this.$emit('goHandle')
+                }else {
+                    this.$toast.clear()
+                    Toast(data.message)
                 }
             },
 
@@ -221,16 +226,21 @@
                 this.getSell()
             },
             async getSell() {
+                this.$toast.loading({mask: true, message: '加载中...', duration: 0})
                 let jsonStr = JSON.stringify({price: this.trustPrice, assetsPairId: this.assetId})
-                let memo = `以${this.trustPrice}QC的价格卖出${this.trustNum}${this.curInfo.symbol}`
-                let data = await paymentLink(this.token, this.curInfo.asset2_uid, this.trustNum, memo, jsonStr)
+                let memo = `以${this.trustPrice}CEEC的价格卖出${this.trustNum}${this.curInfo.symbol}`
+                
+                // let data = await paymentLink(this.token, this.curInfo.asset2_uid, this.trustNum, memo, jsonStr)
+                let data = await addSell(this.token, this.assetId, this.trustPrice, this.trustNum)
                 if(data.status === 200) {
+                    this.$toast.clear()
                     Toast(data.message)
                     // this.showPay = true
                     // this.newPayUrl = data.data
                     // console.log('new pay url: ', this.newPayUrl)
                     // window.open(data.data,"_blank");
                 }else {
+                    this.$toast.clear()
                     Toast(data.message)
                 }
             }
