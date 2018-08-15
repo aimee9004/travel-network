@@ -178,12 +178,14 @@
             },
 
             async getCurrentList() {
+                this.currentList = []
                 let data = await myCurOrders(this.token, this.assetId, this.buySellType)
                 if(data.status === 200) {
                     this.currentList = data.data
                 }
             },
             async getDealList() {
+                this.currentList = []
                 let data = await myDealOrders(this.token, this.assetId, this.buySellType)
                 if(data.status === 200) {
                     this.currentList = data.data
