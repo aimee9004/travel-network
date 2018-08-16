@@ -18,6 +18,7 @@ const BuySell = r => require.ensure([], () => r(require('@/page/deal/buy-sell/bu
 
 // 分享页面
 const ShareOne = r => require.ensure([], () => r(require('@/page/share/share-one')), 'shareOne')
+const ShareTwo = r => require.ensure([], () => r(require('@/page/share/share-two')), 'shareTwo')
 
 
 let myRoutes = [
@@ -33,6 +34,10 @@ let myRoutes = [
     path: '/share-one',
     name: 'shareOne',
     component: ShareOne
+  }, {
+    path: '/share-two',
+    name: 'shareTwo',
+    component: ShareTwo
   }, {
     path: '/demo',
     name: 'demo',

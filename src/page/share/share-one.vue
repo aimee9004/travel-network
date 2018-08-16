@@ -7,7 +7,7 @@
             <p class="describe">
                 我是XXX <br /> 让我们一起建设节点旅行, 开启旅行新玩法！
             </p>
-            <van-button class="bottom-btn" type="primary">立即获得</van-button>
+            <van-button @click="goGet" class="bottom-btn" type="primary">立即获得</van-button>
         </div>
     </div>
 </template>
@@ -17,6 +17,13 @@
         data() {
             return {
 
+            }
+        },
+        methods: {
+            goGet() {
+                this.$router.push({
+                    name: 'shareTwo'
+                })
             }
         }   
     }
