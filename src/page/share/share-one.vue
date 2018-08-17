@@ -5,7 +5,7 @@
             <p class="tip">现在加入即可获得</p>
             <p class="big-tip">1200TEN</p>
             <p class="describe">
-                我是XXX <br /> 让我们一起建设节点旅行, 开启旅行新玩法！
+                <strong>邀请码：{{msg}}</strong> <br /> 让我们一起建设节点旅行, 开启旅行新玩法！
             </p>
             <van-button @click="goGet" class="bottom-btn" type="primary">立即获得</van-button>
         </div>
@@ -13,10 +13,20 @@
 </template>
 
 <script>
+    import Vue from 'vue'
+    import { Button } from 'vant'
+    Vue.use(Button);
     export default {
         data() {
             return {
-
+                msg: ''
+            }
+        },
+        created() {
+            if (process.env.NODE_ENV == 'development') {
+                this.msg = 'aimme-test'
+            }else if(process.env.NODE_ENV == 'production'){
+                this.msg = this.$route.query.code
             }
         },
         methods: {
@@ -78,6 +88,9 @@
                 color: #f9ddaf;
                 margin: 1.25rem .5rem;
                 line-height: .5rem;
+                >strong {
+                    font-size: .36rem;
+                }
             }
             .bottom-btn {
                 font-size: .36rem;
@@ -88,6 +101,7 @@
                 display: inline-block;
                 line-height: .9rem;
                 background-color: #efd7a6;
+                border: 0;
             }
         }
     }

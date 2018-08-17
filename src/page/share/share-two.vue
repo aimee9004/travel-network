@@ -23,18 +23,26 @@
         <h1 class="title-cn">节点旅行</h1>
         <p class="title-en">Travel Network</p>
         <div class="bottom-btn-div">
-            <button>iPhone版下载</button>
-            <button>Android版下载</button>
+            <a href="https://www.travel-network.xin/attachment/mixin/app/tnw-release_latest.apk" download="travel-network">iPhone版下载</a>
+            <a href="javascript:;" @click="getAndroid">Android版下载</a>
         </div>
         <p class="bottom-info">人人参与, 人人共享</p>
     </div>
 </template>
 
 <script>
+    import Vue from 'vue'
+    import { Button, Toast } from 'vant'
+    Vue.use(Button).use(Toast);
     export default {
         data() {
             return {
 
+            }
+        },
+        methods: {
+            getAndroid() {
+                Toast('即将上线，敬请期待...')
             }
         }   
     }
@@ -107,7 +115,7 @@
             margin: .1rem 0 .5rem;
         }
         .bottom-btn-div {
-            >button {
+            >a {
                 width: 3rem;
                 height: .88rem;
                 line-height: .88rem;
@@ -115,7 +123,8 @@
                 font-size: .28rem;
                 color: white;
                 background-color: black;
-                &+button {
+                display: inline-block;
+                &+a {
                     background-color: blue;
                     margin-left: .3rem;
                 }
