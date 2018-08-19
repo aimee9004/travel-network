@@ -3,9 +3,9 @@
         <img class="top-img" src="../../assets/share1.png" alt="">
         <div class="main-info">
             <p class="tip">现在加入即可获得</p>
-            <p class="big-tip">1200TEN</p>
+            <p class="big-tip">1200TNW</p>
             <p class="describe">
-                <strong>邀请码：{{msg}}</strong> <br /> 让我们一起建设节点旅行, 开启旅行新玩法！
+                <strong v-if="msg!=='' && !!msg">邀请码：{{msg}}</strong> <br /> 让我们一起建设节点旅行, 开启旅行新玩法！
             </p>
             <van-button @click="goGet" class="bottom-btn" type="primary">立即获得</van-button>
         </div>
@@ -24,7 +24,7 @@
         },
         created() {
             if (process.env.NODE_ENV == 'development') {
-                this.msg = 'aimme-test'
+                this.msg = this.$route.query.code
             }else if(process.env.NODE_ENV == 'production'){
                 this.msg = this.$route.query.code
             }
@@ -51,6 +51,7 @@
             display: block;
             position: relative;
             z-index: 1;
+            padding-top: .4rem;
         }
         .main-info {
             margin: 0 .15rem;
