@@ -24,7 +24,7 @@ export const myDealOrders = (token, assetId, type) => fetch(envBaseUrl+'/exchang
 export const addBuy = (token, assetPairId, price, amount) => fetch(envBaseUrl+'/exchange/addBuy', { accessToken: token, assetPairId, price, amount }, 'POST');
 export const addSell = (token, assetPairId, price, amount) => fetch(envBaseUrl+'/exchange/addSell', { accessToken: token, assetPairId, price, amount }, 'POST');
 export const paymentLink = (token, assetUId, amount, memo, otherData) => fetch(envBaseUrl+'/exchange/paymentLink', { accessToken: token, assetUId, amount, memo, otherData }, 'POST');
-export const assetCurInfo = (token, assetId) => fetch(envBaseUrl+'/exchange/assetCurInfo', { accessToken: token, assetId }, 'POST');
+export const assetCurInfo = (token, assetId, type) => fetch(envBaseUrl+'/exchange/assetCurInfo', { accessToken: token, assetId, type }, 'POST');
 export const cancelSellOrder = (token, orderUid, memberId) => fetch(envBaseUrl+'/exchange/cancelSellOrder', { accessToken: token, orderUid, memberId }, 'POST');
 export const cancelBuyOrder = (token, orderUid, memberId) => fetch(envBaseUrl+'/exchange/cancelBuyOrder', { accessToken: token, orderUid, memberId }, 'POST');
 

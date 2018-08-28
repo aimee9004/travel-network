@@ -156,7 +156,7 @@
                 }
             },
             async getCurInfo() {
-                let curInfo = await assetCurInfo(this.token, this.assetId)
+                let curInfo = await assetCurInfo(this.token, this.assetId, this.buySellType)
                 if(curInfo.status === 200) {
                     if(!!curInfo.data) {
                         this.curInfo = curInfo.data
