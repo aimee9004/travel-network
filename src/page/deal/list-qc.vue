@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div class="list-qc">
         <header-bar :showHeadList="false"></header-bar>
 
         <van-collapse v-model="activeName" accordion>
@@ -43,6 +43,26 @@
                 </div>
             </van-collapse-item>
         </van-collapse>
+        <div class="explain">
+            <h2>
+                使用说明
+            </h2>
+            <p>
+                1. 兑换功能是Travel Network（中文名称：节点旅行）为了解决旅行生态中，繁琐汇率而设计的一个极简汇率兑换功能，资产和信息存储在分布式数据库上面，交易通过转账形式实现，兑换功能只做撮合交易层服务，资产与交易引擎隔离。没有资产沉淀在兑换平台，避免挪用个人资产现象发生，请大家信任使用。
+            </p>
+            <p>
+                2. 使用兑换功能服务无任何手续费产生。
+            </p>
+            <p>
+                3. 使用兑换功能必须先完成实名认证。
+            </p>
+            <p>
+                4. 钱包密码为六位数字，请妥善保管，如果丢失，钱包里的资产将无法找回。
+            </p>
+            <p>
+                5. 如需开通更多兑换品种，请去旅行页面，话题板块，发起讨论，提出增加某个兑换品种的理由，开发方会看见您的建议并做出选择性的决定。
+            </p>
+        </div>
         
         <footer-bar :firstAssetId="firstAssetId"></footer-bar>
 
@@ -90,7 +110,7 @@
             this.token = this.$route.query.token
             
             if (process.env.NODE_ENV == 'development') {
-                this.token = 'c0RFeGNMcXBySDJkL2xmTjFSaUlTdjlNNlB0ZTV4MnlPdk9maEE0ZUFiN1NLcExLdnppQkF0T3RHRzBTTUxDeWtsaEJMRVFKbEVvTG1ab1RsbHo5S2Z1ZElRT3dwT1FQcnZFT0ZzOGw1anB3SG1NQ2N1dXZrUG1WNk54ZkhBaHErM0xPMVJHR0JablJDeG9lU1lWQ1Mwc3MyaVpuVHpJOWpaczdtc1NZczFnPQ=='
+                this.token = 'c0RFeGNMcXBySDJkL2xmTjFSaUlTdjlNNlB0ZTV4MnlFd0dyMXhCUzRyWG1ncUN6Rlh4dlEvYnRqcThVaHNnazFEcmVydHM0akd5cFpCR2RMYjdTL2Z1ZElRT3dwT1FQOWlHYmVUcHYrc2JxeUVHTENoRjNmaHRSa1FxQnc1S3Z6R2FIN29jU1MrYmdwdGcvMENlSW4vU0FzazJUQ3FnTXN5Z3o5Wm5QSlBJPQ=='
             }else if(process.env.NODE_ENV == 'production'){
                 if(!this.token) {
                     this.token = localStorage.getItem('token')
@@ -136,9 +156,11 @@
 </script>
 
 <style lang="scss" scoped>
+    .list-qc {
+        padding-bottom: 1rem;
+    }
     .van-collapse {
         margin-top: .88rem;
-        margin-bottom: 1rem;
     }
     .list-item {
         /deep/ .van-cell {
@@ -229,6 +251,19 @@
         .buy-sell-btn {
             .van-button {
             }
+        }
+    }
+    .explain {
+        font-size: .26rem;
+        background-color: white;
+        padding: .3rem .2rem;
+        text-align: left;
+        >h2 {
+            font-size: .36rem;
+            font-weight: bold;
+        }
+        >p {
+            margin: .2rem 0;
         }
     }
 </style>

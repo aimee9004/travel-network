@@ -48,6 +48,23 @@ export default async(url = '', data = {}, type = 'GET', method = 'fetch') => {
 				android.toLogin(JSON.stringify(responseJson))
 				return
 			}
+			
+			// 405 提示用户进行实名认证
+			if(responseJson.status === 405) {
+				Toast(responseJson.message)
+				android.toRealNamePanel(JSON.stringify(responseJson))
+				return
+			}
+
+			// 406 弹出密码输入框
+			if(responseJson.status === 406) {
+				if(!!responseJson.message) {
+					Toast(responseJson.message)
+				}
+				android.toPasswordPanel(JSON.stringify(responseJson))
+				return
+			}
+
 			// if(statusCodes.indexOf(responseJson.status) !== -1 || !responseJson.status) {
 			// 	let debugInfo = await debugReport(url, data, responseJson)
 			// }
