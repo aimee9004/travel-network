@@ -105,12 +105,13 @@
             next()
         },
         created() {
+            console.log(132)
             this.$toast.loading({mask: true, message: '加载中...', duration: 0})
             // this.goTest()
             this.token = this.$route.query.token
             
             if (process.env.NODE_ENV == 'development') {
-                this.token = 'c0RFeGNMcXBySDJkL2xmTjFSaUlTdjlNNlB0ZTV4MnlFd0dyMXhCUzRyWG1ncUN6Rlh4dlEvYnRqcThVaHNnazFEcmVydHM0akd5cFpCR2RMYjdTL2Z1ZElRT3dwT1FQOWlHYmVUcHYrc2JxeUVHTENoRjNmaHRSa1FxQnc1S3Z6R2FIN29jU1MrYmdwdGcvMENlSW4vU0FzazJUQ3FnTXN5Z3o5Wm5QSlBJPQ=='
+                this.token = 'c0RFeGNMcXBySDJkL2xmTjFSaUlTdjlNNlB0ZTV4MnlYelU3c0s5YUFOMDhuOUVmblljTkp2YnRqcThVaHNnazFEcmVydHM0akd5cFpCR2RMYjdTL2Z1ZElRT3dwT1FQUm10WStjMmd0QndnZlhPL2NOaVdIV20yemdRZlNvV0g1ZmhEQU0yV21BVC9kREF2YlRRTEtmdzVTcXo5Y3E0bVB0Yk03RWZ4VmRVPQ=='
             }else if(process.env.NODE_ENV == 'production'){
                 if(!this.token) {
                     this.token = localStorage.getItem('token')

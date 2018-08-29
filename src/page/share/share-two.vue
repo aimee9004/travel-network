@@ -1,6 +1,6 @@
 <template>
     <div class="share-one">
-        <img class="logo" src="../../assets/share-two2.png" alt="">
+        <!-- <img class="logo" :src="logoSrc" alt=""> -->
         <p class="describe">节点旅行是基于 MiXinNetwork开发的一款旅行生态社群平台, 通过底层协议链接资源方与消费者。</p>
         <div class="middle-info">
             <div>
@@ -22,11 +22,12 @@
         </div>
         <h1 class="title-cn">节点旅行</h1>
         <p class="title-en">Travel Network</p>
+        <p class="warning-info">（请在浏览器中打开本页下载）</p>
         <div class="bottom-btn-div">
-            <a href="https://www.travel-network.xin/attachment/mixin/app/tnw-release_latest.apk" download="travel-network">iPhone版下载</a>
-            <a href="javascript:;" @click="getAndroid">Android版下载</a>
+            <a href="javascript:;" @click="getAndroid">iPhone版下载</a>
+            <a href="https://www.travel-network.xin/attachment/mixin/app/tnw-release_latest.apk" download="travel-network">Android版下载</a>
         </div>
-        <p class="bottom-info">人人参与, 人人共享</p>
+        <!-- <p class="bottom-info">人人参与, 人人共享</p> -->
     </div>
 </template>
 
@@ -37,7 +38,7 @@
     export default {
         data() {
             return {
-
+                logoSrc: require('@/assets/share-two2.png'),
             }
         },
         methods: {
@@ -63,6 +64,7 @@
             font-size: .24rem;
             color: white;
             padding: 0 .75rem;
+            padding-top: .4rem;
         }
         .middle-info {
             border-radius: .1rem;
@@ -113,6 +115,9 @@
         .title-en {
             font-size: .24rem;
             margin: .1rem 0 .5rem;
+        }
+        .warning-info {
+            font-size: .2rem;
         }
         .bottom-btn-div {
             >a {
